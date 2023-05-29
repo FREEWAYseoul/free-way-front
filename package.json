@@ -1,0 +1,39 @@
+{
+  "name": "free-way",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.29.11",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
+    "styled-components": "^5.1.0",
+    "styled-normalize": "^8.0.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.2.4",
+    "@types/styled-components": "^5.1.22",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "msw": "^1.2.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
