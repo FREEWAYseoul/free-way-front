@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# npm을 사용하는 경우
+npx commitlint --edit $1
