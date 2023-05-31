@@ -1,0 +1,14 @@
+import SearchInput from '../common/SearchInput';
+
+const Search = () => {
+  return (
+    <>
+      <SearchInput
+        placeholder='역이름을 입력해주세요.'
+        listeningMessage='듣고 있습니다! 역이름을 말해주세요.'
+      />
+    </>
+  );
+};
+
+export default Search;
