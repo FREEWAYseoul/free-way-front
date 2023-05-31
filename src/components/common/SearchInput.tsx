@@ -17,6 +17,10 @@ const SearchInput = ({ placeholder, listeningMessage }: SearchInputProps) => {
     },
   });
 
+  const handleMouseDown = () => {
+    listen({ lang: 'ko-KR' });
+  };
+
   const handleTyping = (e: ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value);
   };
@@ -34,7 +38,7 @@ const SearchInput = ({ placeholder, listeningMessage }: SearchInputProps) => {
           placeholder={placeholder}
           onChange={handleTyping}
         />
-        <Button handleMouseDown={listen} handleMouseUp={stop}>
+        <Button handleMouseDown={handleMouseDown} handleMouseUp={stop}>
           🎤
         </Button>
         <Button handleClick={handleResetButton}>ⅹ</Button>
