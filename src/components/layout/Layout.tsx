@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
-  max-width: 480px;
+  max-width: 375px;
   width: 100%;
   height: 100vh;
   background-size: contain;
