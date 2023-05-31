@@ -1,15 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
-import { SubwayProps, useMap } from '../../../hooks/useMap';
+import { useMap } from '../../../hooks/useMap';
 import ElevatorImg from '../../../assets/elevator.svg';
 import styled from 'styled-components';
 import axios from 'axios';
-
-interface ElevatorProps {
-  title: string;
-  lat: number;
-  lng: number;
-}
+import { ElevatorProps, LocalProps, SubwayProps } from '../../../types/subwayType';
+import { fetchLocalSubway } from '../../../apis/SubwayAPI';
 
 const MapMarkerController = ({ title }: { title: string }) => {
   const { kakaoMap, subways } = useMap();
@@ -17,15 +13,21 @@ const MapMarkerController = ({ title }: { title: string }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [subwayTitle, setSubwayTitle] = useState<string>(title);
   const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
+  const [localSubway, setLocalSubway] = useState([]);
 
   /**
    * subway marker move
    */
-  const moveSubway = (title: string, lat: number, lng: number) => {
+  const moveSubway = async (title: string, lat: number, lng: number) => {
     const moveLatLon = new kakao.maps.LatLng(lat, lng);
     kakaoMap.setLevel(3);
     kakaoMap.panTo(moveLatLon);
     setSubwayTitle(title);
+
+    const res = await fetchLocalSubway(lng, lat);
+    setLocalSubway(
+      res.data.documents.sort((a: LocalProps, b: LocalProps) => a.distance - b.distance)
+    );
   };
 
   const moveMap = useCallback(async () => {
@@ -33,7 +35,8 @@ const MapMarkerController = ({ title }: { title: string }) => {
     markers.forEach((marker) => {
       marker.setMap(null);
     });
-    /*
+
+    /* 역이름, id 검색
     const res = await axios({
       method: 'get',
       url: `/api/subways/elevator`,
@@ -99,17 +102,24 @@ const MapMarkerController = ({ title }: { title: string }) => {
   }, [markers]);
 
   return (
-    <Container>
-      <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-      {subways.length > 0 &&
-        searchResult.map((item: SubwayProps) => (
-          <SearchItem
-            key={item.title}
-            info={item}
-            onClick={() => moveSubway(item.title, item.lat, item.lng)}
-          />
+    <>
+      <StyledTop>
+        <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        {subways.length > 0 &&
+          searchResult.map((item: SubwayProps) => (
+            <SearchItem
+              key={item.title}
+              info={item}
+              onClick={() => moveSubway(item.title, item.lat, item.lng)}
+            />
+          ))}
+      </StyledTop>
+      <StyledBottom>
+        {localSubway.map((item: LocalProps) => (
+          <LocalItem key={item.id} info={item} />
         ))}
-    </Container>
+      </StyledBottom>
+    </>
   );
 };
 
@@ -117,7 +127,17 @@ const SearchItem = ({ info, onClick }: { info: SubwayProps; onClick: () => void 
   return <div onClick={() => onClick()}>{info.title}</div>;
 };
 
-const Container = styled.div`
+const LocalItem = ({ info }: { info: LocalProps }) => {
+  return (
+    <div>
+      {info.place_name} {info.distance}m
+    </div>
+  );
+};
+
+export default MapMarkerController;
+
+const StyledTop = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -126,7 +146,7 @@ const Container = styled.div`
   left: 50%;
   width: 90%;
   height: 100px;
-  background-color: white;
+  background-color: #fff;
   transform: translateX(-50%);
   z-index: 99;
 
@@ -136,4 +156,21 @@ const Container = styled.div`
   }
 `;
 
-export default MapMarkerController;
+const StyledBottom = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  bottom: 20px;
+  left: 50%;
+  width: 90%;
+  min-height: 140px;
+  background-color: #fff;
+  transform: translateX(-50%);
+  z-index: 99;
+  overflow: auto;
+
+  & > div {
+    background-color: lightgray;
+  }
+`;

@@ -1,15 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { fetchSubways } from '../apis/SubwayAPI';
+import { SubwayProps } from '../types/subwayType';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
-
-export interface SubwayProps {
-  title: string;
-  lat: number;
-  lng: number;
-}
 
 export const useMap = () => {
   const kakaoMap = useContext(KakaoMapContext);
@@ -42,13 +37,4 @@ export const useMap = () => {
     kakaoMap,
     subways,
   };
-};
-
-const fetchSubways = async () => {
-  const res = await axios({
-    method: 'get',
-    url: '/api/subways',
-  });
-
-  return res;
 };
