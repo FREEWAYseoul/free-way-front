@@ -1,37 +1,45 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
+import subwayDumy from './data/subwayDumy.json';
+import elevatorDumy from './data/elevatorDumy.json';
 
 export const handlers = [
-  rest.post('/login', (req, res, ctx) => {
-    // Persist user's authentication in the session
-    sessionStorage.setItem('is-authenticated', 'true');
+  rest.get('/api/subways', async (req, res, ctx) => {
+    await sleep(200);
 
-    return res(
-      // Respond with a 200 status code
-      ctx.status(200)
-    );
+    return res(ctx.status(200), ctx.json(subwayDumy));
   }),
+  rest.get('/api/subways/elevator', async (req, res, ctx) => {
+    const title = req.url.searchParams.get('title');
 
-  rest.get('/user', (req, res, ctx) => {
-    // Check if the user is authenticated in this session
-    const isAuthenticated = sessionStorage.getItem('is-authenticated');
+    const newElevator = elevatorDumy.filter((item) => item.subway === title);
 
-    if (!isAuthenticated) {
-      // If not authenticated, respond with a 403 error
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: 'Not authorized',
-        })
-      );
-    }
+    await sleep(200);
 
-    // If authenticated, return a mocked user details
-    return res(
-      ctx.status(200),
-      ctx.json({
-        username: 'admin',
-      })
-    );
+    return res(ctx.status(200), ctx.json(newElevator));
+  }),
+  rest.post('/api/subways/elevator', async (req, res, ctx) => {
+    const body = await req.json();
+
+    const newElevator = elevatorDumy.filter((item) => {
+      if (
+        body.swLat <= item.lat &&
+        item.lat <= body.neLat &&
+        body.swLng <= item.lng &&
+        item.lng <= body.neLng
+      ) {
+        return item;
+      }
+    });
+
+    await sleep(200);
+
+    return res(ctx.status(200), ctx.json(newElevator));
   }),
 ];
+
+async function sleep(timeout: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+}
