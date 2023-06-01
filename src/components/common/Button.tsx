@@ -17,12 +17,10 @@ const Button = ({ handleClick, handleMouseUp, handleMouseDown, children }: Butto
 export default Button;
 
 const StyledButton = styled.button`
-  width: 35px;
-  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 3px 6px;
   background: none;
   border: none;
   border-radius: 4px;
@@ -31,11 +29,5 @@ const StyledButton = styled.button`
 
   &:hover {
     background-color: #d4d4d4;
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
   }
 `;
