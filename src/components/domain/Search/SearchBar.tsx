@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import Button from '../Button';
-import { useKeywordsContext } from '../../domain/KeywordsContext';
+import Button from '../../common/Button';
+import { useKeywordsContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
 
 type SearchBarProps = {

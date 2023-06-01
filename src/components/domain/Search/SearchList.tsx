@@ -10,7 +10,7 @@ import { type Station } from '../../../api/stations';
 // ] as const;
 
 type Props = {
-  label: string;
+  label?: string;
   data: Station[];
 };
 
