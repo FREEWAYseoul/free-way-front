@@ -17,7 +17,7 @@ export const fetchStations = async (keywords: string) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `/?keywords=${keywords}`, // <- 후에 서버주소로 변경
+      url: `/search/?keywords=${keywords}`, // <- 후에 서버주소로 변경
     });
     if (res.status === 200) {
       return res.data;

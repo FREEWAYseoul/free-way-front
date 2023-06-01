@@ -11,7 +11,7 @@ const getStationsInfo = async (_req, res, ctx) => {
   return res(ctx.status(200), ctx.json([...stations]));
 };
 
-export const handlers = [rest.get('/', getStationsInfo)];
+export const handlers = [rest.get('/search', getStationsInfo)];
 
 async function sleep(timeout: number) {
   return new Promise((resolve) => {
