@@ -1,10 +1,10 @@
 import SearchList from './SearchList';
 import SearchBar from './SearchBar';
-import { useKeywordsContext } from './SearchContext';
+import { useSearchContext } from './SearchContext';
 import { useStationInfo } from '../../../api/stations';
 
 const Search = () => {
-  const { keywords } = useKeywordsContext();
+  const { keywords } = useSearchContext();
   const { data } = useStationInfo(keywords);
 
   return (

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import Button from '../../common/Button';
-import { useKeywordsContext } from './SearchContext';
+import { useSearchContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
 
 type SearchBarProps = {
@@ -11,7 +11,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
   const { keywords, handleTyping, handleMouseDown, handleMouseUp, resetKeywords, isListening } =
-    useKeywordsContext();
+    useSearchContext();
 
   return (
     <>

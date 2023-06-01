@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 type PageTitleProps = {
   upperLine: string;
   lowerLine: string;
@@ -5,11 +7,22 @@ type PageTitleProps = {
 
 const PageTitle = ({ upperLine, lowerLine }: PageTitleProps) => {
   return (
-    <div id='pageTitle'>
-      <h1>{upperLine}</h1>
-      <h1>{lowerLine}</h1>
-    </div>
+    <TitleWrapper>
+      <Text>{upperLine}</Text>
+      <Text>{lowerLine}</Text>
+    </TitleWrapper>
   );
 };
 
 export default PageTitle;
+
+export const TitleWrapper = styled.div``;
+
+export const Text = styled.div`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 25px;
+  margin-bottom: 10px;
+`;

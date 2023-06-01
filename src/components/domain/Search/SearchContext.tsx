@@ -9,10 +9,10 @@ import {
 } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
 
-type KeywordsState = {
+type SearchState = {
   keywords: string;
 };
-type KeywordsAction = {
+type SearchAction = {
   handleTyping: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleMouseDown: () => void;
   handleMouseUp: () => void;
@@ -21,11 +21,11 @@ type KeywordsAction = {
   resetKeywords: () => void;
   selectKeywords: (keywords: string) => void;
 };
-type KeywordsContext = KeywordsState & KeywordsAction;
+type SearchContext = SearchState & SearchAction;
 
-const KeywordsContext = createContext<KeywordsContext | null>(null);
+const SearchContext = createContext<SearchContext | null>(null);
 
-export const KeywordsContextProvider = ({ children }: PropsWithChildren) => {
+export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const [keywords, setKeywords] = useState('');
 
   const { listen, listening, stop } = useSpeechRecognition({
@@ -76,11 +76,11 @@ export const KeywordsContextProvider = ({ children }: PropsWithChildren) => {
     resetKeywords,
     selectKeywords,
   };
-  return <KeywordsContext.Provider value={value}>{children}</KeywordsContext.Provider>;
+  return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
 };
 
-export const useKeywordsContext = () => {
-  const context = useContext(KeywordsContext);
+export const useSearchContext = () => {
+  const context = useContext(SearchContext);
   if (!context) {
     throw new Error('no context found!');
   }

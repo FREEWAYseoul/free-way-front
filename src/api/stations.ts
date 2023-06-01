@@ -9,8 +9,8 @@ export type Elevator = {
 export type Station = {
   id: number;
   name: string;
-  status: '사용가능' | '일부가능' | '사용불가능';
-  line: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+  status: string; //'사용가능' | '일부가능' | '사용불가능';
+  line: string; //'1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 };
 
 export const fetchStations = async (keywords: string) => {

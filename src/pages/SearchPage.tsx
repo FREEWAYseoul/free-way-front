@@ -1,11 +1,11 @@
-import { KeywordsContextProvider } from '../components/domain/Search/SearchContext';
+import { SearchContextProvider } from '../components/domain/Search/SearchContext';
 import Search from '../components/domain/Search';
 
 const SearchPage = () => {
   return (
-    <KeywordsContextProvider>
+    <SearchContextProvider>
       <Search />
-    </KeywordsContextProvider>
+    </SearchContextProvider>
   );
 };
 

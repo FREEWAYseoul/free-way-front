@@ -4,12 +4,12 @@ import { ReactComponent as LineCircle } from '../../../assets/icons/line-2.svg';
 type SearchItemProps = {
   id?: number;
   name: string;
-  status: '사용가능' | '일부가능' | '사용불가능';
-  line?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+  status: string;
+  line?: string;
 };
 
 type StyledElevatorStatusCircleProps = {
-  status: '사용가능' | '일부가능' | '사용불가능';
+  status: string;
 };
 
 const SearchItem = ({ name, status }: SearchItemProps) => {
