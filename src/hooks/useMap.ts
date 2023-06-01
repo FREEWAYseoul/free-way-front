@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { fetchSubways } from '../apis/SubwayAPI';
+import { fetchSubways } from '../apis/subwayAPI';
 import { SubwayProps } from '../types/subwayType';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);

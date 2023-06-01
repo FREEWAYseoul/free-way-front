@@ -23,16 +23,14 @@ export const handlers = [
 
     const newElevator = elevatorDumy.filter((item) => {
       if (
-        body.swLat <= item.lat &&
-        item.lat <= body.neLat &&
-        body.swLng <= item.lng &&
-        item.lng <= body.neLng
+        body.sw.lat <= item.lat &&
+        item.lat <= body.ne.lat &&
+        body.sw.lng <= item.lng &&
+        item.lng <= body.ne.lng
       ) {
         return item;
       }
     });
-
-    await sleep(200);
 
     return res(ctx.status(200), ctx.json(newElevator));
   }),

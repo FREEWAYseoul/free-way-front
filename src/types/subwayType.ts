@@ -1,7 +1,19 @@
-export interface SubwayProps {
-  title: string;
+export interface PositionProps {
   lat: number;
   lng: number;
+}
+
+export interface SubwayProps extends PositionProps {
+  title: string;
+}
+
+export interface ElevatorProps extends PositionProps {
+  title: string;
+}
+
+export interface RectanglePositionProps {
+  sw: PositionProps;
+  ne: PositionProps;
 }
 
 export interface LocalProps {
@@ -17,10 +29,4 @@ export interface LocalProps {
   road_address_name: string;
   x: number;
   y: number;
-}
-
-export interface ElevatorProps {
-  title: string;
-  lat: number;
-  lng: number;
 }

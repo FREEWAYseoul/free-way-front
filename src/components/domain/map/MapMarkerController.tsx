@@ -3,9 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import ElevatorImg from '../../../assets/elevator.svg';
 import styled from 'styled-components';
-import axios from 'axios';
-import { ElevatorProps, LocalProps, SubwayProps } from '../../../types/subwayType';
-import { fetchLocalSubway } from '../../../apis/SubwayAPI';
+import { ElevatorProps, SubwayProps } from '../../../types/subwayType';
+import { fetchElevators } from '../../../apis/subwayAPI';
 
 const MapMarkerController = ({ title }: { title: string }) => {
   const { kakaoMap, subways } = useMap();
@@ -13,7 +12,6 @@ const MapMarkerController = ({ title }: { title: string }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [subwayTitle, setSubwayTitle] = useState<string>(title);
   const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
-  const [localSubway, setLocalSubway] = useState([]);
 
   /**
    * subway marker move
@@ -24,13 +22,11 @@ const MapMarkerController = ({ title }: { title: string }) => {
     kakaoMap.panTo(moveLatLon);
     setSubwayTitle(title);
 
-    const res = await fetchLocalSubway(lng, lat);
-    setLocalSubway(
-      res.data.documents.sort((a: LocalProps, b: LocalProps) => a.distance - b.distance)
-    );
+    // const res = await fetchLocalSubway(lng, lat);
   };
 
   const moveMap = useCallback(async () => {
+    console.log(markers);
     // 마커 초기화
     markers.forEach((marker) => {
       marker.setMap(null);
@@ -48,20 +44,18 @@ const MapMarkerController = ({ title }: { title: string }) => {
 
     const sw = kakaoMap.getBounds().getSouthWest();
     const ne = kakaoMap.getBounds().getNorthEast();
+    const param = {
+      sw: {
+        lat: sw.getLat(),
+        lng: sw.getLng(),
+      },
+      ne: {
+        lat: ne.getLat(),
+        lng: ne.getLng(),
+      },
+    };
 
-    const res = await axios({
-      method: 'post',
-      url: `/api/subways/elevator`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: {
-        swLat: sw.getLat(),
-        swLng: sw.getLng(),
-        neLat: ne.getLat(),
-        neLng: ne.getLng(),
-      },
-    }).catch((e) => console.log(e));
+    const res = await fetchElevators(param);
 
     if (res) {
       const imageSrc = ElevatorImg;
@@ -95,9 +89,10 @@ const MapMarkerController = ({ title }: { title: string }) => {
   }, [subwayTitle]);
 
   useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'idle', moveMap);
+    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', moveMap);
+
     return () => {
-      kakao.maps.event.removeListener(kakaoMap, 'idle', moveMap);
+      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', moveMap);
     };
   }, [markers]);
 
@@ -114,25 +109,12 @@ const MapMarkerController = ({ title }: { title: string }) => {
             />
           ))}
       </StyledTop>
-      <StyledBottom>
-        {localSubway.map((item: LocalProps) => (
-          <LocalItem key={item.id} info={item} />
-        ))}
-      </StyledBottom>
     </>
   );
 };
 
 const SearchItem = ({ info, onClick }: { info: SubwayProps; onClick: () => void }) => {
   return <div onClick={() => onClick()}>{info.title}</div>;
-};
-
-const LocalItem = ({ info }: { info: LocalProps }) => {
-  return (
-    <div>
-      {info.place_name} {info.distance}m
-    </div>
-  );
 };
 
 export default MapMarkerController;
@@ -152,25 +134,6 @@ const StyledTop = styled.div`
 
   & > div {
     cursor: pointer;
-    background-color: lightgray;
-  }
-`;
-
-const StyledBottom = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  bottom: 20px;
-  left: 50%;
-  width: 90%;
-  min-height: 140px;
-  background-color: #fff;
-  transform: translateX(-50%);
-  z-index: 99;
-  overflow: auto;
-
-  & > div {
     background-color: lightgray;
   }
 `;

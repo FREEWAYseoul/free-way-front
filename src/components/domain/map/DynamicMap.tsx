@@ -22,14 +22,17 @@ const DynamicMap = ({ position, children }: DynamicMapProps) => {
 
   useEffect(() => {
     if (!kakaoMapRef.current) return;
-
     setMap(new window.kakao.maps.Map(kakaoMapRef.current, option));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <MapWrapper>
-      <StyledMap ref={kakaoMapRef} id='map' style={{ width: '100%', height: '100vh' }}>
+      <StyledMap
+        ref={kakaoMapRef}
+        id='map'
+        style={{ width: '100%', height: 'calc(100vh - 208px)' }}
+      >
         {map && <KakaoMapContext.Provider value={map}>{children}</KakaoMapContext.Provider>}
       </StyledMap>
     </MapWrapper>
