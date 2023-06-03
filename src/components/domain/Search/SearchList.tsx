@@ -11,15 +11,16 @@ const SearchList = ({ label, data }: Props) => {
   return (
     <ListWrapper>
       <Label>{label}</Label>
-      {data?.map((station) => (
-        <SearchItem
-          key={station.id}
-          id={station.id}
-          name={station.name}
-          status={station.status}
-          line={station.line}
-        />
-      ))}
+      {data &&
+        data?.map((station) => (
+          <SearchItem
+            key={station.id}
+            id={station.id}
+            name={station.name}
+            status={station.status}
+            line={station.line}
+          />
+        ))}
     </ListWrapper>
   );
 };

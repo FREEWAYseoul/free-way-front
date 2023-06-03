@@ -12,6 +12,7 @@ const HomeSearchBar = () => {
 export default HomeSearchBar;
 
 export const StyledHomeSearchBarWrapper = styled.div`
+  width: 90%;
   display: flex;
   justify-content: center;
   align-content: center;

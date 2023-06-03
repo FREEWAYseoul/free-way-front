@@ -1,32 +1,40 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
-  ChangeEvent,
   PropsWithChildren,
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
+import { Station, useStationInfo } from '../../../api/stations';
 
 type SearchState = {
   keywords: string;
+  searchHistory: Station[];
 };
+
 type SearchAction = {
   handleTyping: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleMouseDown: () => void;
   handleMouseUp: () => void;
-  handleSubmit: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isListening: () => boolean;
   resetKeywords: () => void;
   selectKeywords: (keywords: string) => void;
+  addSearchHistory: () => void;
+  getFourRecentSearchHistory: () => Station[];
 };
+
 type SearchContext = SearchState & SearchAction;
 
 const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const [keywords, setKeywords] = useState('');
+  const [searchHistory, setSearchHistory] = useState<Station[]>([]);
+  const { data } = useStationInfo(keywords);
 
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result: string) => {
@@ -46,17 +54,22 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     return listening;
   };
 
-  const handleTyping = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleTyping = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value);
   }, []);
 
-  const handleSubmit = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    /** TODOS
-     * 1. 키워드를 localStorage에 넣기
-     * 2. 결과페이지로 이동하기
-     */
-    e.preventDefault();
-  }, []);
+  const addSearchHistory = useCallback(() => {
+    setSearchHistory([...searchHistory, ...data]);
+    localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...data]));
+  }, [data, searchHistory]);
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      addSearchHistory();
+    },
+    [addSearchHistory]
+  );
 
   const resetKeywords = () => {
     setKeywords('');
@@ -66,8 +79,15 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     setKeywords(keywords);
   };
 
+  const getFourRecentSearchHistory = () => {
+    return searchHistory.filter((v) => v !== null).slice(0, 4);
+  };
+
   const value = {
     keywords,
+    searchHistory,
+    addSearchHistory,
+    getFourRecentSearchHistory,
     handleTyping,
     handleMouseDown,
     handleMouseUp,
@@ -76,6 +96,11 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     resetKeywords,
     selectKeywords,
   };
+
+  useEffect(() => {
+    setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]'));
+  }, []);
+
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
 };
 

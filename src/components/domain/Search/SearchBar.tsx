@@ -10,12 +10,19 @@ type SearchBarProps = {
 } & PropsWithChildren;
 
 const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
-  const { keywords, handleTyping, handleMouseDown, handleMouseUp, resetKeywords, isListening } =
-    useSearchContext();
+  const {
+    keywords,
+    handleSubmit,
+    handleTyping,
+    handleMouseDown,
+    handleMouseUp,
+    resetKeywords,
+    isListening,
+  } = useSearchContext();
 
   return (
     <>
-      <StyledSearchBarWrapper>
+      <StyledSearchBarForm onSubmit={handleSubmit}>
         <StyledSearchBar
           value={keywords}
           type='text'
@@ -26,7 +33,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
           <MicIcon />
         </Button>
         <Button handleClick={resetKeywords}>ⅹ</Button>
-      </StyledSearchBarWrapper>
+      </StyledSearchBarForm>
       {() => isListening() && <p>{listeningMessage}</p>}
     </>
   );
@@ -34,7 +41,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
 
 export default SearchBar;
 
-const StyledSearchBarWrapper = styled.form`
+const StyledSearchBarForm = styled.form`
   display: flex;
   align-items: center;
   padding: 8px;
