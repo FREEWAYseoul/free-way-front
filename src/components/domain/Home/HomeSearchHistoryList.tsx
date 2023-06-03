@@ -15,5 +15,9 @@ const HomeSearchHistoryList = () => {
 export default HomeSearchHistoryList;
 
 const StyledHomeSearchListWrapper = styled.div`
-  width: 90%;
+  position: absolute;
+  left: 5.33%;
+  right: 5.33%;
+  top: 51.97%;
+  bottom: 39.16%;
 `;

@@ -2,13 +2,16 @@ import styled from 'styled-components';
 import HomeSearchBar from './HomeSearchBar';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
 import HomePageTitle from './HomePageTitle';
+import { useSearchContext } from '../Search/SearchContext';
 
 const Home = () => {
+  const { isListening } = useSearchContext();
+
   return (
     <HomeWrapper id='home-container'>
       <HomePageTitle />
       <HomeSearchBar />
-      <HomeSearchHistoryList />
+      {isListening() ? <div>듣고 있어요.</div> : <HomeSearchHistoryList />}
     </HomeWrapper>
   );
 };

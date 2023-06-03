@@ -12,5 +12,9 @@ const HomePageTitle = () => {
 export default HomePageTitle;
 
 const StyledHomePageTitleWrapper = styled.div`
-  width: 85%;
+  position: absolute;
+  left: 5.33%;
+  right: 5.33%;
+  top: 15.16%;
+  bottom: 61.97%;
 `;
