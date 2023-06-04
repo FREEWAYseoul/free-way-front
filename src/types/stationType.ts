@@ -3,8 +3,12 @@ export interface PositionProps {
   lng: number;
 }
 
-export interface SubwayProps extends PositionProps {
-  title: string;
+export interface StationProps {
+  lineId: number;
+  stationId: number;
+  stationName: string;
+  stationStatus: string;
+  position: PositionProps;
 }
 
 export interface ElevatorProps extends PositionProps {

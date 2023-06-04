@@ -1,18 +1,18 @@
 import DynamicMap from './DynamicMap';
 import KakaoMapScriptLoader from './KakaoMapScriptLoader';
 import MapMarkerController from './MapMarkerController';
+import { useResultContext } from '../station/ResultContext';
 
-const MapPreview = () => {
-  const title = '쌍문';
-  const position = { lat: 37.65323939675669, lng: 127.04766306716449 };
+const MapView = () => {
+  const { station } = useResultContext();
 
   return (
     <KakaoMapScriptLoader>
-      <DynamicMap position={position}>
-        <MapMarkerController title={title} />
+      <DynamicMap position={station.position}>
+        <MapMarkerController />
       </DynamicMap>
     </KakaoMapScriptLoader>
   );
 };
 
-export default MapPreview;
+export default MapView;

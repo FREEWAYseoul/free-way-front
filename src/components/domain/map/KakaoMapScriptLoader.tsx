@@ -17,7 +17,7 @@ const KakaoMapScriptLoader = ({ children }: KakaoMapScriptLoaderProps) => {
 
     const script = document.createElement('script');
     script.id = KAKAO_MAP_SCRIPT_ID;
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&autoload=false&libraries=clusterer`;
 
     script.onload = () => {
       window.kakao.maps.load(() => {
@@ -32,7 +32,7 @@ const KakaoMapScriptLoader = ({ children }: KakaoMapScriptLoaderProps) => {
   }, []);
 
   if (!isSetMapScript) {
-    return <>loading....</>;
+    return <div></div>;
   }
 
   return <>{children}</>;

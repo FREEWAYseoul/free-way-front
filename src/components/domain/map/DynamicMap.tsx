@@ -17,22 +17,21 @@ const DynamicMap = ({ position, children }: DynamicMapProps) => {
   const targetPoint = new kakao.maps.LatLng(position.lat, position.lng);
   const option = {
     center: targetPoint,
-    level: 3,
+    minLevel: 0,
+    maxLevel: 7,
+    level: 4,
   };
 
   useEffect(() => {
     if (!kakaoMapRef.current) return;
-    setMap(new window.kakao.maps.Map(kakaoMapRef.current, option));
+    const map = new window.kakao.maps.Map(kakaoMapRef.current, option);
+    setMap(map);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <MapWrapper>
-      <StyledMap
-        ref={kakaoMapRef}
-        id='map'
-        style={{ width: '100%', height: 'calc(100vh - 208px)' }}
-      >
+      <StyledMap ref={kakaoMapRef} id='map' style={{ width: '100%', height: '100%' }}>
         {map && <KakaoMapContext.Provider value={map}>{children}</KakaoMapContext.Provider>}
       </StyledMap>
     </MapWrapper>
@@ -40,7 +39,9 @@ const DynamicMap = ({ position, children }: DynamicMapProps) => {
 };
 
 const MapWrapper = styled.div`
+  flex: 1;
   width: 100%;
+  min-height: 300px;
 `;
 
 const StyledMap = styled.div`

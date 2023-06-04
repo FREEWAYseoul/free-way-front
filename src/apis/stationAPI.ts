@@ -1,24 +1,24 @@
 import axios from 'axios';
-import { RectanglePositionProps } from '../types/subwayType';
+import { RectanglePositionProps } from '../types/stationType';
 
 const KAKAO_REST_KEY = 'af61b95c8bffb045cb0d212e309d64cd';
 
 /**
- * subway list
+ * station list
  */
-export const fetchSubways = async () => {
+export const fetchSearchStations = async () => {
   const res = await axios({
     method: 'get',
-    url: '/api/subways',
+    url: '/api/stations/search',
   }).catch((e) => console.log(e));
 
   return res;
 };
 
 /**
- * local subway list
+ * local station list
  */
-export const fetchLocalSubway = async (x: number, y: number) => {
+export const fetchLocalStation = async (x: number, y: number) => {
   const res = await axios({
     method: 'get',
     url: 'https://dapi.kakao.com/v2/local/search/category.json',
@@ -37,16 +37,31 @@ export const fetchLocalSubway = async (x: number, y: number) => {
 };
 
 /**
- * subway elevator list
+ * station elevator list
  */
 export const fetchElevators = async (lectanglePosition: RectanglePositionProps) => {
   const res = await axios({
     method: 'post',
-    url: `/api/subways/elevator`,
+    url: `/api/elevators`,
     headers: {
       'Content-Type': 'application/json',
     },
     data: lectanglePosition,
+  }).catch((e) => console.log(e));
+
+  return res;
+};
+
+/**
+ * station detail
+ */
+export const fetchStation = async (title: string) => {
+  const res = await axios({
+    method: 'post',
+    url: `/api/stations`,
+    params: {
+      stationName: title,
+    },
   }).catch((e) => console.log(e));
 
   return res;

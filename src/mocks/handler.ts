@@ -4,21 +4,21 @@ import subwayDumy from './data/subwayDumy.json';
 import elevatorDumy from './data/elevatorDumy.json';
 
 export const handlers = [
-  rest.get('/api/subways', async (req, res, ctx) => {
+  rest.get('/api/stations/search', async (req, res, ctx) => {
     await sleep(200);
 
     return res(ctx.status(200), ctx.json(subwayDumy));
   }),
-  rest.get('/api/subways/elevator', async (req, res, ctx) => {
+  rest.get('/api/stations', async (req, res, ctx) => {
     const title = req.url.searchParams.get('title');
 
-    const newElevator = elevatorDumy.filter((item) => item.subway === title);
+    const station = elevatorDumy.find((item) => item.subway === title);
 
     await sleep(200);
 
-    return res(ctx.status(200), ctx.json(newElevator));
+    return res(ctx.status(200), ctx.json(station));
   }),
-  rest.post('/api/subways/elevator', async (req, res, ctx) => {
+  rest.post('/api/elevators', async (req, res, ctx) => {
     const body = await req.json();
 
     const newElevator = elevatorDumy.filter((item) => {
