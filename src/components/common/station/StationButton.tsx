@@ -6,27 +6,31 @@ interface StationButtonProps {
   children: React.ReactNode;
   handleChangeTab: (arg1: string) => void;
   onClick?: () => void;
-  type?: string;
+  tel?: string;
 }
 
-const StationButton = ({ title, isActive, children, handleChangeTab }: StationButtonProps) => {
+const StationButton = ({ title, isActive, children, handleChangeTab, tel }: StationButtonProps) => {
+  const handleTelLinkClick = () => {
+    window.open(`tel:${tel}`, '_blank');
+  };
+
   return (
     <>
-      {/* {type === 'tel' ? (
+      {tel ? (
         <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
-          <input className='wrapper' type='tel' value={'010-4187-4575'}>
+          <div className='wrapper' onClick={handleTelLinkClick}>
             {children}
             <p>{title}</p>
-          </input>
+          </div>
         </StyledButton>
-      ) : ( */}
-      <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
-        <div className='wrapper'>
-          {children}
-          <p>{title}</p>
-        </div>
-      </StyledButton>
-      {/* )} */}
+      ) : (
+        <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
+          <div className='wrapper'>
+            {children}
+            <p>{title}</p>
+          </div>
+        </StyledButton>
+      )}
     </>
   );
 };
@@ -58,7 +62,7 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     z-index: 99;
   }
 
-  & > .wrapper {
+  & .wrapper {
     cursor: pointer;
     position: absolute;
     display: flex;

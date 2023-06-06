@@ -3,12 +3,7 @@ import { useResultContext } from './ResultContext';
 import StationButton from '../../common/station/StationButton';
 
 const StationButtonGroup = () => {
-  const { activeTab, handleChangeTab } = useResultContext();
-
-  const handleOnClickTel = (title: string) => {
-    handleChangeTab(title);
-    document.location.href = `tel:010-4187-4575`;
-  };
+  const { station, activeTab, handleChangeTab } = useResultContext();
 
   return (
     <StyledButtonBox>
@@ -86,8 +81,8 @@ const StationButtonGroup = () => {
       <StationButton
         title={'안내 전화'}
         isActive={activeTab === '안내 전화'}
-        handleChangeTab={handleOnClickTel}
-        type='tel'
+        handleChangeTab={handleChangeTab}
+        tel={station.stationTel}
       >
         <svg
           width='22'

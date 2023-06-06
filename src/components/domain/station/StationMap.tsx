@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import Badge from '../../common/station/Badge';
+import { STATION_LINE_COLORS } from '../../../constants/color';
+import StationTitle from '../../common/station/StationTitle';
 
 interface StationMapProps {
   title: string;
@@ -7,12 +8,12 @@ interface StationMapProps {
 }
 
 const StationMap = ({ title, line }: StationMapProps) => {
+  const color = STATION_LINE_COLORS[line];
+
   return (
-    <StyledStationMap>
+    <StyledStationMap $color={color.color}>
       <div className='stationLine'>역삼</div>
-      <div className='stationMapBox'>
-        <Badge lineId={line}>{line}</Badge> {title}
-      </div>
+      <StationTitle title={title} line={line} color={color.color} />
       <div className='stationLine'>교대</div>
     </StyledStationMap>
   );
@@ -20,32 +21,12 @@ const StationMap = ({ title, line }: StationMapProps) => {
 
 export default StationMap;
 
-const StyledStationMap = styled.div`
+const StyledStationMap = styled.div<{ $color: string }>`
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-
-  & > .stationMapBox {
-    position: absolute;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    left: 50%;
-    padding: 5px 29px;
-    height: 40px;
-    min-width: 113px;
-    line-height: 20px;
-    border-radius: 30px;
-    border: 5px solid #60b157;
-    background-color: #fff;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    z-index: 99;
-  }
 
   & > .stationLine {
     flex: 1;
@@ -54,7 +35,7 @@ const StyledStationMap = styled.div`
     height: 28px;
     line-height: 20px;
     color: #fff;
-    background-color: #60b157;
+    background-color: ${({ $color }) => $color};
 
     &:first-child {
       border-radius: 16px 0 0 16px;

@@ -8,6 +8,7 @@ export interface StationProps {
   stationId: number;
   stationName: string;
   stationStatus: string;
+  stationTel: string;
   position: PositionProps;
 }
 
@@ -33,4 +34,15 @@ export interface LocalProps {
   road_address_name: string;
   x: number;
   y: number;
+}
+
+export interface StationTitleProps {
+  title: string;
+  line: number;
+  color: string;
+}
+
+export interface StationMakerProps {
+  info: StationProps;
+  isActive: boolean;
 }

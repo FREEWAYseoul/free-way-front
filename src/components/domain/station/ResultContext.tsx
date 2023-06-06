@@ -9,11 +9,9 @@ interface ResultContextProviderProps {
 export interface ReactContextValueProps {
   station: StationProps;
   activeTab: string;
-  localStations: StationProps[];
   isDrag: boolean;
   handleChangeTab: (arg1: string) => void;
   handleChangeStation: (arg1: StationProps) => void;
-  setLocalStations: (arg1: StationProps[]) => void;
   handleShowInfo: (arg1: boolean) => void;
 }
 
@@ -21,7 +19,6 @@ export const ResultContext = createContext<ReactContextValueProps | null>(null);
 
 export const ResultContextProvider = ({ children, initStation }: ResultContextProviderProps) => {
   const [station, setStation] = useState<StationProps>(initStation);
-  const [localStations, setLocalStations] = useState<StationProps[]>([]);
   const [isDrag, setIsDrag] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('엘리베이터');
 
@@ -44,12 +41,10 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
 
   const contextValue = {
     station,
-    localStations,
     activeTab,
     isDrag,
     handleChangeTab,
     handleChangeStation,
-    setLocalStations,
     handleShowInfo,
   };
 

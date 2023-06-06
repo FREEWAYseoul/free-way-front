@@ -2,17 +2,19 @@
 import { useEffect } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
+import CustomOverlay from '../../common/station/CustomOverlay';
+import StationMarker from '../../common/station/StationMarker';
 
 const MapMarkerController = () => {
   const { station, handleShowInfo } = useResultContext();
-  const { kakaoMap, moveMap, setSubwaysMarker, markers } = useMap();
+  const { kakaoMap, moveMap, markers, stationMarkers, setStationMarker } = useMap();
 
   /**
    * station marker move
    */
   const moveStation = async (lat: number, lng: number) => {
     const moveLatLon = new kakao.maps.LatLng(lat, lng);
-    kakaoMap.setLevel(4);
+    kakaoMap.setLevel(2);
     kakaoMap.panTo(moveLatLon);
   };
 
@@ -21,14 +23,14 @@ const MapMarkerController = () => {
   }, [station]);
 
   useEffect(() => {
+    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', setStationMarker);
     kakao.maps.event.addListener(kakaoMap, 'tilesloaded', moveMap);
-    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', setSubwaysMarker);
 
     return () => {
+      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', setStationMarker);
       kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', moveMap);
-      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', setSubwaysMarker);
     };
-  }, [markers]);
+  }, [markers, stationMarkers]);
 
   useEffect(() => {
     kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
@@ -37,7 +39,23 @@ const MapMarkerController = () => {
     };
   }, []);
 
-  return <></>;
+  return (
+    <>
+      {stationMarkers.length > 0 && (
+        <div>
+          {stationMarkers.map((item, idx) => (
+            <CustomOverlay
+              key={item.stationName + idx}
+              position={item.position}
+              onClick={() => moveStation(item.position.lat, item.position.lng)}
+            >
+              <StationMarker info={item} isActive={station.stationId === item.stationId} />
+            </CustomOverlay>
+          ))}
+        </div>
+      )}
+    </>
+  );
 };
 
 export default MapMarkerController;

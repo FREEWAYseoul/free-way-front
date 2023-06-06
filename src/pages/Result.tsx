@@ -6,10 +6,11 @@ import { ResultContextProvider } from '../components/domain/station/ResultContex
 
 const Result = () => {
   const initStation = {
-    lineId: 4,
+    lineId: 2,
     stationId: 2,
     stationName: '창동',
     stationStatus: '시용가능',
+    stationTel: '010-4187-4575',
     position: { lat: 37.65323939675669, lng: 127.04766306716449 },
   };
 

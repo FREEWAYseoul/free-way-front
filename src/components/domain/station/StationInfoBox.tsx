@@ -12,7 +12,7 @@ const badgeList = [
   },
   {
     title: '신분당',
-    lineId: 0,
+    lineId: 9,
   },
 ];
 
@@ -52,7 +52,7 @@ const StyledStationInfoBox = styled.div<{ $isDrag: boolean }>`
   ${({ $isDrag }) =>
     $isDrag &&
     css`
-      bottom: -190px;
+      bottom: -120px;
     `}
 `;
 

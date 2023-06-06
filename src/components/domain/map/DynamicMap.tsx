@@ -18,8 +18,8 @@ const DynamicMap = ({ position, children }: DynamicMapProps) => {
   const option = {
     center: targetPoint,
     minLevel: 0,
-    maxLevel: 7,
-    level: 4,
+    maxLevel: 8,
+    level: 2,
   };
 
   useEffect(() => {

@@ -11,14 +11,16 @@ interface StationHeaderProps {
 }
 
 const StationHeader = ({ lineList }: StationHeaderProps) => {
-  const { handleShowInfo } = useResultContext();
+  const { station, handleShowInfo } = useResultContext();
+
+  console.log(station, lineList);
 
   return (
     <StyledStationInfoHeader>
       <div>
         {lineList.length > 0 &&
           lineList.map((item) => (
-            <Badge key={item.lineId} lineId={item.lineId}>
+            <Badge key={item.lineId} lineId={item.lineId} isActive={station.lineId === item.lineId}>
               {item.title}
             </Badge>
           ))}
