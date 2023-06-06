@@ -2,54 +2,117 @@
 import { useEffect } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
+import { StationProps } from '../../../types/stationType';
 import CustomOverlay from '../../common/station/CustomOverlay';
 import StationMarker from '../../common/station/StationMarker';
+import ElevatorMarker from '../../common/station/ElevatorMarker';
+import MyMarkerIcon from '../../../assets/icons/myMarker.png';
+import TargetIcon from '../../../assets/icons/target.svg';
+import styled from 'styled-components';
 
 const MapMarkerController = () => {
-  const { station, handleShowInfo } = useResultContext();
-  const { kakaoMap, moveMap, markers, stationMarkers, setStationMarker } = useMap();
+  const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
+    useResultContext();
+  const { kakaoMap, stationMarkers, setStationMarker, elevatorMarkers, myMarker, setMyMarker } =
+    useMap();
 
   /**
    * station marker move
    */
-  const moveStation = async (lat: number, lng: number) => {
+  const moveStation = async (data: StationProps, lat: number, lng: number) => {
     const moveLatLon = new kakao.maps.LatLng(lat, lng);
     kakaoMap.setLevel(2);
     kakaoMap.panTo(moveLatLon);
+    handleChangeStation(data);
+    handleShowController(true);
   };
 
   useEffect(() => {
-    moveStation(station.position.lat, station.position.lng);
-  }, [station]);
-
-  useEffect(() => {
     kakao.maps.event.addListener(kakaoMap, 'tilesloaded', setStationMarker);
-    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', moveMap);
 
     return () => {
       kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', setStationMarker);
-      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', moveMap);
     };
-  }, [markers, stationMarkers]);
+  }, [stationMarkers]);
+
+  useEffect(() => {
+    kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
+    return () => {
+      kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
+    };
+  }, [isShow]);
 
   useEffect(() => {
     kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
+
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const currentPosition = new kakao.maps.LatLng(latitude, longitude);
+
+        if (!myMarker) {
+          // 마커 생성
+          const newMarker = new kakao.maps.CustomOverlay({
+            position: currentPosition,
+            content: `<img src="${MyMarkerIcon}" />`,
+          });
+          newMarker.setMap(kakaoMap);
+          setMyMarker(newMarker);
+        } else {
+          myMarker.setPosition(currentPosition);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
     return () => {
       kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
+      navigator.geolocation.clearWatch(watchId);
     };
   }, []);
 
   return (
     <>
+      <StyledMyMarker
+        onClick={() =>
+          kakaoMap.setCenter(
+            new kakao.maps.LatLng(
+              Number(myMarker?.getPosition().getLat()),
+              Number(myMarker?.getPosition().getLng())
+            )
+          )
+        }
+      >
+        <img src={TargetIcon} />
+      </StyledMyMarker>
       {stationMarkers.length > 0 && (
         <div>
           {stationMarkers.map((item, idx) => (
             <CustomOverlay
               key={item.stationName + idx}
               position={item.position}
-              onClick={() => moveStation(item.position.lat, item.position.lng)}
+              onClick={() => moveStation(item, item.position.lat, item.position.lng)}
             >
-              <StationMarker info={item} isActive={station.stationId === item.stationId} />
+              <StationMarker
+                info={item}
+                isActive={station.stationName === item.stationName}
+                level={kakaoMap.getLevel()}
+              />
+            </CustomOverlay>
+          ))}
+        </div>
+      )}
+      {elevatorMarkers.length > 0 && kakaoMap.getLevel() < 5 && (
+        <div>
+          {elevatorMarkers.map((item) => (
+            <CustomOverlay
+              key={item.lng + item.lat}
+              position={{ lat: item.lat, lng: item.lng }}
+              onClick={() => console.log('엘리베이터 클릭')}
+            >
+              <ElevatorMarker text='4번출구' status='사용' />
             </CustomOverlay>
           ))}
         </div>
@@ -59,3 +122,20 @@ const MapMarkerController = () => {
 };
 
 export default MapMarkerController;
+
+const StyledMyMarker = styled.div`
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 17px;
+  bottom: 260px;
+  width: 37px;
+  height: 37px;
+  border-radius: 7px;
+  border: 0.833333px solid #f3f3f3;
+  background-color: #fff;
+  box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.2);
+  z-index: 88;
+`;

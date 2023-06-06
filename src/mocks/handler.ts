@@ -18,21 +18,8 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(station));
   }),
-  rest.post('/api/elevators', async (req, res, ctx) => {
-    const body = await req.json();
-
-    const newElevator = elevatorDumy.filter((item) => {
-      if (
-        body.sw.lat <= item.lat &&
-        item.lat <= body.ne.lat &&
-        body.sw.lng <= item.lng &&
-        item.lng <= body.ne.lng
-      ) {
-        return item;
-      }
-    });
-
-    return res(ctx.status(200), ctx.json(newElevator));
+  rest.get('/api/elevators', async (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(elevatorDumy));
   }),
 ];
 

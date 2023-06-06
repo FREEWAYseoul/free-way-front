@@ -40,9 +40,11 @@ export interface StationTitleProps {
   title: string;
   line: number;
   color: string;
+  type?: string;
 }
 
 export interface StationMakerProps {
   info: StationProps;
   isActive: boolean;
+  level: number;
 }

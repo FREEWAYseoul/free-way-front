@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { RectanglePositionProps } from '../types/stationType';
 
 const KAKAO_REST_KEY = 'af61b95c8bffb045cb0d212e309d64cd';
 
@@ -39,14 +38,10 @@ export const fetchLocalStation = async (x: number, y: number) => {
 /**
  * station elevator list
  */
-export const fetchElevators = async (lectanglePosition: RectanglePositionProps) => {
+export const fetchElevators = async () => {
   const res = await axios({
-    method: 'post',
+    method: 'get',
     url: `/api/elevators`,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    data: lectanglePosition,
   }).catch((e) => console.log(e));
 
   return res;

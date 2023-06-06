@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import StationInfoBox from '../components/domain/station/StationInfoBox';
-import MapView from '../components/domain/map/MapView';
-import TestSearchBar from '../components/domain/TestSearchBar';
 import { ResultContextProvider } from '../components/domain/station/ResultContext';
+import ContentsView from '../components/domain/station/ContentsView';
 
 const Result = () => {
   const initStation = {
@@ -17,10 +16,7 @@ const Result = () => {
   return (
     <StyledContainer>
       <ResultContextProvider initStation={initStation}>
-        <StyledTop>
-          <TestSearchBar />
-        </StyledTop>
-        <MapView />
+        <ContentsView />
         <StationInfoBox />
       </ResultContextProvider>
     </StyledContainer>
@@ -37,21 +33,21 @@ const StyledContainer = styled.div`
   height: 100vh;
 `;
 
-const StyledTop = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  top: 20px;
-  left: 50%;
-  width: 90%;
-  height: 100px;
-  background-color: #fff;
-  transform: translateX(-50%);
-  z-index: 99;
+// const StyledTop = styled.div`
+//   position: absolute;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 4px;
+//   top: 20px;
+//   left: 50%;
+//   width: 90%;
+//   height: 100px;
+//   background-color: #fff;
+//   transform: translateX(-50%);
+//   z-index: 99;
 
-  & > div {
-    cursor: pointer;
-    background-color: lightgray;
-  }
-`;
+//   & > div {
+//     cursor: pointer;
+//     background-color: lightgray;
+//   }
+// `;

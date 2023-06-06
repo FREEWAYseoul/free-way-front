@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Badge from './Badge';
 import { StationTitleProps } from '../../../types/stationType';
 
-const StationTitle = ({ line, title, color }: StationTitleProps) => {
+const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
   return (
-    <StyledStationTitleWrapper $color={color}>
+    <StyledStationTitleWrapper $color={color} $type={type || ''}>
       <Badge lineId={line} isActive={true}>
         {line}
       </Badge>
@@ -15,7 +15,7 @@ const StationTitle = ({ line, title, color }: StationTitleProps) => {
 
 export default StationTitle;
 
-const StyledStationTitleWrapper = styled.div<{ $color: string }>`
+const StyledStationTitleWrapper = styled.div<{ $color: string; $type: string }>`
   position: absolute;
   box-sizing: border-box;
   display: flex;
@@ -23,9 +23,7 @@ const StyledStationTitleWrapper = styled.div<{ $color: string }>`
   align-items: center;
   gap: 4px;
   left: 50%;
-  padding: 5px 29px;
   height: 40px;
-  min-width: 113px;
   line-height: 20px;
   border-radius: 30px;
   border: 5px solid ${({ $color }) => $color};
@@ -33,4 +31,15 @@ const StyledStationTitleWrapper = styled.div<{ $color: string }>`
   transform: translateX(-50%);
   white-space: nowrap;
   z-index: 99;
+
+  ${({ $type }) => {
+    return $type === 'marker'
+      ? css`
+          padding: 7px 9px 7px 6px;
+        `
+      : css`
+          padding: 5px 29px;
+          min-width: 113px;
+        `;
+  }}
 `;

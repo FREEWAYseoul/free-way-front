@@ -18,13 +18,14 @@ const DynamicMap = ({ position, children }: DynamicMapProps) => {
   const option = {
     center: targetPoint,
     minLevel: 0,
-    maxLevel: 8,
+    maxLevel: 7,
     level: 2,
   };
 
   useEffect(() => {
     if (!kakaoMapRef.current) return;
     const map = new window.kakao.maps.Map(kakaoMapRef.current, option);
+
     setMap(map);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

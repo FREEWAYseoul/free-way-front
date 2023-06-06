@@ -80,7 +80,6 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
       $isActive &&
       css`
         color: #316bff;
-        font-weight: bold;
       `}
 
     & > svg {

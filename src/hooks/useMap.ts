@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { fetchElevators, fetchSearchStations } from '../apis/stationAPI';
 import { ElevatorProps, StationProps } from '../types/stationType';
-import ElevatorImg from '../assets/elevator.svg';
 import { useQuery } from '@tanstack/react-query';
+import { useResultContext } from '../components/domain/station/ResultContext';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
 
 export const useMap = () => {
+  const { station } = useResultContext();
   const kakaoMap = useContext(KakaoMapContext);
   const { data: subwaysData, isLoading } = useQuery(['api/stations'], fetchSearchStations, {
     staleTime: Infinity,
@@ -15,8 +16,19 @@ export const useMap = () => {
       return res?.data || [];
     },
   });
+  const { data: elevatorData, isLoading: elevatorLoading } = useQuery(
+    ['api/elevators'],
+    fetchElevators,
+    {
+      staleTime: Infinity,
+      select: (res) => {
+        return res?.data || [];
+      },
+    }
+  );
+  const [myMarker, setMyMarker] = useState<kakao.maps.CustomOverlay | null>(null);
   const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
-  const [markers, setMarkers] = useState<kakao.maps.Marker[]>([]);
+  const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>([]);
 
   if (!kakaoMap) {
     throw new Error('map이 존재하지 않습니다.');
@@ -41,34 +53,7 @@ export const useMap = () => {
   };
 
   /**
-   * 지도 영역 이동 시 엘리베이터 마커 렌더
-   */
-  const moveMap = useCallback(async () => {
-    // 마커 초기화
-    markers.forEach((marker) => {
-      marker.setMap(null);
-    });
-    const coordinate = mapAreaCoordinate();
-    const res = await fetchElevators(coordinate);
-    if (res) {
-      const imageSrc = ElevatorImg;
-      const imageSize = new kakao.maps.Size(64, 69);
-      const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-      const newMarkers = res.data.map((item: ElevatorProps) => {
-        const markerPosition = new kakao.maps.LatLng(item.lat, item.lng);
-        const marker = new kakao.maps.Marker({
-          position: markerPosition,
-          image: markerImage,
-        });
-        marker.setMap(kakaoMap);
-        return marker;
-      });
-      setMarkers(newMarkers);
-    }
-  }, [markers]);
-
-  /**
-   * 지도 영역 이동 시 지하철 마커 렌더
+   * 지도 영역 이동 시 지하철
    */
   const setStationMarker = () => {
     const coordinate = mapAreaCoordinate();
@@ -87,6 +72,28 @@ export const useMap = () => {
       setStationMarkers(filterSubways);
     }
   };
+  //   // 마커 초기화
+  //   markers.forEach((marker) => {
+  //     marker.setMap(null);
+  //   });
+  //   const coordinate = mapAreaCoordinate();
+  //   const res = await fetchElevators(coordinate);
+  //   if (res) {
+  //     const imageSrc = ElevatorImg;
+  //     const imageSize = new kakao.maps.Size(64, 69);
+  //     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+  //     const newMarkers = res.data.map((item: ElevatorProps) => {
+  //       const markerPosition = new kakao.maps.LatLng(item.lat, item.lng);
+  //       const marker = new kakao.maps.Marker({
+  //         position: markerPosition,
+  //         image: markerImage,
+  //       });
+  //       marker.setMap(kakaoMap);
+  //       return marker;
+  //     });
+  //     setMarkers(newMarkers);
+  //   }
+  // }, [markers]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -94,11 +101,20 @@ export const useMap = () => {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (!elevatorLoading) {
+      setElevatorMarkers(
+        elevatorData.filter((item: ElevatorProps) => item.title === station.stationName)
+      );
+    }
+  }, [elevatorLoading, station]);
+
   return {
     kakaoMap,
-    moveMap,
-    markers,
     stationMarkers,
     setStationMarker,
+    elevatorMarkers,
+    myMarker,
+    setMyMarker,
   };
 };

@@ -10,9 +10,11 @@ export interface ReactContextValueProps {
   station: StationProps;
   activeTab: string;
   isDrag: boolean;
+  isShow: boolean;
   handleChangeTab: (arg1: string) => void;
   handleChangeStation: (arg1: StationProps) => void;
   handleShowInfo: (arg1: boolean) => void;
+  handleShowController: (arg1: boolean) => void;
 }
 
 export const ResultContext = createContext<ReactContextValueProps | null>(null);
@@ -20,6 +22,7 @@ export const ResultContext = createContext<ReactContextValueProps | null>(null);
 export const ResultContextProvider = ({ children, initStation }: ResultContextProviderProps) => {
   const [station, setStation] = useState<StationProps>(initStation);
   const [isDrag, setIsDrag] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<string>('엘리베이터');
 
   const handleChangeTab = (title: string) => {
@@ -28,6 +31,10 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
 
   const handleShowInfo = (flag: boolean) => {
     setIsDrag(flag);
+  };
+
+  const handleShowController = (flag: boolean) => {
+    setIsShow(flag);
   };
 
   const handleChangeStation = (data: StationProps) => {
@@ -46,6 +53,8 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
     handleChangeTab,
     handleChangeStation,
     handleShowInfo,
+    isShow,
+    handleShowController,
   };
 
   return <ResultContext.Provider value={contextValue}>{children}</ResultContext.Provider>;

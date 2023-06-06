@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import StationMap from './StationMap';
 import StationButtonGroup from './StationButtonGroup';
-import { useEffect } from 'react';
 import { useResultContext } from './ResultContext';
 import StationHeader from './StationHeader';
 
@@ -17,14 +16,10 @@ const badgeList = [
 ];
 
 const StationInfoBox = () => {
-  const { station, localStations, isDrag } = useResultContext();
-
-  useEffect(() => {
-    console.log('지도 역 정보', localStations);
-  }, [localStations]);
+  const { station, isDrag, isShow } = useResultContext();
 
   return (
-    <StyledStationInfoBox $isDrag={isDrag}>
+    <StyledStationInfoBox $isDrag={isDrag} $isShow={isShow}>
       <StationHeader lineList={badgeList} />
       <Divider />
       <StationMap title={station.stationName} line={station.lineId} />
@@ -35,9 +30,9 @@ const StationInfoBox = () => {
 
 export default StationInfoBox;
 
-const StyledStationInfoBox = styled.div<{ $isDrag: boolean }>`
+const StyledStationInfoBox = styled.div<{ $isDrag: boolean; $isShow: boolean }>`
   position: absolute;
-  display: flex;
+  display: ${({ $isShow }) => ($isShow ? 'flex' : 'none')};
   flex-direction: column;
   bottom: 0;
   width: 100%;
@@ -48,6 +43,7 @@ const StyledStationInfoBox = styled.div<{ $isDrag: boolean }>`
   background-color: #fff;
   z-index: 99;
   transition: all 0.3s;
+  box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.1);
 
   ${({ $isDrag }) =>
     $isDrag &&

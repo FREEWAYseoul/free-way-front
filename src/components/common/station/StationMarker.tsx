@@ -3,13 +3,18 @@ import { STATION_LINE_COLORS } from '../../../constants/color';
 import { StationMakerProps } from '../../../types/stationType';
 import StationTitle from './StationTitle';
 
-const StationMarker = ({ info, isActive }: StationMakerProps) => {
+const StationMarker = ({ info, isActive, level }: StationMakerProps) => {
   const color = STATION_LINE_COLORS[info.lineId];
 
   return (
-    <StyledStationMaker $color={color.color} $isActive={isActive}>
-      {isActive ? (
-        <StationTitle title={info.stationName} line={info.lineId} color={color.color} />
+    <StyledStationMaker $color={color.color} $isActive={isActive} $level={level}>
+      {isActive && level < 5 ? (
+        <StationTitle
+          title={info.stationName}
+          line={info.lineId}
+          color={color.color}
+          type='marker'
+        />
       ) : (
         <StyledStation $color={color.color}>
           <span>{info.lineId}</span> <div>{info.stationName}</div>
@@ -22,15 +27,16 @@ const StationMarker = ({ info, isActive }: StationMakerProps) => {
 
 export default StationMarker;
 
-const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean }>`
+const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean; $level: number }>`
   cursor: pointer;
   position: absolute;
   top: -45px;
   z-index: 99;
+  filter: drop-shadow(0px 0px 10.8px rgba(68, 81, 69, 0.3));
 
   & > .triangle {
     position: absolute;
-    bottom: ${({ $isActive }) => ($isActive ? '-45px' : '-35px')};
+    bottom: ${({ $isActive, $level }) => ($isActive && $level < 5 ? '-45px' : '-35px')};
     left: 50%;
     height: 15px;
     width: 15px;

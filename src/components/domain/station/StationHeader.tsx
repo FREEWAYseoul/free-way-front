@@ -13,8 +13,6 @@ interface StationHeaderProps {
 const StationHeader = ({ lineList }: StationHeaderProps) => {
   const { station, handleShowInfo } = useResultContext();
 
-  console.log(station, lineList);
-
   return (
     <StyledStationInfoHeader>
       <div>
