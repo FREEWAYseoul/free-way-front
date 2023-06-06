@@ -41,8 +41,9 @@ const StyledHomeSearchBar = styled(Link)`
   box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.1);
   border-radius: 80px;
 
+  padding-left: 27px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-decoration: none;
   outline: none;
@@ -55,7 +56,7 @@ const ButtonText = styled.span`
   font-size: 18px;
   line-height: 21px;
 
-  color: #434343;
+  color: #316bff;
   opacity: 0.5;
 `;
 

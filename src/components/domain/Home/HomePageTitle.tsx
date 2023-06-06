@@ -15,6 +15,6 @@ const StyledHomePageTitleWrapper = styled.div`
   position: absolute;
   left: 5.33%;
   right: 5.33%;
-  top: 15.16%;
+  top: 8.16%;
   bottom: 61.97%;
 `;

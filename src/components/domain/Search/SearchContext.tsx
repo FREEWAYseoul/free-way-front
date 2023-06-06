@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
 import { Station, useStationInfo } from '../../../api/stations';
+import { useNavigate } from 'react-router-dom';
 
 type SearchState = {
   keywords: string;
@@ -35,10 +36,14 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const [keywords, setKeywords] = useState('');
   const [searchHistory, setSearchHistory] = useState<Station[]>([]);
   const { data } = useStationInfo(keywords);
+  const navigate = useNavigate();
 
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result: string) => {
       setKeywords(result);
+    },
+    onEnd: () => {
+      if (keywords) navigate('/search');
     },
   });
 
@@ -59,6 +64,8 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const addSearchHistory = useCallback(() => {
+    if (!data) return;
+
     setSearchHistory([...searchHistory, ...data]);
     localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...data]));
   }, [data, searchHistory]);

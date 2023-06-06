@@ -1,12 +1,7 @@
 import Home from '../components/domain/Home';
-import { SearchContextProvider } from '../components/domain/Search/SearchContext';
 
 const HomePage = () => {
-  return (
-    <SearchContextProvider>
-      <Home />
-    </SearchContextProvider>
-  );
+  return <Home />;
 };
 
 export default HomePage;

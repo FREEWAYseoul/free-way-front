@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 export type Elevator = {
@@ -28,9 +28,6 @@ export const fetchStations = async (keywords: string) => {
 };
 
 export const useStationInfo = (keywords: string) => {
-  const queryClient = useQueryClient();
-  console.log(queryClient);
-
   return useQuery(['stations', keywords], () => fetchStations(keywords), {
     refetchOnWindowFocus: false,
     retry: 0,
