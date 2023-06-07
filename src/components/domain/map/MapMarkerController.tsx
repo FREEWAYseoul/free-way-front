@@ -68,10 +68,11 @@ const MapMarkerController = () => {
     );
 
     return () => {
+      myMarker?.setMap(null);
       kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
       navigator.geolocation.clearWatch(watchId);
     };
-  }, []);
+  }, [myMarker]);
 
   return (
     <>
