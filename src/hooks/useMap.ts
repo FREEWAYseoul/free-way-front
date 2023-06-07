@@ -1,34 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchElevators, fetchSearchStations } from '../apis/stationAPI';
 import { ElevatorProps, StationProps } from '../types/stationType';
-import { useQuery } from '@tanstack/react-query';
 import { useResultContext } from '../components/domain/station/ResultContext';
+import { useStationInfo } from '../api/stations';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
 
 export const useMap = () => {
   const { station } = useResultContext();
   const kakaoMap = useContext(KakaoMapContext);
-  const { data: subwaysData, isLoading } = useQuery(['api/stations'], fetchSearchStations, {
-    staleTime: Infinity,
-    select: (res) => {
-      return res?.data || [];
-    },
-  });
-  const { data: elevatorData, isLoading: elevatorLoading } = useQuery(
-    ['api/elevators'],
-    fetchElevators,
-    {
-      staleTime: Infinity,
-      select: (res) => {
-        return res?.data || [];
-      },
-    }
-  );
+  const { data: stationData, isLoading } = useStationInfo();
   const [myMarker, setMyMarker] = useState<kakao.maps.CustomOverlay | null>(null);
   const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
-  const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>([]);
+  const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>(station.elevators);
 
   if (!kakaoMap) {
     throw new Error('map이 존재하지 않습니다.');
@@ -42,12 +26,12 @@ export const useMap = () => {
     const ne = kakaoMap.getBounds().getNorthEast();
     return {
       sw: {
-        lat: sw.getLat(),
-        lng: sw.getLng(),
+        latitude: sw.getLat(),
+        longitude: sw.getLng(),
       },
       ne: {
-        lat: ne.getLat(),
-        lng: ne.getLng(),
+        latitude: ne.getLat(),
+        longitude: ne.getLng(),
       },
     };
   };
@@ -56,44 +40,22 @@ export const useMap = () => {
    * 지도 영역 이동 시 지하철
    */
   const setStationMarker = () => {
-    const coordinate = mapAreaCoordinate();
+    const mapCoordinate = mapAreaCoordinate();
 
-    if (subwaysData) {
-      const filterSubways = subwaysData.filter((item: StationProps) => {
-        const { position } = item;
+    if (stationData) {
+      const filterSubways = stationData.filter((item: StationProps) => {
+        const { coordinate } = item;
         if (
-          coordinate.sw.lat <= position.lat &&
-          position.lat <= coordinate.ne.lat &&
-          coordinate.sw.lng <= position.lng &&
-          position.lng <= coordinate.ne.lng
+          mapCoordinate.sw.latitude <= coordinate.latitude &&
+          coordinate.latitude <= mapCoordinate.ne.latitude &&
+          mapCoordinate.sw.longitude <= coordinate.longitude &&
+          coordinate.longitude <= mapCoordinate.ne.longitude
         )
           return item;
       });
       setStationMarkers(filterSubways);
     }
   };
-  //   // 마커 초기화
-  //   markers.forEach((marker) => {
-  //     marker.setMap(null);
-  //   });
-  //   const coordinate = mapAreaCoordinate();
-  //   const res = await fetchElevators(coordinate);
-  //   if (res) {
-  //     const imageSrc = ElevatorImg;
-  //     const imageSize = new kakao.maps.Size(64, 69);
-  //     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-  //     const newMarkers = res.data.map((item: ElevatorProps) => {
-  //       const markerPosition = new kakao.maps.LatLng(item.lat, item.lng);
-  //       const marker = new kakao.maps.Marker({
-  //         position: markerPosition,
-  //         image: markerImage,
-  //       });
-  //       marker.setMap(kakaoMap);
-  //       return marker;
-  //     });
-  //     setMarkers(newMarkers);
-  //   }
-  // }, [markers]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -102,12 +64,8 @@ export const useMap = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    if (!elevatorLoading) {
-      setElevatorMarkers(
-        elevatorData.filter((item: ElevatorProps) => item.title === station.stationName)
-      );
-    }
-  }, [elevatorLoading, station]);
+    setElevatorMarkers(station.elevators);
+  }, [station]);
 
   return {
     kakaoMap,

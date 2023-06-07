@@ -1,16 +1,16 @@
 import MapView from '../map/MapView';
 import { useResultContext } from './ResultContext';
-import ConvenienceView from './ConvenienceView';
+import FacilitiesView from './FacilitiesView';
 import MapDetailView from './MapDetailView';
 
 const ContentsView = () => {
-  const { activeTab } = useResultContext();
+  const { station, activeTab } = useResultContext();
 
   return (
     <>
       <MapView />
-      {activeTab === '역사 지도' && <MapDetailView />}
-      {activeTab === '편의시설' && <ConvenienceView />}
+      {activeTab === '역사 지도' && <MapDetailView src={station.stationImageUrl} />}
+      {activeTab === '편의시설' && <FacilitiesView facilities={station.facilities} />}
     </>
   );
 };

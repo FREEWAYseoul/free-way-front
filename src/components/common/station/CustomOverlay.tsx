@@ -1,20 +1,20 @@
 import { useEffect, useRef } from 'react';
-import { PositionProps } from '../../../types/stationType';
+import { CoordinateProps } from '../../../types/stationType';
 import { useMap } from '../../../hooks/useMap';
 
 interface CustomOverlayProps {
-  position: PositionProps;
-  onClick: () => void;
+  coordinate: CoordinateProps;
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
-const CustomOverlay = ({ position, onClick, children }: CustomOverlayProps) => {
+const CustomOverlay = ({ coordinate, onClick, children }: CustomOverlayProps) => {
   const { kakaoMap } = useMap();
 
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const markerPosition = new kakao.maps.LatLng(position.lat, position.lng);
+    const markerPosition = new kakao.maps.LatLng(coordinate.latitude, coordinate.longitude);
 
     const marker = new kakao.maps.CustomOverlay({
       position: markerPosition,

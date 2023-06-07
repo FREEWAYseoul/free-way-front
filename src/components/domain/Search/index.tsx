@@ -35,7 +35,8 @@ const Search = () => {
       setKeywordMatchingData(temp);
     }
     focusOnSearchInput();
-  }, [keywords, data, getMatchingData, focusOnSearchInput]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keywords, data, getMatchingData]);
 
   return (
     <SearchWrapper>
