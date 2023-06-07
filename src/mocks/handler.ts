@@ -1,4 +1,3 @@
-// src/mocks/handlers.js
 import { rest } from 'msw';
 import subwayDumy from './data/subwayDumy.json';
 import elevatorDumy from './data/elevatorDumy.json';
@@ -14,6 +13,11 @@ export const handlers = [
 
     const station = elevatorDumy.find((item) => item.subway === title);
 
+    async function sleep(timeout: number) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, timeout);
+      });
+    }
     await sleep(200);
 
     return res(ctx.status(200), ctx.json(station));

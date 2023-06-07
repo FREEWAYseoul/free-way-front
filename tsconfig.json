@@ -21,6 +21,6 @@
 
     "types": ["kakao.maps.d.ts", "node"]
   },
-  "include": ["src", "styles"],
+  "include": ["src", "src/styles"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
