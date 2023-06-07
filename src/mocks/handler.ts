@@ -1,17 +1,31 @@
 import { rest } from 'msw';
-import { stations } from './data/stations';
+import subwayDumy from './data/subwayDumy.json';
+import elevatorDumy from './data/elevatorDumy.json';
 
-const getStationsInfo = async (_req, res, ctx) => {
-  await sleep(200);
+export const handlers = [
+  rest.get('/api/stations/search', async (req, res, ctx) => {
+    await sleep(200);
 
-  // 쿼리 키워드 테스트
-  // const keywords = req.url.searchParams.get('keywords');
-  // console.log(keywords);
+    return res(ctx.status(200), ctx.json(subwayDumy));
+  }),
+  rest.get('/api/stations', async (req, res, ctx) => {
+    const title = req.url.searchParams.get('title');
 
-  return res(ctx.status(200), ctx.json([...stations]));
-};
+    const station = elevatorDumy.find((item) => item.subway === title);
 
-export const handlers = [rest.get('/search', getStationsInfo)];
+    async function sleep(timeout: number) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, timeout);
+      });
+    }
+    await sleep(200);
+
+    return res(ctx.status(200), ctx.json(station));
+  }),
+  rest.get('/api/elevators', async (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(elevatorDumy));
+  }),
+];
 
 async function sleep(timeout: number) {
   return new Promise((resolve) => {
