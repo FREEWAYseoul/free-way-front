@@ -6,7 +6,8 @@ import { Station, useStationInfo } from '../../../api/stations';
 import { useEffect, useState } from 'react';
 
 const Search = () => {
-  const { keywords, getFourRecentSearchHistory, getMatchingData } = useSearchContext();
+  const { keywords, getFourRecentSearchHistory, getMatchingData, focusOnSearchInput } =
+    useSearchContext();
   const { data, isLoading } = useStationInfo();
   const [keywordMatchingData, setKeywordMatchingData] = useState<Station[] | []>([]);
   const recentSearchHistory = getFourRecentSearchHistory();
@@ -24,7 +25,7 @@ const Search = () => {
     } else if (!keywords && recentSearchHistory.length > 0) {
       content = <SearchList data={recentSearchHistory} />;
     } else {
-      content = <div>blank</div>;
+      content = <div></div>;
     }
   }
 
@@ -33,7 +34,8 @@ const Search = () => {
       const temp = getMatchingData(data);
       setKeywordMatchingData(temp);
     }
-  }, [keywords, data, getMatchingData]);
+    focusOnSearchInput();
+  }, [keywords, data, getMatchingData, focusOnSearchInput]);
 
   return (
     <SearchWrapper>

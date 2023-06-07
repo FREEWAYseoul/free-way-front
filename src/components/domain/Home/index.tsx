@@ -10,6 +10,7 @@ import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.s
 const Home = () => {
   const { keywords, startListening, isListening } = useSearchContext();
 
+  // 아래 주석은 유한 음성 테스트 자원을 위해 개발을 위한 임시 테스트 코드 입니다.
   // temp
   // const [isListening, setIsListening] = useState(false);
 
@@ -56,7 +57,6 @@ const Home = () => {
 
           <MicContainer>
             {keywords ? <span>{keywords}</span> : <span>듣고 있어요</span>}
-            {/* {keywords ? <TypeWriter value={keywords} /> : <TypeWriter value='듣고 있어요' />} */}
             <MicIcon />
           </MicContainer>
         </>

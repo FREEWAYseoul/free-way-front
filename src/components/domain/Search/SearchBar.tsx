@@ -24,6 +24,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
     <>
       <StyledSearchBarForm onSubmit={handleSubmit}>
         <StyledSearchBar
+          id='search-bar'
           value={keywords}
           type='text'
           placeholder={placeholder}

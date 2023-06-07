@@ -8,7 +8,6 @@ type Props = {
 };
 
 const SearchList = ({ label, data }: Props) => {
-  console.log('search list data', data);
   return (
     <ListWrapper id='search-list-wrapper'>
       <Label>{label}</Label>
@@ -27,7 +26,7 @@ const SearchList = ({ label, data }: Props) => {
 
 export default SearchList;
 
-const ListWrapper = styled.div`
+const ListWrapper = styled.ul`
   position: absolute;
   top: 0;
   width: 100%;

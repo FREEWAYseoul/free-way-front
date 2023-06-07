@@ -1,15 +1,19 @@
 import SearchList from '../Search/SearchList';
-import { stations } from '../../../mocks/data/stations';
 import styled from 'styled-components';
-
-const tempData = stations;
+import { useSearchContext } from '../Search/SearchContext';
 
 const HomeSearchHistoryList = () => {
-  return (
-    <StyledHomeSearchListWrapper>
-      <SearchList label='최근 검색' data={tempData} />
-    </StyledHomeSearchListWrapper>
-  );
+  const { getFourRecentSearchHistory } = useSearchContext();
+  const recentSearchHistory = getFourRecentSearchHistory();
+
+  let content = null;
+  if (recentSearchHistory.length) {
+    content = <SearchList label='최근 검색' data={recentSearchHistory} />;
+  } else {
+    content = <div>광고가 들어갈 자리입니다</div>;
+  }
+
+  return <StyledHomeSearchListWrapper>{content}</StyledHomeSearchListWrapper>;
 };
 
 export default HomeSearchHistoryList;

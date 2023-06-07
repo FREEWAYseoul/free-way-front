@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { ReactComponent as LineCircle } from '../../../assets/icons/line-2.svg';
-import { Link } from 'react-router-dom';
+import { useSearchContext } from './SearchContext';
 
 type SearchItemProps = {
   id?: string;
@@ -13,9 +13,10 @@ type StyledElevatorStatusCircleProps = {
   status: string;
 };
 
-const SearchItem = ({ name, status }: SearchItemProps) => {
+const SearchItem = ({ name, status, id }: SearchItemProps) => {
+  const { handleAutofillClick } = useSearchContext();
   return (
-    <SearchItemWrapper to='/result'>
+    <SearchItemWrapper id={id} onClick={handleAutofillClick}>
       <Text>{name}</Text>
       <ElevatorStatusCircle status={status}>{status}</ElevatorStatusCircle>
       <StyledLineSVG />
@@ -25,7 +26,7 @@ const SearchItem = ({ name, status }: SearchItemProps) => {
 
 export default SearchItem;
 
-const SearchItemWrapper = styled(Link)`
+const SearchItemWrapper = styled.li`
   display: flex;
   align-items: center;
   padding-top: 12px;
@@ -33,6 +34,7 @@ const SearchItemWrapper = styled(Link)`
   position: relative;
   border-bottom: 1px solid rgba(217, 217, 217, 0.5);
   text-decoration: none;
+  cursor: pointer;
 `;
 
 const ElevatorStatusCircle = styled.div<StyledElevatorStatusCircleProps>`

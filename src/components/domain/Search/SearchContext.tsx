@@ -26,6 +26,8 @@ type SearchAction = {
   addSearchHistory: () => void;
   getFourRecentSearchHistory: () => Station[];
   getMatchingData: (data: Station[]) => Station[];
+  handleAutofillClick: (e: React.MouseEvent<HTMLLIElement>) => void;
+  focusOnSearchInput: () => void;
 };
 
 type SearchContext = SearchState & SearchAction;
@@ -44,11 +46,14 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
-  const [keywords, setKeywords] = useState('');
+  const [keywords, setKeywords] = useState<string | null>('');
   const [searchHistory, setSearchHistory] = useState<Station[]>([]);
-  // const [filteredStations, setFilteredStations] = useState([]);
+  const [matchingData, setMatchingData] = useState<Station[]>([]);
+  const [selectedStationInfo, setSelectedStationInfo] = useState<Station>();
+  const [filteredStations, setFilteredStations] = useState([]);
+  console.log(selectedStationInfo);
+  console.log(setFilteredStations);
 
-  // Voice Search Logics
   const startListening = useCallback(() => {
     listen({ lang: 'ko-KR' });
   }, [listen]);
@@ -61,29 +66,47 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     return listening;
   }, [listening]);
 
-  // Text Search Logics
   const handleTyping = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value);
   }, []);
 
-  const getMatchingData = (data: Station[]) => {
-    const character = keywords.trim();
-    return data.filter((data: Station) => data.stationName.includes(character));
+  const handleAutofillClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    const selectedStation = matchingData.filter((data) => data.stationId === e.currentTarget.id);
+    setSelectedStationInfo(selectedStation[0]);
+    setKeywords(selectedStation[0].stationName);
+    focusOnSearchInput();
   };
 
+  const focusOnSearchInput = () => {
+    document.querySelector('#search-bar')?.focus();
+  };
+
+  const getMatchingData = useCallback(
+    (data: Station[]) => {
+      const character = keywords?.trim();
+      const matchingData = data.filter(
+        (data: Station) => character && data.stationName.includes(character)
+      );
+      setMatchingData(matchingData);
+      return matchingData;
+    },
+    [keywords]
+  );
+
+  // TODO: 로컬 스토리지 관련 로직 수정 필요
   const addSearchHistory = useCallback(() => {
-    return;
-    // if (!filteredStations) return;
-    // setSearchHistory([...searchHistory, ...filteredStations]);
-    // localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...filteredStations]));
-  }, []);
+    if (!filteredStations) return;
+    setSearchHistory([...searchHistory, ...filteredStations]);
+    localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...filteredStations]));
+  }, [filteredStations, searchHistory]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      addSearchHistory();
+      // addSearchHistory();
+      navigate('/result');
     },
-    [addSearchHistory]
+    [navigate]
   );
 
   const resetKeywords = () => {
@@ -106,6 +129,8 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     isListening,
     resetKeywords,
     getMatchingData,
+    handleAutofillClick,
+    focusOnSearchInput,
   };
 
   useEffect(() => {
