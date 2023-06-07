@@ -7,10 +7,9 @@ import { useEffect } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
 
-const SERVER_API = `/api/stations/search?keyword=`;
-
 const Home = () => {
-  const { keywords, selectKeywords, handleMouseUp, isListening } = useSearchContext();
+  const { keywords, startListening, isListening } = useSearchContext();
+
   // temp
   // const [isListening, setIsListening] = useState(false);
 
@@ -20,24 +19,10 @@ const Home = () => {
   // };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(SERVER_API);
-        const data = await response.json();
-        console.log('data', data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     if (keywords[keywords.length - 1] === '역') {
-      handleMouseUp();
+      startListening();
     }
-  }, [keywords, selectKeywords, handleMouseUp]);
+  }, [keywords, startListening]);
 
   return (
     <HomeWrapper id='home-container'>
@@ -59,7 +44,7 @@ const Home = () => {
             }}
           >
             <Player
-              src={'https://assets3.lottiefiles.com/packages/lf20_tqvrzfnf.json'}
+              src={'src/assets/lotties/purse.json'}
               loop
               autoplay
               style={{

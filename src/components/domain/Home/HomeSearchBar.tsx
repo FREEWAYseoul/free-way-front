@@ -5,7 +5,7 @@ import { useSearchContext } from '../Search/SearchContext';
 import { Link } from 'react-router-dom';
 
 const HomeSearchBar = () => {
-  const { handleMouseDown, handleMouseUp } = useSearchContext();
+  const { startListening } = useSearchContext();
 
   return (
     <StyledHomeSearchBarWrapper>
@@ -13,7 +13,7 @@ const HomeSearchBar = () => {
         <ButtonText>역이름을 입력해주세요.</ButtonText>
       </StyledHomeSearchBar>
       <StyledHomeSearchBarMicWrapper>
-        <Button handleMouseDown={handleMouseDown} handleMouseUp={handleMouseUp}>
+        <Button handleMouseDown={startListening}>
           <MicIcon />
         </Button>
       </StyledHomeSearchBarMicWrapper>

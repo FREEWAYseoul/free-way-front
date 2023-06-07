@@ -1,23 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-export type Elevator = {
-  exit: string;
-  isAvailable: boolean;
+const SERVER_API = `/api/stations/search?keyword=`;
+
+export type Coordinate = {
+  latitude: string;
+  longitude: string;
 };
 
 export type Station = {
-  id: number;
-  name: string;
-  status: string; //'사용가능' | '일부가능' | '사용불가능';
-  line: string; //'1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+  availableElevatorsNumber: number;
+  coordinate: Coordinate;
+  lineId: string;
+  stationId: string;
+  stationName: string;
+  stationStatus: string;
 };
 
-export const fetchStations = async (keywords: string) => {
+export const fetchStations = async () => {
   try {
     const res = await axios({
       method: 'get',
-      url: `/search/?keywords=${keywords}`, // <- 후에 서버주소로 변경
+      url: SERVER_API,
     });
     if (res.status === 200) {
       return res.data;
@@ -27,12 +31,12 @@ export const fetchStations = async (keywords: string) => {
   }
 };
 
-export const useStationInfo = (keywords: string) => {
-  return useQuery(['stations', keywords], () => fetchStations(keywords), {
+export const useStationInfo = () => {
+  return useQuery(['stations'], () => fetchStations(), {
     refetchOnWindowFocus: false,
     retry: 0,
-    enabled: !!keywords,
-    select: (data) => data.slice(0, 10),
+    // enabled: !!keywords,
+    // select: (data) =>{ data.filter(0, 10)},
     onSuccess: (data) => console.log(data),
     onError: (e: Error) => console.log(e.message),
   });

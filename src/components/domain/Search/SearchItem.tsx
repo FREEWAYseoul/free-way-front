@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
 import { ReactComponent as LineCircle } from '../../../assets/icons/line-2.svg';
+import { Link } from 'react-router-dom';
 
 type SearchItemProps = {
-  id?: number;
+  id?: string;
   name: string;
   status: string;
   line?: string;
@@ -14,7 +15,7 @@ type StyledElevatorStatusCircleProps = {
 
 const SearchItem = ({ name, status }: SearchItemProps) => {
   return (
-    <SearchItemWrapper>
+    <SearchItemWrapper to='/result'>
       <Text>{name}</Text>
       <ElevatorStatusCircle status={status}>{status}</ElevatorStatusCircle>
       <StyledLineSVG />
@@ -24,13 +25,14 @@ const SearchItem = ({ name, status }: SearchItemProps) => {
 
 export default SearchItem;
 
-const SearchItemWrapper = styled.div`
+const SearchItemWrapper = styled(Link)`
   display: flex;
   align-items: center;
   padding-top: 12px;
   padding-bottom: 12px;
   position: relative;
   border-bottom: 1px solid rgba(217, 217, 217, 0.5);
+  text-decoration: none;
 `;
 
 const ElevatorStatusCircle = styled.div<StyledElevatorStatusCircleProps>`
@@ -44,17 +46,17 @@ const ElevatorStatusCircle = styled.div<StyledElevatorStatusCircleProps>`
   cursor: pointer;
   ${(props) => {
     switch (props.status) {
-      case '사용가능':
+      case '사용 가능':
         return css`
           color: #4aa570;
           background-color: rgba(96, 208, 132, 0.3);
         `;
-      case '일부가능':
+      case '일부 가능':
         return css`
           color: #eda54b;
           background-color: rgba(237, 165, 75, 0.3);
         `;
-      case '사용불가능':
+      case '사용 불가능':
         return css`
           color: #e56e73;
           background-color: rgba(229, 110, 115, 0.3);

@@ -14,8 +14,8 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
     keywords,
     handleSubmit,
     handleTyping,
-    handleMouseDown,
-    handleMouseUp,
+    startListening,
+    endListening,
     resetKeywords,
     isListening,
   } = useSearchContext();
@@ -29,7 +29,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
           placeholder={placeholder}
           onChange={handleTyping}
         />
-        <Button handleMouseDown={handleMouseDown} handleMouseUp={handleMouseUp}>
+        <Button handleMouseDown={startListening} handleMouseUp={endListening}>
           <MicIcon />
         </Button>
         <Button handleClick={resetKeywords}>ⅹ</Button>
@@ -47,7 +47,7 @@ const StyledSearchBarForm = styled.form`
   padding: 8px;
   border-radius: 4px;
   font-size: 20px;
-  width: 90%;
+  width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `;
 
@@ -56,7 +56,7 @@ const StyledSearchBar = styled.input`
   border: none;
   border-radius: 4px;
   font-size: 14px;
-  width: 90%;
+  width: 100%;
   max-width: 300px;
   outline: none;
 `;

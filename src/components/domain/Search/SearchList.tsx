@@ -8,19 +8,19 @@ type Props = {
 };
 
 const SearchList = ({ label, data }: Props) => {
+  console.log('search list data', data);
   return (
-    <ListWrapper>
+    <ListWrapper id='search-list-wrapper'>
       <Label>{label}</Label>
-      {data &&
-        data?.map((station) => (
-          <SearchItem
-            key={station.id}
-            id={station.id}
-            name={station.name}
-            status={station.status}
-            line={station.line}
-          />
-        ))}
+      {data.map((station) => (
+        <SearchItem
+          key={station.stationId}
+          id={station.stationId}
+          name={station.stationName}
+          status={station.stationStatus}
+          line={station.lineId}
+        />
+      ))}
     </ListWrapper>
   );
 };
@@ -28,9 +28,12 @@ const SearchList = ({ label, data }: Props) => {
 export default SearchList;
 
 const ListWrapper = styled.div`
+  position: absolute;
+  top: 0;
   width: 100%;
-  padding: 20px 32px;
-  padding-bottom: 48px;
+  max-width: 320px;
+  max-height: 90%;
+  padding: 10px 32px;
   overflow-y: auto;
 `;
 

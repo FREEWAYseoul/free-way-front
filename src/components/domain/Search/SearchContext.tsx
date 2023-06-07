@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
-import { Station, useStationInfo } from '../../../api/stations';
+import { Station } from '../../../api/stations';
 import { useNavigate } from 'react-router-dom';
 
 type SearchState = {
@@ -18,14 +18,14 @@ type SearchState = {
 
 type SearchAction = {
   handleTyping: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleMouseDown: () => void;
-  handleMouseUp: () => void;
+  startListening: () => void;
+  endListening: () => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isListening: () => boolean;
   resetKeywords: () => void;
-  selectKeywords: (keywords: string) => void;
   addSearchHistory: () => void;
   getFourRecentSearchHistory: () => Station[];
+  getMatchingData: (data: Station[]) => Station[];
 };
 
 type SearchContext = SearchState & SearchAction;
@@ -33,11 +33,8 @@ type SearchContext = SearchState & SearchAction;
 const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
-  const [keywords, setKeywords] = useState('');
-  const [searchHistory, setSearchHistory] = useState<Station[]>([]);
-  const { data } = useStationInfo(keywords);
   const navigate = useNavigate();
-
+  // const { data } = useStationInfo();
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result: string) => {
       setKeywords(result);
@@ -47,28 +44,39 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
-  const handleMouseDown = () => {
+  const [keywords, setKeywords] = useState('');
+  const [searchHistory, setSearchHistory] = useState<Station[]>([]);
+  // const [filteredStations, setFilteredStations] = useState([]);
+
+  // Voice Search Logics
+  const startListening = useCallback(() => {
     listen({ lang: 'ko-KR' });
-  };
+  }, [listen]);
 
-  const handleMouseUp = () => {
+  const endListening = useCallback(() => {
     stop();
-  };
+  }, [stop]);
 
-  const isListening = (): boolean => {
+  const isListening = useCallback((): boolean => {
     return listening;
-  };
+  }, [listening]);
 
+  // Text Search Logics
   const handleTyping = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value);
   }, []);
 
-  const addSearchHistory = useCallback(() => {
-    if (!data) return;
+  const getMatchingData = (data: Station[]) => {
+    const character = keywords.trim();
+    return data.filter((data: Station) => data.stationName.includes(character));
+  };
 
-    setSearchHistory([...searchHistory, ...data]);
-    localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...data]));
-  }, [data, searchHistory]);
+  const addSearchHistory = useCallback(() => {
+    return;
+    // if (!filteredStations) return;
+    // setSearchHistory([...searchHistory, ...filteredStations]);
+    // localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...filteredStations]));
+  }, []);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,10 +90,6 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     setKeywords('');
   };
 
-  const selectKeywords = (keywords: string) => {
-    setKeywords(keywords);
-  };
-
   const getFourRecentSearchHistory = () => {
     return searchHistory.filter((v) => v !== null).slice(0, 4);
   };
@@ -96,12 +100,12 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     addSearchHistory,
     getFourRecentSearchHistory,
     handleTyping,
-    handleMouseDown,
-    handleMouseUp,
+    startListening,
+    endListening,
     handleSubmit,
     isListening,
     resetKeywords,
-    selectKeywords,
+    getMatchingData,
   };
 
   useEffect(() => {
