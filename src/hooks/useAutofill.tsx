@@ -18,7 +18,6 @@ const useAutofill = () => {
   const handleAutofillClick = useCallback(
     (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => {
       const data = matchingData ? matchingData : searchHistory;
-      console.log('handleAutofill test', e.currentTarget.id);
       const selectedStation = data.filter((station) => station.stationId === e.currentTarget.id);
       setSelectedStationInfo(selectedStation[0]);
       setKeywords(selectedStation[0].stationName);
