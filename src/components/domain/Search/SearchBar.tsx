@@ -14,35 +14,38 @@ type SearchBarProps = {
 
 const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
   const { keywords, inputRef } = useSearchContext();
-  const { handleSubmit, handleTyping, resetKeywords } = useSearchBar();
+  const { handleSubmit, handleTyping } = useSearchBar();
   const { startListening, endListening, isListening } = useMic();
   const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/');
   };
   return (
     <>
-      <StyledSearchBarForm onSubmit={handleSubmit}>
+      <StyledSearchBarWrapper>
         <StyledLeftSection>
-          <Button>{''}</Button>
-          <Button onClick={handleGoBack}>{'<'}</Button>
+          <Button handleClick={handleGoBack}>{'<'}</Button>
         </StyledLeftSection>
-        <StyledSearchBarInput
-          id='search-bar'
-          value={keywords || ''}
-          type='text'
-          placeholder={placeholder}
-          onChange={handleTyping}
-          // onKeyDown={handleKeydown}
-          ref={inputRef}
-        />
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          <StyledSearchBarInput
+            id='search-bar'
+            value={keywords || ''}
+            type='text'
+            placeholder={placeholder}
+            onChange={handleTyping}
+            // onKeyDown={handleKeydown}
+            ref={inputRef}
+          />
+        </form>
         <StyledRightSection>
           <Button handleMouseDown={startListening} handleMouseUp={endListening}>
             <MicIcon />
           </Button>
-          <Button handleClick={resetKeywords}>ⅹ</Button>
         </StyledRightSection>
-      </StyledSearchBarForm>
+      </StyledSearchBarWrapper>
       {isListening() && <p>{listeningMessage}</p>}
     </>
   );
@@ -50,7 +53,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
 
 export default SearchBar;
 
-const StyledSearchBarForm = styled.form`
+const StyledSearchBarWrapper = styled.div`
   height: 55px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
