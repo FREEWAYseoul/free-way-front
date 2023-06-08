@@ -3,7 +3,7 @@ import HomeSearchBar from './HomeSearchBar';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
 import HomePageTitle from './HomePageTitle';
 import { useSearchContext } from '../Search/SearchContext';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
 
@@ -12,31 +12,31 @@ type VoiceSearchProps = {
 };
 
 const Home = () => {
-  const { keywords, startListening, isListening: temp } = useSearchContext();
+  const { keywords, endListening, isListening } = useSearchContext();
 
   // 아래 주석은 유한 음성 테스트 자원을 위해 개발을 위한 임시 테스트 코드 입니다.
-  temp;
-  const [isListening, setIsListening] = useState(false);
+  // temp;
+  // const [isListening, setIsListening] = useState(false);
 
-  temp;
-  const handleClick = () => {
-    setIsListening((prev) => !prev);
-  };
+  // temp;
+  // const handleClick = () => {
+  //   setIsListening((prev) => !prev);
+  // };
 
   useEffect(() => {
     if (keywords[keywords.length - 1] === '역') {
-      startListening();
+      endListening();
     }
-  }, [keywords, startListening]);
+  }, [keywords, endListening]);
 
   return (
     <HomeWrapper id='home-container'>
       <HomePageTitle />
       <HomeSearchBar />
-      <TempMic id='test-button' onClick={handleClick}>
+      {/* <TempMic id='test-button' onClick={handleClick}>
         Test
-      </TempMic>
-      {isListening ? (
+      </TempMic> */}
+      {isListening() ? (
         <VoiceSearchWrapper>
           <Player src={'src/assets/lotties/purse.json'} loop autoplay></Player>
           <MicContainer>
@@ -67,10 +67,10 @@ export const HomeWrapper = styled.div`
   position: relative;
 `;
 
-const TempMic = styled.button`
-  position: absolute;
-  top: 10%;
-`;
+// const TempMic = styled.button`
+//   position: absolute;
+//   top: 10%;
+// `;
 
 const VoiceSearchWrapper = styled.div`
   position: relative;

@@ -86,7 +86,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
 
   const getMatchingData = useCallback(
     (data: Station[]) => {
-      const character = keywords?.trim();
+      const character = keywords?.replace('역', '').trim();
       const matchingData = data.filter(
         (data: Station) => character && data.stationName.includes(character)
       );

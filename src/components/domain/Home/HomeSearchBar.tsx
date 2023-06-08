@@ -13,7 +13,7 @@ const HomeSearchBar = () => {
         <StyledHomeSearchBarPlaceholder>역이름을 입력해주세요.</StyledHomeSearchBarPlaceholder>
       </StyledHomeSearchBar>
       <StyledHomeSearchBarMicWrapper>
-        <Button handleMouseDown={startListening}>
+        <Button handleClick={startListening}>
           <MicIcon />
         </Button>
       </StyledHomeSearchBarMicWrapper>
