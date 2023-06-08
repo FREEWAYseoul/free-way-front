@@ -2,14 +2,16 @@ import styled from 'styled-components';
 import SearchList from './SearchList';
 import SearchBar from './SearchBar';
 import { useSearchContext } from './SearchContext';
-import { Station, useStationInfo } from '../../../api/stations';
-import { useEffect, useState } from 'react';
+import { useStationInfo } from '../../../api/stations';
+import { useEffect } from 'react';
+import useLocalStorage from '../../../hooks/useLocalStorage';
+import useSearchBar from '../../../hooks/useSearchBar';
 
 const Search = () => {
-  const { keywords, getFourRecentSearchHistory, getMatchingData, focusOnSearchInput } =
-    useSearchContext();
+  const { keywords, filteredStations, setFilteredStations } = useSearchContext();
+  const { getMatchingData, focusOnSearchInput } = useSearchBar();
+  const { getFourRecentSearchHistory } = useLocalStorage();
   const { data, isLoading } = useStationInfo();
-  const [keywordMatchingData, setKeywordMatchingData] = useState<Station[] | []>([]);
   const recentSearchHistory = getFourRecentSearchHistory();
 
   let content = null;
@@ -17,10 +19,10 @@ const Search = () => {
     content = <div>loading...</div>;
   } else {
     if (keywords) {
-      if (!keywordMatchingData.length) {
+      if (!filteredStations.length) {
         content = <div>검색 결과가 없습니다.</div>;
       } else {
-        content = <SearchList data={keywordMatchingData} />;
+        content = <SearchList data={filteredStations} />;
       }
     } else if (!keywords && recentSearchHistory.length > 0) {
       content = <SearchList data={recentSearchHistory} />;
@@ -32,7 +34,7 @@ const Search = () => {
   useEffect(() => {
     if (data) {
       const temp = getMatchingData(data);
-      setKeywordMatchingData(temp);
+      setFilteredStations(temp);
     }
     focusOnSearchInput();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,8 +71,7 @@ const SearchBarWrapper = styled.div`
 const DropdownBoxWrapper = styled.div`
   position: relative;
 
-  width: 80%;
-  max-width: 375px;
+  width: 90%;
   height: 528px;
   border-radius: 5px;
 

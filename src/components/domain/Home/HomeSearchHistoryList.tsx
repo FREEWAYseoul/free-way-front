@@ -1,9 +1,9 @@
 import SearchList from '../Search/SearchList';
 import styled from 'styled-components';
-import { useSearchContext } from '../Search/SearchContext';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const HomeSearchHistoryList = () => {
-  const { getFourRecentSearchHistory } = useSearchContext();
+  const { getFourRecentSearchHistory } = useLocalStorage();
   const recentSearchHistory = getFourRecentSearchHistory();
 
   let content = null;
@@ -21,8 +21,7 @@ export default HomeSearchHistoryList;
 const StyledHomeSearchListWrapper = styled.div`
   position: absolute;
   bottom: 20%;
-  width: inherit;
-  max-width: 400px;
+  width: 90%;
   height: 20%;
   max-height: 220px;
 `;

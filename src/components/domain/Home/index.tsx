@@ -6,13 +6,15 @@ import { useSearchContext } from '../Search/SearchContext';
 import { useEffect } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
+import useMic from '../../../hooks/useMic';
 
 type VoiceSearchProps = {
   keywords: string;
 };
 
 const Home = () => {
-  const { keywords, endListening, isListening } = useSearchContext();
+  const { keywords } = useSearchContext();
+  const { endListening, isListening } = useMic();
 
   // 아래 주석은 유한 음성 테스트 자원을 위해 개발을 위한 임시 테스트 코드 입니다.
   // temp;

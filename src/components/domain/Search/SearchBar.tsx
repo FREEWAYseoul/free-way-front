@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import Button from '../../common/Button';
 import { useSearchContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
-import useAutofill from '../../../hooks/useAutofill';
+import { useNavigate } from 'react-router-dom';
+import useMic from '../../../hooks/useMic';
+import useSearchBar from '../../../hooks/useSearchBar';
 
 type SearchBarProps = {
   placeholder: string;
@@ -11,31 +13,28 @@ type SearchBarProps = {
 } & PropsWithChildren;
 
 const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
-  const {
-    keywords,
-    handleSubmit,
-    handleTyping,
-    startListening,
-    endListening,
-    resetKeywords,
-    isListening,
-  } = useSearchContext();
-  const { handleKeydown } = useAutofill();
-
+  const { keywords, inputRef } = useSearchContext();
+  const { handleSubmit, handleTyping, resetKeywords } = useSearchBar();
+  const { startListening, endListening, isListening } = useMic();
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   return (
     <>
       <StyledSearchBarForm onSubmit={handleSubmit}>
         <StyledLeftSection>
           <Button>{''}</Button>
-          <Button>{'<'}</Button>
+          <Button onClick={handleGoBack}>{'<'}</Button>
         </StyledLeftSection>
         <StyledSearchBarInput
           id='search-bar'
-          value={keywords}
+          value={keywords || ''}
           type='text'
           placeholder={placeholder}
           onChange={handleTyping}
-          onKeyDown={handleKeydown}
+          // onKeyDown={handleKeydown}
+          ref={inputRef}
         />
         <StyledRightSection>
           <Button handleMouseDown={startListening} handleMouseUp={endListening}>
@@ -82,7 +81,6 @@ const StyledSearchBarInput = styled.input`
 `;
 
 const StyledRightSection = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `;

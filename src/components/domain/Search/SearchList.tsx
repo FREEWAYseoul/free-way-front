@@ -34,6 +34,7 @@ const StyledListWrapper = styled.ul`
   position: absolute;
   top: 0;
   width: 100%;
+  min-height: 240px;
   max-height: 50%;
   padding: 10px;
   overflow-y: auto;

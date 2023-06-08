@@ -1,16 +1,31 @@
 import { useCallback } from 'react';
 import { useSearchContext } from '../components/domain/Search/SearchContext';
+import useSearchBar from './useSearchBar';
 
 const useAutofill = () => {
   const {
     autofillRef,
+    inputRef,
     selectedIdx,
     matchingData,
+    searchHistory,
     setSelectedIdx,
-    focusOnSearchInput,
     setSelectedStationInfo,
     setKeywords,
   } = useSearchContext();
+  const { focusOnSearchInput } = useSearchBar();
+
+  const handleAutofillClick = useCallback(
+    (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => {
+      const data = matchingData ? matchingData : searchHistory;
+      console.log('handleAutofill test', e.currentTarget.id);
+      const selectedStation = data.filter((station) => station.stationId === e.currentTarget.id);
+      setSelectedStationInfo(selectedStation[0]);
+      setKeywords(selectedStation[0].stationName);
+      focusOnSearchInput();
+    },
+    [focusOnSearchInput, matchingData, searchHistory, setKeywords, setSelectedStationInfo]
+  );
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {
@@ -29,21 +44,18 @@ const useAutofill = () => {
           setSelectedIdx(-1);
           break;
         case 'Enter':
-          alert('enter');
+          if (inputRef.current?.value !== matchingData[selectedIdx]?.stationName) {
+            e.preventDefault();
+            setKeywords(matchingData[selectedIdx]?.stationName);
+            return;
+          }
           break;
         default:
           break;
       }
     },
-    [selectedIdx, autofillRef, setSelectedIdx]
+    [autofillRef, inputRef, matchingData, selectedIdx, setKeywords, setSelectedIdx]
   );
-
-  const handleAutofillClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const selectedStation = matchingData.filter((data) => data.stationId === e.currentTarget.id);
-    setSelectedStationInfo(selectedStation[0]);
-    setKeywords(selectedStation[0].stationName);
-    focusOnSearchInput();
-  };
 
   return { handleKeydown, handleAutofillClick };
 };
