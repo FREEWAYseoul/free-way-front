@@ -7,6 +7,10 @@ import { useEffect, useState } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
 
+type VoiceSearchProps = {
+  keywords: string;
+};
+
 const Home = () => {
   const { keywords, startListening, isListening: temp } = useSearchContext();
 
@@ -34,23 +38,12 @@ const Home = () => {
       </TempMic>
       {isListening ? (
         <VoiceSearchWrapper>
-          <div style={{}}>
-            <Player
-              src={'src/assets/lotties/purse.json'}
-              loop
-              autoplay
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-            ></Player>
-          </div>
-
+          <Player src={'src/assets/lotties/purse.json'} loop autoplay></Player>
           <MicContainer>
             {keywords ? (
-              <VoiceSearchText>{keywords}</VoiceSearchText>
+              <VoiceSearchText keywords={keywords}>{keywords}</VoiceSearchText>
             ) : (
-              <VoiceSearchText>듣고 있어요</VoiceSearchText>
+              <VoiceSearchText keywords={keywords}>듣고 있어요</VoiceSearchText>
             )}
             <MicIcon />
           </MicContainer>
@@ -79,33 +72,42 @@ const TempMic = styled.button`
   top: 10%;
 `;
 
-const MicContainer = styled.div`
-  position: absolute;
-`;
-
 const VoiceSearchWrapper = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 372px;
   top: 10%;
 `;
 
-const VoiceSearchText = styled.div`
-  width: 70px;
+const MicContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const VoiceSearchText = styled.div<VoiceSearchProps>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -300%);
+  width: max-content;
+  min-width: 120px;
   height: 35px;
   border-radius: 25px;
-  background-color: black;
-  color: white;
-
-  font-size: 12px;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  position: absolute;
-  bottom: 200px;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
+  background-color: ${(props) => (props.keywords.length <= 0 ? 'transparent' : 'black')};
+  padding: 0 10px;
+  color: white;
+  font-size: 18px;
 `;
