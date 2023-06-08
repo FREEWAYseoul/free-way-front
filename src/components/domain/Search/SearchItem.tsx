@@ -1,22 +1,24 @@
 import styled, { css } from 'styled-components';
 import { ReactComponent as LineCircle } from '../../../assets/icons/line-2.svg';
-import { useSearchContext } from './SearchContext';
+import useAutofill from '../../../hooks/useAutofill';
 
 type SearchItemProps = {
   id?: string;
   name: string;
   status: string;
   line?: string;
+  isFocus?: boolean;
 };
 
 type StyledElevatorStatusCircleProps = {
   status: string;
 };
 
-const SearchItem = ({ name, status, id }: SearchItemProps) => {
-  const { handleAutofillClick } = useSearchContext();
+const SearchItem = ({ name, status, id, isFocus }: SearchItemProps) => {
+  const { handleAutofillClick } = useAutofill();
+
   return (
-    <SearchItemWrapper id={id} onClick={handleAutofillClick}>
+    <SearchItemWrapper id={id} onClick={handleAutofillClick} isFocus={isFocus}>
       <Text>{name}</Text>
       <ElevatorStatusCircle status={status}>{status}</ElevatorStatusCircle>
       <StyledLineSVG />
@@ -26,15 +28,22 @@ const SearchItem = ({ name, status, id }: SearchItemProps) => {
 
 export default SearchItem;
 
-const SearchItemWrapper = styled.li`
+const SearchItemWrapper = styled.li<{ isFocus?: boolean }>`
+  position: relative;
+
   display: flex;
   align-items: center;
   padding-top: 12px;
   padding-bottom: 12px;
-  position: relative;
   border-bottom: 1px solid rgba(217, 217, 217, 0.5);
   text-decoration: none;
+
   cursor: pointer;
+  &:hover {
+    background-color: #edf5f5;
+    cursor: pointer;
+  }
+  background-color: ${(props) => (props.isFocus ? '#edf5f5' : '#fff')};
 `;
 
 const ElevatorStatusCircle = styled.div<StyledElevatorStatusCircleProps>`
