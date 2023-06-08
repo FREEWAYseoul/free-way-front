@@ -1,10 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
+  Dispatch,
   PropsWithChildren,
+  RefObject,
+  SetStateAction,
   createContext,
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
@@ -15,6 +19,9 @@ type SearchState = {
   keywords: string;
   searchHistory: Station[];
   stationId: number;
+  autofillRef: RefObject<HTMLUListElement>;
+  selectedIdx: number;
+  matchingData: Station[];
 };
 
 type SearchAction = {
@@ -27,8 +34,11 @@ type SearchAction = {
   addSearchHistory: () => void;
   getFourRecentSearchHistory: () => Station[];
   getMatchingData: (data: Station[]) => Station[];
-  handleAutofillClick: (e: React.MouseEvent<HTMLLIElement>) => void;
   focusOnSearchInput: () => void;
+  setSelectedIdx: Dispatch<SetStateAction<number>>;
+  setSelectedStationInfo: Dispatch<SetStateAction<Station | undefined>>;
+  setKeywords: Dispatch<SetStateAction<string>>;
+  setFilteredStations: Dispatch<SetStateAction<never[]>>;
 };
 
 type SearchContext = SearchState & SearchAction;
@@ -37,7 +47,7 @@ const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
-  // const { data } = useStationInfo();
+
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result: string) => {
       setKeywords(result);
@@ -52,8 +62,9 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const [matchingData, setMatchingData] = useState<Station[]>([]);
   const [selectedStationInfo, setSelectedStationInfo] = useState<Station>();
   const [filteredStations, setFilteredStations] = useState([]);
-  // console.log(selectedStationInfo);
-  console.log(setFilteredStations);
+
+  const [selectedIdx, setSelectedIdx] = useState<number>(-1);
+  const autofillRef = useRef<HTMLUListElement>(null);
 
   const startListening = useCallback(() => {
     listen({ lang: 'ko-KR' });
@@ -70,14 +81,6 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const handleTyping = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value);
   }, []);
-
-  const handleAutofillClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    const selectedStation = matchingData.filter((data) => data.stationId === e.currentTarget.id);
-    setSelectedStationInfo(selectedStation[0]);
-    setKeywords(selectedStation[0].stationName);
-    focusOnSearchInput();
-    // staionIdRef.current =
-  };
 
   const focusOnSearchInput = () => {
     const el: HTMLInputElement | null = document.querySelector('#search-bar');
@@ -123,6 +126,14 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const value = {
     keywords,
     searchHistory,
+    stationId: selectedStationInfo ? Number(selectedStationInfo.stationId) : 150,
+    matchingData,
+    autofillRef,
+    selectedIdx,
+    setSelectedIdx,
+    setSelectedStationInfo,
+    setKeywords,
+    setFilteredStations,
     addSearchHistory,
     getFourRecentSearchHistory,
     handleTyping,
@@ -132,9 +143,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     isListening,
     resetKeywords,
     getMatchingData,
-    handleAutofillClick,
     focusOnSearchInput,
-    stationId: selectedStationInfo ? Number(selectedStationInfo.stationId) : 150,
   };
 
   useEffect(() => {

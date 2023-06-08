@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../../common/Button';
 import { useSearchContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
+import useAutofill from '../../../hooks/useAutofill';
 
 type SearchBarProps = {
   placeholder: string;
@@ -19,6 +20,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
     resetKeywords,
     isListening,
   } = useSearchContext();
+  const { handleKeydown } = useAutofill();
 
   return (
     <>
@@ -27,12 +29,13 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
           <Button>{''}</Button>
           <Button>{'<'}</Button>
         </StyledLeftSection>
-        <StyledSearchBar
+        <StyledSearchBarInput
           id='search-bar'
           value={keywords}
           type='text'
           placeholder={placeholder}
           onChange={handleTyping}
+          onKeyDown={handleKeydown}
         />
         <StyledRightSection>
           <Button handleMouseDown={startListening} handleMouseUp={endListening}>
@@ -69,7 +72,7 @@ const StyledLeftSection = styled.div`
   align-items: center;
 `;
 
-const StyledSearchBar = styled.input`
+const StyledSearchBarInput = styled.input`
   border-radius: 4px;
   width: 100%;
   max-width: 300px;
