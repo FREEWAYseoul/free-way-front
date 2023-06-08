@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FacilitiesProps } from '../../../types/stationType';
 
 const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
@@ -32,11 +32,11 @@ const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
       <div className='updateDate'>0/00 0요일 00:00 업데이트 완료</div>
       <StyledFacilitiesBox>
         {facilitiesData.map((item) => (
-          <li key={item.name}>
+          <StyledFacilitiesItem key={item.name} $isActive={facilities[item.name]}>
             <span className='checkBox'></span>
             {item.title}
             <span className='status'>{facilities[item.name] ? '사용가능' : '사용불가'}</span>
-          </li>
+          </StyledFacilitiesItem>
         ))}
       </StyledFacilitiesBox>
     </StyledFacilitiesView>
@@ -71,37 +71,47 @@ const StyledFacilitiesBox = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+`;
 
-  & > li {
-    box-sizing: content-box;
+const StyledFacilitiesItem = styled.li<{ $isActive: boolean }>`
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #d9d9d9;
+
+  &:first-child {
+    padding-top: 8px;
+  }
+
+  & > .checkBox {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+  }
+
+  & > .status {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 15px 20px;
-    border-bottom: 1px solid #d9d9d9;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 5px 8px 4px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 30px;
 
-    &:first-child {
-      padding-top: 8px;
-    }
-
-    & > .checkBox {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background-color: #d9d9d9;
-    }
-
-    & > .status {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      align-items: flex-start;
-      padding: 5px 8px 4px;
-      color: #4aa570;
-      font-size: 12px;
-      font-weight: bold;
-      background: rgba(96, 208, 132, 0.3);
-      border-radius: 30px;
-    }
+    ${({ $isActive }) => {
+      return $isActive
+        ? css`
+            color: #4aa570;
+            background: rgba(96, 208, 132, 0.3);
+          `
+        : css`
+            color: #e56e73;
+            background: rgba(229, 110, 115, 0.2);
+          `;
+    }}
   }
 `;

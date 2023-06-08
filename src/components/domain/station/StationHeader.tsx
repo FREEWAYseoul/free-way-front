@@ -5,6 +5,7 @@ import { useStationInfo } from '../../../api/stations';
 import { StationProps } from '../../../types/stationType';
 import { useEffect, useState } from 'react';
 import Badge from '../../common/station/Badge';
+import { useNavigate } from 'react-router-dom';
 
 interface BadgeProps {
   lineId: string | number;
@@ -12,9 +13,14 @@ interface BadgeProps {
 }
 
 const StationHeader = () => {
+  const navigate = useNavigate();
+  const { station, handleChangeStation } = useResultContext();
   const { data: stationData, isLoading } = useStationInfo();
-  const { station, handleShowInfo, handleChangeStation } = useResultContext();
   const [badges, setBadges] = useState<BadgeProps[]>([]);
+
+  const handleMoveSearch = () => {
+    navigate('/search');
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -46,7 +52,7 @@ const StationHeader = () => {
             </Badge>
           ))}
       </div>
-      <button onClick={() => handleShowInfo(false)}>
+      <button onClick={handleMoveSearch}>
         <img src={CloseIcon} alt='닫기' />
       </button>
     </StyledStationInfoHeader>
