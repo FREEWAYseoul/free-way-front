@@ -3,15 +3,18 @@ import BackArrowIcon from '../../../assets/icons/back-arrow.svg';
 import CircleCancelIcon from '../../../assets/icons/circle-cancel.svg';
 import { useNavigate } from 'react-router-dom';
 import { StationDetailProps } from '../../../types/stationType';
+import { useSearchContext } from '../Search/SearchContext';
 
 const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
   const navigate = useNavigate();
+  const { setKeywords } = useSearchContext();
 
   const handleMoveHome = () => {
     navigate('/');
   };
 
-  const handleMoveSearch = () => {
+  const handleMoveSearch = (e) => {
+    if (e.target.tagName === 'IMG') setKeywords('');
     navigate('/search');
   };
 
