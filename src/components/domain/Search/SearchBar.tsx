@@ -35,7 +35,7 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
         </Button>
         <Button handleClick={resetKeywords}>ⅹ</Button>
       </StyledSearchBarForm>
-      {() => isListening() && <p>{listeningMessage}</p>}
+      {isListening() && <p>{listeningMessage}</p>}
     </>
   );
 };

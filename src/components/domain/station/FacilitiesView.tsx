@@ -1,33 +1,51 @@
 import styled from 'styled-components';
+import { FacilitiesProps } from '../../../types/stationType';
 
-const ConvenienceView = () => {
+const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
+  console.log(facilities);
+
+  const facilitiesData = [
+    {
+      title: '휠체어 리프트',
+      name: 'wheelchairLift',
+    },
+    {
+      title: '유아수유방',
+      name: 'feedingRoom',
+    },
+    {
+      title: '환전키오스크',
+      name: 'currencyExchangeKiosk',
+    },
+    {
+      title: '무인민원발급기',
+      name: 'unmannedCivilApplicationIssuingMachine',
+    },
+    {
+      title: '환승주차장',
+      name: 'transitParkingLot',
+    },
+  ];
+
   return (
-    <StyledConvenienceView>
+    <StyledFacilitiesView>
       <div className='updateDate'>0/00 0요일 00:00 업데이트 완료</div>
-      <StyledConvenienceBox>
-        <li>
-          <span className='checkBox'></span>휠체어 리프트<span className='status'>사용가능</span>
-        </li>
-        <li>
-          <span className='checkBox'></span>유아수유방<span className='status'>사용가능</span>
-        </li>
-        <li>
-          <span className='checkBox'></span>환전키오스크<span className='status'>사용가능</span>
-        </li>
-        <li>
-          <span className='checkBox'></span>무인민원발급기<span className='status'>사용가능</span>
-        </li>
-        <li>
-          <span className='checkBox'></span>환승주차장<span className='status'>사용가능</span>
-        </li>
-      </StyledConvenienceBox>
-    </StyledConvenienceView>
+      <StyledFacilitiesBox>
+        {facilitiesData.map((item) => (
+          <li key={item.name}>
+            <span className='checkBox'></span>
+            {item.title}
+            <span className='status'>{facilities[item.name] ? '사용가능' : '사용불가'}</span>
+          </li>
+        ))}
+      </StyledFacilitiesBox>
+    </StyledFacilitiesView>
   );
 };
 
-export default ConvenienceView;
+export default FacilitiesView;
 
-const StyledConvenienceView = styled.div`
+const StyledFacilitiesView = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -49,7 +67,7 @@ const StyledConvenienceView = styled.div`
   }
 `;
 
-const StyledConvenienceBox = styled.ul`
+const StyledFacilitiesBox = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;

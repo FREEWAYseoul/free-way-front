@@ -1,14 +1,10 @@
 import styled from 'styled-components';
 
-const MapDetailView = () => {
+const MapDetailView = ({ src }: { src: string }) => {
   return (
     <StyledMapDetailView>
       <StyledImageWrapper>
-        <img
-          src='http://data.seoul.go.kr/contents/stn_img/image_5_19.jpg'
-          alt='내부지도'
-          width={'100%'}
-        />
+        <img src={src} alt='내부지도' width={'100%'} />
       </StyledImageWrapper>
     </StyledMapDetailView>
   );
