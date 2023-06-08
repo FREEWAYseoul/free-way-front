@@ -10,7 +10,7 @@ const HomeSearchBar = () => {
   return (
     <StyledHomeSearchBarWrapper>
       <StyledHomeSearchBar to='/search'>
-        <ButtonText>역이름을 입력해주세요.</ButtonText>
+        <StyledHomeSearchBarPlaceholder>역이름을 입력해주세요.</StyledHomeSearchBarPlaceholder>
       </StyledHomeSearchBar>
       <StyledHomeSearchBarMicWrapper>
         <Button handleMouseDown={startListening}>
@@ -28,9 +28,7 @@ const StyledHomeSearchBarWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-  margin: 125px 0px;
-  position: inherit;
-  top: -15%;
+  position: relative;
 `;
 
 const StyledHomeSearchBar = styled(Link)`
@@ -49,15 +47,18 @@ const StyledHomeSearchBar = styled(Link)`
   outline: none;
 `;
 
-const ButtonText = styled.span`
+const StyledHomeSearchBarPlaceholder = styled.span`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
 
-  color: #316bff;
+  color: #434343;
   opacity: 0.5;
+  &:hover {
+    color: #316bff;
+  }
 `;
 
 const StyledHomeSearchBarMicWrapper = styled.div`
@@ -77,7 +78,6 @@ const StyledHomeSearchBarMicWrapper = styled.div`
   align-items: center;
 
   transition: transform 0.2s;
-
   &:hover {
     transform: scale(1.1);
   }
