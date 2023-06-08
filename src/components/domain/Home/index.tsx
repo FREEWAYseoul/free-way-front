@@ -32,7 +32,9 @@ const Home = () => {
   return (
     <HomeWrapper id='home-container'>
       <HomePageTitle />
-      <HomeSearchBar />
+      <StyledHomeSearchBarWrapper>
+        <HomeSearchBar />
+      </StyledHomeSearchBarWrapper>
       {/* <TempMic id='test-button' onClick={handleClick}>
         Test
       </TempMic> */}
@@ -71,6 +73,18 @@ export const HomeWrapper = styled.div`
 //   position: absolute;
 //   top: 10%;
 // `;
+
+const StyledHomeSearchBarWrapper = styled.div`
+  position: absolute;
+  top: -13.3%;
+
+  width: 90%;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+`;
 
 const VoiceSearchWrapper = styled.div`
   position: relative;

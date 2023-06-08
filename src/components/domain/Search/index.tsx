@@ -40,10 +40,12 @@ const Search = () => {
 
   return (
     <SearchWrapper>
-      <SearchBar
-        placeholder='역이름을 입력해주세요.'
-        listeningMessage='듣고 있습니다! 역이름을 말해주세요.'
-      />
+      <SearchBarWrapper>
+        <SearchBar
+          placeholder='역이름을 입력해주세요.'
+          listeningMessage='듣고 있습니다! 역이름을 말해주세요.'
+        />
+      </SearchBarWrapper>
       <DropdownBoxWrapper>{content}</DropdownBoxWrapper>
     </SearchWrapper>
   );
@@ -52,17 +54,23 @@ const Search = () => {
 export default Search;
 
 const SearchWrapper = styled.div`
-  min-width: 375px;
-  min-height: 812px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  padding-top: 10%;
 `;
 
+const SearchBarWrapper = styled.div`
+  width: 90%;
+  height: min-content;
+`;
 const DropdownBoxWrapper = styled.div`
-  min-width: 375px;
+  position: relative;
+
+  width: 80%;
+  max-width: 375px;
   height: 528px;
   border-radius: 5px;
 
@@ -70,5 +78,5 @@ const DropdownBoxWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  position: relative;
+  /* background-color: rgba(0, 0, 0, 0.3); */
 `;

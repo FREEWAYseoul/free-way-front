@@ -8,7 +8,7 @@ const HomeSearchBar = () => {
   const { startListening } = useSearchContext();
 
   return (
-    <StyledHomeSearchBarWrapper>
+    <>
       <StyledHomeSearchBar to='/search'>
         <StyledHomeSearchBarPlaceholder>역이름을 입력해주세요.</StyledHomeSearchBarPlaceholder>
       </StyledHomeSearchBar>
@@ -17,19 +17,11 @@ const HomeSearchBar = () => {
           <MicIcon />
         </Button>
       </StyledHomeSearchBarMicWrapper>
-    </StyledHomeSearchBarWrapper>
+    </>
   );
 };
 
 export default HomeSearchBar;
-
-const StyledHomeSearchBarWrapper = styled.div`
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  position: relative;
-`;
 
 const StyledHomeSearchBar = styled(Link)`
   flex: 1;

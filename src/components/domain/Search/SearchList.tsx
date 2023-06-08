@@ -30,9 +30,8 @@ const ListWrapper = styled.ul`
   position: absolute;
   top: 0;
   width: 100%;
-  max-width: 320px;
-  max-height: 90%;
-  padding: 10px 32px;
+  max-height: 50%;
+  padding: 10px;
   overflow-y: auto;
 `;
 

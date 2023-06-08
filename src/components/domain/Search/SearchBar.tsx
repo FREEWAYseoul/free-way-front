@@ -23,6 +23,10 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
   return (
     <>
       <StyledSearchBarForm onSubmit={handleSubmit}>
+        <StyledLeftSection>
+          <Button>{''}</Button>
+          <Button>{'<'}</Button>
+        </StyledLeftSection>
         <StyledSearchBar
           id='search-bar'
           value={keywords}
@@ -30,10 +34,12 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
           placeholder={placeholder}
           onChange={handleTyping}
         />
-        <Button handleMouseDown={startListening} handleMouseUp={endListening}>
-          <MicIcon />
-        </Button>
-        <Button handleClick={resetKeywords}>ⅹ</Button>
+        <StyledRightSection>
+          <Button handleMouseDown={startListening} handleMouseUp={endListening}>
+            <MicIcon />
+          </Button>
+          <Button handleClick={resetKeywords}>ⅹ</Button>
+        </StyledRightSection>
       </StyledSearchBarForm>
       {isListening() && <p>{listeningMessage}</p>}
     </>
@@ -43,21 +49,37 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
 export default SearchBar;
 
 const StyledSearchBarForm = styled.form`
-  display: flex;
-  align-items: center;
-  padding: 8px;
+  height: 55px;
   border-radius: 4px;
-  font-size: 20px;
-  width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-gap: 10px;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+`;
+
+const StyledLeftSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledSearchBar = styled.input`
-  padding: 8px;
-  border: none;
   border-radius: 4px;
-  font-size: 14px;
   width: 100%;
   max-width: 300px;
+  border: none;
   outline: none;
+  padding-left: 5%;
+`;
+
+const StyledRightSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
