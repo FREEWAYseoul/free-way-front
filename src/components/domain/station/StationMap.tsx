@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { STATION_LINE_COLORS } from '../../../constants/color';
 import StationTitle from '../../common/station/StationTitle';
+import { useResultContext } from './ResultContext';
 
 interface StationMapProps {
   title: string;
@@ -8,12 +9,15 @@ interface StationMapProps {
 }
 
 const StationMap = ({ title, line }: StationMapProps) => {
+  const { handleShowInfo } = useResultContext();
   const color = STATION_LINE_COLORS[line];
 
   return (
     <StyledStationMap $color={color.color}>
       <div className='stationLine'>역삼</div>
-      <StationTitle title={title} line={line} color={color.color} />
+      <div className='stationTitleBox' onClick={() => handleShowInfo(false)}>
+        <StationTitle title={title} line={line} color={color.color} />
+      </div>
       <div className='stationLine'>교대</div>
     </StyledStationMap>
   );
@@ -27,6 +31,15 @@ const StyledStationMap = styled.div<{ $color: string }>`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+
+  & > .stationTitleBox {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    height: 40px;
+    transform: translateX(-50%);
+    z-index: 99;
+  }
 
   & > .stationLine {
     flex: 1;

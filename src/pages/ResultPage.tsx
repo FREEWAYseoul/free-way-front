@@ -5,6 +5,7 @@ import { useSearchContext } from '../components/domain/Search/SearchContext';
 import { ResultContextProvider } from '../components/domain/station/ResultContext';
 import ContentsView from '../components/domain/station/ContentsView';
 import StationInfoBox from '../components/domain/station/StationInfoBox';
+import StationSearchBar from '../components/domain/station/StationSearchBar';
 
 const ResultPage = () => {
   const { stationId } = useSearchContext();
@@ -17,6 +18,7 @@ const ResultPage = () => {
   return (
     <StyledContainer>
       <ResultContextProvider initStation={data}>
+        <StationSearchBar station={data} />
         <ContentsView />
         <StationInfoBox />
       </ResultContextProvider>
@@ -33,22 +35,3 @@ const StyledContainer = styled.div`
   width: 100%;
   height: 100vh;
 `;
-
-// const StyledTop = styled.div`
-//   position: absolute;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 4px;
-//   top: 20px;
-//   left: 50%;
-//   width: 90%;
-//   height: 100px;
-//   background-color: #fff;
-//   transform: translateX(-50%);
-//   z-index: 99;
-
-//   & > div {
-//     cursor: pointer;
-//     background-color: lightgray;
-//   }
-// `;
