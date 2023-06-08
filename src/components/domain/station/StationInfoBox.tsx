@@ -4,23 +4,12 @@ import StationButtonGroup from './StationButtonGroup';
 import { useResultContext } from './ResultContext';
 import StationHeader from './StationHeader';
 
-const badgeList = [
-  {
-    title: 2,
-    lineId: 2,
-  },
-  {
-    title: '신분당',
-    lineId: 9,
-  },
-];
-
 const StationInfoBox = () => {
   const { station, isDrag, isShow } = useResultContext();
 
   return (
     <StyledStationInfoBox $isDrag={isDrag} $isShow={isShow}>
-      <StationHeader lineList={badgeList} />
+      <StationHeader />
       <Divider />
       <StationMap title={station.stationName} line={station.lineId} />
       <StationButtonGroup />

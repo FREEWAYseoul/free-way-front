@@ -17,7 +17,7 @@ const StationMarker = ({ info, isActive, level }: StationMakerProps) => {
         />
       ) : (
         <StyledStation $color={color.color}>
-          <span>{info.lineId}</span> <div>{info.stationName}</div>
+          <span>{info.availableElevatorsNumber}</span> <div>{info.stationName}</div>
         </StyledStation>
       )}
       <div className='triangle'></div>

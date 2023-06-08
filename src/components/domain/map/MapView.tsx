@@ -8,7 +8,7 @@ const MapView = () => {
 
   return (
     <KakaoMapScriptLoader>
-      <DynamicMap position={station.position}>
+      <DynamicMap coordinate={station.stationCoordinate}>
         <MapMarkerController />
       </DynamicMap>
     </KakaoMapScriptLoader>

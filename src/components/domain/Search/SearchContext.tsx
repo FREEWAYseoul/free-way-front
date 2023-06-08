@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 type SearchState = {
   keywords: string;
   searchHistory: Station[];
+  stationId: number;
 };
 
 type SearchAction = {
@@ -46,12 +47,12 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     },
   });
 
-  const [keywords, setKeywords] = useState<string | null>('');
+  const [keywords, setKeywords] = useState<string>('');
   const [searchHistory, setSearchHistory] = useState<Station[]>([]);
   const [matchingData, setMatchingData] = useState<Station[]>([]);
   const [selectedStationInfo, setSelectedStationInfo] = useState<Station>();
   const [filteredStations, setFilteredStations] = useState([]);
-  console.log(selectedStationInfo);
+  // console.log(selectedStationInfo);
   console.log(setFilteredStations);
 
   const startListening = useCallback(() => {
@@ -75,10 +76,12 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     setSelectedStationInfo(selectedStation[0]);
     setKeywords(selectedStation[0].stationName);
     focusOnSearchInput();
+    // staionIdRef.current =
   };
 
   const focusOnSearchInput = () => {
-    document.querySelector('#search-bar')?.focus();
+    const el: HTMLInputElement | null = document.querySelector('#search-bar');
+    if (el) el.focus();
   };
 
   const getMatchingData = useCallback(
@@ -131,6 +134,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     getMatchingData,
     handleAutofillClick,
     focusOnSearchInput,
+    stationId: selectedStationInfo ? Number(selectedStationInfo.stationId) : 150,
   };
 
   useEffect(() => {

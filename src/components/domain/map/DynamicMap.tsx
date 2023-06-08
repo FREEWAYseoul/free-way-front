@@ -1,25 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { KakaoMapContext } from '../../../hooks/useMap';
+import { CoordinateProps } from '../../../types/stationType';
 
 interface DynamicMapProps {
-  position: {
-    lat: number;
-    lng: number;
-  };
+  coordinate: CoordinateProps;
   children: React.ReactNode;
 }
 
-const DynamicMap = ({ position, children }: DynamicMapProps) => {
+const DynamicMap = ({ coordinate, children }: DynamicMapProps) => {
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const kakaoMapRef = useRef<HTMLDivElement>(null);
 
-  const targetPoint = new kakao.maps.LatLng(position.lat, position.lng);
+  const targetPoint = new kakao.maps.LatLng(coordinate.latitude, coordinate.longitude);
   const option = {
     center: targetPoint,
     minLevel: 0,
-    maxLevel: 7,
-    level: 2,
+    maxLevel: 6,
+    level: 3,
   };
 
   useEffect(() => {

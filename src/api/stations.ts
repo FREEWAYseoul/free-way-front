@@ -35,9 +35,24 @@ export const useStationInfo = () => {
   return useQuery(['stations'], () => fetchStations(), {
     refetchOnWindowFocus: false,
     retry: 0,
+    staleTime: Infinity,
     // enabled: !!keywords,
     // select: (data) =>{ data.filter(0, 10)},
     onSuccess: (data) => console.log(data),
     onError: (e: Error) => console.log(e.message),
   });
+};
+
+export const fetchGetStation = async (stationId: number) => {
+  try {
+    const res = await axios({
+      method: 'get',
+      url: `/api/stations/${stationId}`,
+    });
+    if (res.status === 200) {
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
-import { StationProps } from '../../../types/stationType';
 import CustomOverlay from '../../common/station/CustomOverlay';
 import StationMarker from '../../common/station/StationMarker';
 import ElevatorMarker from '../../common/station/ElevatorMarker';
@@ -13,17 +12,17 @@ import styled from 'styled-components';
 const MapMarkerController = () => {
   const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
     useResultContext();
-  const { kakaoMap, stationMarkers, setStationMarker, elevatorMarkers, myMarker, setMyMarker } =
+  const { kakaoMap, stationMarkers, elevatorMarkers, setStationMarker, myMarker, setMyMarker } =
     useMap();
 
   /**
    * station marker move
    */
-  const moveStation = async (data: StationProps, lat: number, lng: number) => {
+  const moveStation = async (stationId: number, lat: number, lng: number) => {
     const moveLatLon = new kakao.maps.LatLng(lat, lng);
-    kakaoMap.setLevel(2);
+    kakaoMap.setLevel(3);
     kakaoMap.panTo(moveLatLon);
-    handleChangeStation(data);
+    handleChangeStation(stationId);
     handleShowController(true);
   };
 
@@ -93,8 +92,10 @@ const MapMarkerController = () => {
           {stationMarkers.map((item, idx) => (
             <CustomOverlay
               key={item.stationName + idx}
-              position={item.position}
-              onClick={() => moveStation(item, item.position.lat, item.position.lng)}
+              coordinate={item.coordinate}
+              onClick={() =>
+                moveStation(item.stationId, item.coordinate.latitude, item.coordinate.longitude)
+              }
             >
               <StationMarker
                 info={item}
@@ -109,11 +110,13 @@ const MapMarkerController = () => {
         <div>
           {elevatorMarkers.map((item) => (
             <CustomOverlay
-              key={item.lng + item.lat}
-              position={{ lat: item.lat, lng: item.lng }}
-              onClick={() => console.log('엘리베이터 클릭')}
+              key={item.elevatorId}
+              coordinate={{
+                latitude: item.elevatorCoordinate.latitude,
+                longitude: item.elevatorCoordinate.longitude,
+              }}
             >
-              <ElevatorMarker text='4번출구' status='사용' />
+              <ElevatorMarker text='EV' status={item.elevatorStatus} />
             </CustomOverlay>
           ))}
         </div>
