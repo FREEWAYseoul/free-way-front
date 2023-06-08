@@ -1,29 +1,58 @@
 import styled from 'styled-components';
-import Badge from '../../common/station/Badge';
 import CloseIcon from '../../../assets/icons/close.svg';
 import { useResultContext } from './ResultContext';
+import { useStationInfo } from '../../../api/stations';
+import { StationProps } from '../../../types/stationType';
+import { useEffect, useState } from 'react';
+import Badge from '../../common/station/Badge';
+import { useNavigate } from 'react-router-dom';
 
-interface StationHeaderProps {
-  lineList: {
-    lineId: number;
-    title: string | number;
-  }[];
+interface BadgeProps {
+  lineId: string | number;
+  stationId: number;
 }
 
-const StationHeader = ({ lineList }: StationHeaderProps) => {
-  const { station, handleShowInfo } = useResultContext();
+const StationHeader = () => {
+  const navigate = useNavigate();
+  const { station, handleChangeStation } = useResultContext();
+  const { data: stationData, isLoading } = useStationInfo();
+  const [badges, setBadges] = useState<BadgeProps[]>([]);
+
+  const handleMoveSearch = () => {
+    navigate('/search');
+  };
+
+  useEffect(() => {
+    if (!isLoading) {
+      const filterStation = stationData.filter(
+        (item: StationProps) => item.stationName === station.stationName
+      );
+      setBadges(
+        filterStation.map((item: StationProps) => ({
+          lineId: item.lineId,
+          stationId: item.stationId,
+        }))
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [station, isLoading]);
 
   return (
     <StyledStationInfoHeader>
       <div>
-        {lineList.length > 0 &&
-          lineList.map((item) => (
-            <Badge key={item.lineId} lineId={item.lineId} isActive={station.lineId === item.lineId}>
-              {item.title}
+        {badges.length > 0 &&
+          badges.map((item) => (
+            <Badge
+              key={item.lineId}
+              lineId={item.lineId}
+              isActive={station.lineId == item.lineId}
+              handleOnClick={() => handleChangeStation(item.stationId)}
+            >
+              {item.lineId}
             </Badge>
           ))}
       </div>
-      <button onClick={() => handleShowInfo(false)}>
+      <button onClick={handleMoveSearch}>
         <img src={CloseIcon} alt='닫기' />
       </button>
     </StyledStationInfoHeader>

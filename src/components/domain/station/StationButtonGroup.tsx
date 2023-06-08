@@ -82,7 +82,7 @@ const StationButtonGroup = () => {
         title={'안내 전화'}
         isActive={activeTab === '안내 전화'}
         handleChangeTab={handleChangeTab}
-        tel={station.stationTel}
+        tel={station.stationContact}
       >
         <svg
           width='22'

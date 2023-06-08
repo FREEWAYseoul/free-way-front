@@ -1,6 +1,24 @@
-export interface PositionProps {
-  lat: number;
-  lng: number;
+export interface CoordinateProps {
+  latitude: number;
+  longitude: number;
+}
+
+export interface FacilitiesProps {
+  [key: string]: boolean;
+  elevator: boolean;
+  wheelchairLift: boolean;
+  disabledToilet: boolean;
+  transitParkingLot: boolean;
+  unmannedCivilApplicationIssuingMachine: boolean;
+  currencyExchangeKiosk: boolean;
+  trainTicketOffice: boolean;
+  feedingRoom: boolean;
+}
+
+export interface ElevatorProps {
+  elevatorId: number;
+  elevatorCoordinate: CoordinateProps;
+  elevatorStatus: '사용 가능' | '공사 중' | '알 수 없음';
 }
 
 export interface StationProps {
@@ -8,17 +26,28 @@ export interface StationProps {
   stationId: number;
   stationName: string;
   stationStatus: string;
-  stationTel: string;
-  position: PositionProps;
+  availableElevatorsNumber?: number;
+  coordinate: CoordinateProps;
 }
 
-export interface ElevatorProps extends PositionProps {
-  title: string;
+export interface StationDetailProps {
+  stationId: number;
+  stationName: string;
+  lineId: number;
+  lineName: string;
+  stationCoordinate: CoordinateProps;
+  stationStatus: string;
+  stationContact: string;
+  stationImageUrl: string;
+  nextStation: null;
+  previousStation: null;
+  facilities: FacilitiesProps;
+  elevators: ElevatorProps[];
 }
 
-export interface RectanglePositionProps {
-  sw: PositionProps;
-  ne: PositionProps;
+export interface RectangleCoordinateProps {
+  sw: CoordinateProps;
+  ne: CoordinateProps;
 }
 
 export interface LocalProps {

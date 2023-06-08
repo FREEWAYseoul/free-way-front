@@ -1,18 +1,19 @@
 import { createContext, useContext, useState } from 'react';
-import { StationProps } from '../../../types/stationType';
+import { StationDetailProps } from '../../../types/stationType';
+import { fetchGetStation } from '../../../api/stations';
 
 interface ResultContextProviderProps {
   children: React.ReactNode;
-  initStation: StationProps;
+  initStation: StationDetailProps;
 }
 
 export interface ReactContextValueProps {
-  station: StationProps;
+  station: StationDetailProps;
   activeTab: string;
   isDrag: boolean;
   isShow: boolean;
   handleChangeTab: (arg1: string) => void;
-  handleChangeStation: (arg1: StationProps) => void;
+  handleChangeStation: (arg1: number) => void;
   handleShowInfo: (arg1: boolean) => void;
   handleShowController: (arg1: boolean) => void;
 }
@@ -20,7 +21,7 @@ export interface ReactContextValueProps {
 export const ResultContext = createContext<ReactContextValueProps | null>(null);
 
 export const ResultContextProvider = ({ children, initStation }: ResultContextProviderProps) => {
-  const [station, setStation] = useState<StationProps>(initStation);
+  const [station, setStation] = useState<StationDetailProps>(initStation);
   const [isDrag, setIsDrag] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<string>('엘리베이터');
@@ -37,13 +38,12 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
     setIsShow(flag);
   };
 
-  const handleChangeStation = (data: StationProps) => {
-    setStation({
-      ...station,
-      stationName: data.stationName,
-      position: { lat: data.position.lat, lng: data.position.lng },
-    });
-    setIsDrag(false);
+  const handleChangeStation = async (stationId: number) => {
+    const res = await fetchGetStation(stationId);
+    if (res) {
+      setStation(res);
+      setIsDrag(false);
+    }
   };
 
   const contextValue = {
