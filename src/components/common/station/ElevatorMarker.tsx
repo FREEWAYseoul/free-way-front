@@ -3,18 +3,18 @@ import ElevatorIcon1 from '../../../assets/icons/elevator.svg';
 import ElevatorIcon2 from '../../../assets/icons/elevator2.svg';
 
 interface ElevatorMarkerProps {
-  text: string;
+  text: number;
   status: '사용 가능' | '공사 중' | '보수 중' | '확인 불가';
 }
 
 const ElevatorMarker = ({ text, status }: ElevatorMarkerProps) => {
   const iconSrc = status === '사용 가능' || status === '확인 불가' ? ElevatorIcon1 : ElevatorIcon2;
-
+  const newText = status === '확인 불가' ? '확인불가' : `${text}번 출구`;
   return (
     <StyledElevatorMarker $status={status}>
       <StyledElevator $status={status}>
         <img src={iconSrc} />
-        {text}
+        {newText}
       </StyledElevator>
       <div className='triangle'>
         <svg
