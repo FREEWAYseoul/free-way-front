@@ -10,6 +10,7 @@ interface BadgeProps {
 }
 
 const Badge = ({ lineId, isActive, handleOnClick, children }: BadgeProps) => {
+  console.log(lineId, 'line id');
   const color = STATION_LINE_COLORS[lineId];
 
   return (
