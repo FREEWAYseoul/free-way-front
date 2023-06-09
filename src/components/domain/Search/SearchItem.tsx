@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+
 import { ReactComponent as Line1 } from '../../../assets/lines/line-1.svg';
 import { ReactComponent as Line2 } from '../../../assets/lines/line-2.svg';
 import { ReactComponent as Line3 } from '../../../assets/lines/line-3.svg';
@@ -20,93 +21,38 @@ type SearchItemProps = {
   name: string;
   status: string;
   line?: string;
-  isFocus?: boolean;
 };
 
-type StyledStatusProps = {
+type StyledElevatorStatusCircleProps = {
   status: string;
 };
 
-const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
-  const { handleAutofillClick } = useAutofill();
-  const [svg, setSVG] = useState<FC<SVGProps<SVGSVGElement>>>();
-
-  useEffect(() => {
-    console.log('line', line);
-    switch (line) {
-      case '1':
-        setSVG(Line1);
-        return;
-      case '2':
-        setSVG(Line2);
-        return;
-      case '3':
-        setSVG(Line3);
-        return;
-      case '4':
-        setSVG(Line4);
-        return;
-      case '5':
-        setSVG(Line5);
-        return;
-      case '6':
-        setSVG(Line6);
-        return;
-      case '7':
-        setSVG(Line7);
-        return;
-      case '8':
-        setSVG(Line8);
-        return;
-      case '9':
-        setSVG(Line9);
-        return;
-      case 'K1':
-        setSVG(LineK1);
-        return;
-      case 'K4':
-        setSVG(LineK4);
-        return;
-      case 'D1':
-        setSVG(LineD1);
-        return;
-      default:
-        throw new Error(`Invalid Line Id ${line}`);
-    }
-  }, [line]);
-
+const SearchItem = ({ name, status, id }: SearchItemProps) => {
+  const { handleAutofillClick } = useSearchContext();
   return (
-    <SearchItemWrapper id={id} onClick={handleAutofillClick} isFocus={isFocus}>
+    <SearchItemWrapper id={id} onClick={handleAutofillClick}>
       <Text>{name}</Text>
-      <Status status={status}>{status}</Status>
-      <StyledLineSVG>{svg}</StyledLineSVG>
+      <ElevatorStatusCircle status={status}>{status}</ElevatorStatusCircle>
+      <StyledLineSVG />
     </SearchItemWrapper>
   );
 };
 
 export default SearchItem;
 
-const SearchItemWrapper = styled.li<{ isFocus?: boolean }>`
-  position: relative;
-
+const SearchItemWrapper = styled.li`
   display: flex;
   align-items: center;
   padding-top: 12px;
   padding-bottom: 12px;
+  position: relative;
   border-bottom: 1px solid rgba(217, 217, 217, 0.5);
   text-decoration: none;
-
   cursor: pointer;
-  &:hover {
-    background-color: #edf5f5;
-    cursor: pointer;
-  }
-  background-color: ${(props) => (props.isFocus ? '#edf5f5' : '#fff')};
 `;
 
-const Status = styled.div<StyledStatusProps>`
-  width: max-content;
-  padding: 0 10px;
+const ElevatorStatusCircle = styled.div<StyledElevatorStatusCircleProps>`
+  width: 60px;
   height: 21px;
   border-radius: 30px;
   font-size: 12px;
@@ -116,31 +62,26 @@ const Status = styled.div<StyledStatusProps>`
   cursor: pointer;
   ${(props) => {
     switch (props.status) {
-      case '모두 사용 가능':
+      case '사용 가능':
         return css`
           color: #4aa570;
           background-color: rgba(96, 208, 132, 0.3);
         `;
-      case '일부 사용 가능':
+      case '일부 가능':
         return css`
           color: #eda54b;
           background-color: rgba(237, 165, 75, 0.3);
         `;
-      case '확인 불가':
+      case '사용 불가능':
         return css`
-          color: #96a1b2;
-          background-color: rgba(203, 208, 217, 0.4);
-        `;
-      case `사용 불가`:
-        return css`
-          color:#E56E73,
-          background-color: rgba(229, 110, 115, 0.2);
+          color: #e56e73;
+          background-color: rgba(229, 110, 115, 0.3);
         `;
     }
   }}
 `;
 
-const StyledLineSVG = styled.div`
+const StyledLineSVG = styled(LineCircle)`
   position: absolute;
   right: 0;
 `;
