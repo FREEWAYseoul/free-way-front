@@ -10,10 +10,10 @@ interface StationMapProps {
 
 const StationMap = ({ title, line }: StationMapProps) => {
   const { station, handleShowInfo, handleChangeStation } = useResultContext();
-  const color = STATION_LINE_COLORS[line] || 'red';
+  const color = STATION_LINE_COLORS[line];
 
   return (
-    <StyledStationMap $color={color.color}>
+    <StyledStationMap $color={color?.color}>
       <div className='stationLine'>
         {station.previousStation?.stationName && (
           <span onClick={() => handleChangeStation(station.previousStation.stationId)}>

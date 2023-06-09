@@ -13,8 +13,10 @@ const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
     navigate('/');
   };
 
-  const handleMoveSearch = (e) => {
-    if (e.target.tagName === 'IMG') {
+  const handleMoveSearch = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target;
+    const el = target as HTMLElement;
+    if (el.tagName === 'IMG') {
       resetKeywords();
     }
     navigate('/search');
