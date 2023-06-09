@@ -4,6 +4,7 @@ import SearchPage from '../pages/SearchPage';
 import ResultPage from '../pages/ResultPage';
 import Layout from '../components/layout/Layout';
 import HomePage from '../pages/HomePage';
+import SafetyAlertPage from '../pages/SafetyAlertPage';
 
 const Routes = () => {
   return (
@@ -12,6 +13,7 @@ const Routes = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/result' element={<ResultPage />} />
+        <Route path='/safetyAlert' element={<SafetyAlertPage />} />
         <Route path='*' element={<Navigate replace to='/' />} />
       </Route>
     </ReactRouters>
