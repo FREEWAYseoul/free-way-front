@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 import { STATION_LINE_COLORS } from '../../../constants/color';
 
@@ -6,25 +5,28 @@ interface BadgeProps {
   lineId: string | number;
   isActive: boolean;
   handleOnClick?: () => void;
-  children: React.ReactNode;
 }
 
-const Badge = ({ lineId, isActive, handleOnClick, children }: BadgeProps) => {
-  console.log(lineId, 'line id');
-  const color = STATION_LINE_COLORS[lineId];
+const Badge = ({ lineId, isActive, handleOnClick }: BadgeProps) => {
+  const color = STATION_LINE_COLORS[lineId] || 'red';
 
   return (
-    <StyledBadge $isActive={isActive} $color={color.color} onClick={handleOnClick}>
-      {children}
+    <StyledBadge
+      $isActive={isActive}
+      $isText={typeof color.lineId === 'string'}
+      $color={color.color}
+      onClick={handleOnClick}
+    >
+      {color.lineId}
     </StyledBadge>
   );
 };
 
 export default Badge;
 
-const StyledBadge = styled.span<{ $isActive: boolean; $color: string }>`
+const StyledBadge = styled.span<{ $isActive: boolean; $isText: boolean; $color: string }>`
   cursor: pointer;
-  padding: 1px 2px 0;
+  padding: 1px 6px 0;
   min-width: 20px;
   height: 20px;
   border-radius: 10px;
@@ -32,6 +34,13 @@ const StyledBadge = styled.span<{ $isActive: boolean; $color: string }>`
   line-height: 20px;
   text-align: center;
   background-color: #fff;
+
+  ${({ $isText }) =>
+    !$isText &&
+    css`
+      padding: 1px 2px 0;
+      width: 20px;
+    `}
 
   ${({ $isActive, $color }) => {
     return $isActive

@@ -47,9 +47,7 @@ const StationHeader = () => {
               lineId={item.lineId}
               isActive={station.lineId == item.lineId}
               handleOnClick={() => handleChangeStation(item.stationId)}
-            >
-              {item.lineId}
-            </Badge>
+            />
           ))}
       </div>
       <button onClick={handleMoveSearch}>
