@@ -12,9 +12,11 @@ const HomePageTitle = () => {
 export default HomePageTitle;
 
 const StyledHomePageTitleWrapper = styled.div`
-  position: absolute;
-  left: 5.33%;
-  right: 5.33%;
-  top: 8.16%;
-  bottom: 61.97%;
+  position: fixed;
+  top: 20%;
+  left: 5%;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;

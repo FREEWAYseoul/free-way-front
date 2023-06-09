@@ -29,29 +29,29 @@ export default ToastMessage;
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(0);
+    transform: translateY(-10%);
   }
   to {
     opacity: 1;
-    transform: translateY(20%);
+    transform: translateY(10%);
   }
 `;
 
 const fadeOut = keyframes`
   from {
     opacity: 1;
-    transform: translateY(20%);
+    transform: translateY(10%);
   }
   to {
     opacity: 0;
-    transform: translateY(0);
+    transform: translateY(-10%);
   }
 `;
 
 const StyledToastMessageWrapper = styled.div<WrapperProps>`
   position: fixed;
   z-index: 99;
-  top: 15%;
+  top: 0;
 
   transform: translate(-50%, -50%);
 
@@ -65,7 +65,7 @@ const StyledToastMessageWrapper = styled.div<WrapperProps>`
   display: flex;
   opacity: 0;
   animation-name: ${(props) => (props.isOpen ? fadeIn : fadeOut)};
-  animation-duration: 1.5s;
+  animation-duration: 2s;
   animation-fill-mode: forwards;
 `;
 

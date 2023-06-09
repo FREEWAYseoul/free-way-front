@@ -19,7 +19,7 @@ const Home = () => {
   const { keywords } = useSearchContext();
   const { endListening, isListening } = useMic();
 
-  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(true);
 
   const navigate = useNavigate();
   const tempContent =
@@ -28,10 +28,9 @@ const Home = () => {
     navigate('/safetyAlert');
   };
   const activeToast = () => {
-    setIsToastOpen(true);
     const timer = setTimeout(() => {
       setIsToastOpen(false);
-    }, 2000);
+    }, 3000);
     return () => {
       clearTimeout(timer);
     };
@@ -140,7 +139,7 @@ const Badge = styled.div`
 
 const StyledHomeSearchBarWrapper = styled.div`
   position: absolute;
-  top: -13.3%;
+  top: -10.3%;
 
   width: 90%;
 
