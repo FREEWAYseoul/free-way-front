@@ -33,6 +33,7 @@ const useSearchBar = () => {
       if (!inputRef.current?.value.length || !filteredStations.length) {
         e.preventDefault();
         alert('역이름을 다시 한 번 확인해주세요!');
+        return;
       } else {
         e.preventDefault();
         addSearchHistory();

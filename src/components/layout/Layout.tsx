@@ -21,7 +21,6 @@ const Wrapper = styled.div`
   justify-content: center;
   margin: auto;
   max-width: 475px;
-  min-width: 375px;
   width: 100%;
   height: 100vh;
   background-size: contain;

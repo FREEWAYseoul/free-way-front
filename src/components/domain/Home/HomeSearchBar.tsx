@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import Button from '../../common/Button';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
-import { useSearchContext } from '../Search/SearchContext';
 import { Link } from 'react-router-dom';
+import useMic from '../../../hooks/useMic';
 
 const HomeSearchBar = () => {
-  const { startListening } = useSearchContext();
+  const { startListening } = useMic();
 
   return (
     <>
