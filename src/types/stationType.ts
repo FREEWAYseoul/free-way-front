@@ -18,7 +18,7 @@ export interface FacilitiesProps {
 export interface ElevatorProps {
   elevatorId: number;
   elevatorCoordinate: CoordinateProps;
-  elevatorStatus: '사용 가능' | '공사 중' | '알 수 없음';
+  elevatorStatus: '사용 가능' | '공사 중' | '보수 중' | '확인 불가';
 }
 
 export interface StationProps {
@@ -30,19 +30,27 @@ export interface StationProps {
   coordinate: CoordinateProps;
 }
 
-export interface StationDetailProps {
+export interface StationInfoProps {
   stationId: number;
   stationName: string;
+}
+
+export interface StationDetailProps extends StationInfoProps {
   lineId: number;
   lineName: string;
   stationCoordinate: CoordinateProps;
   stationStatus: string;
   stationContact: string;
   stationImageUrl: string;
-  nextStation: null;
-  previousStation: null;
+  nextStation: StationInfoProps;
+  previousStation: StationInfoProps;
+  branchStation?: StationInfoProps;
   facilities: FacilitiesProps;
   elevators: ElevatorProps[];
+  transferStations: {
+    stationId: number;
+    lineId: string;
+  }[];
 }
 
 export interface RectangleCoordinateProps {

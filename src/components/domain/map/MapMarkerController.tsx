@@ -141,5 +141,5 @@ const StyledMyMarker = styled.div`
   border: 0.833333px solid #f3f3f3;
   background-color: #fff;
   box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.2);
-  z-index: 88;
+  z-index: 10;
 `;

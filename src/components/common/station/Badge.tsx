@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 import { STATION_LINE_COLORS } from '../../../constants/color';
 
@@ -6,15 +5,14 @@ interface BadgeProps {
   lineId: string | number;
   isActive: boolean;
   handleOnClick?: () => void;
-  children: React.ReactNode;
 }
 
-const Badge = ({ lineId, isActive, handleOnClick, children }: BadgeProps) => {
-  const color = STATION_LINE_COLORS[lineId];
+const Badge = ({ lineId, isActive, handleOnClick }: BadgeProps) => {
+  const color = STATION_LINE_COLORS[lineId] || 'red';
 
   return (
     <StyledBadge $isActive={isActive} $color={color.color} onClick={handleOnClick}>
-      {children}
+      {color.lineId}
     </StyledBadge>
   );
 };

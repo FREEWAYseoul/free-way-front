@@ -4,11 +4,11 @@ import ElevatorIcon2 from '../../../assets/icons/elevator2.svg';
 
 interface ElevatorMarkerProps {
   text: string;
-  status: '사용 가능' | '공사 중' | '알 수 없음';
+  status: '사용 가능' | '공사 중' | '보수 중' | '확인 불가';
 }
 
 const ElevatorMarker = ({ text, status }: ElevatorMarkerProps) => {
-  const iconSrc = status === '사용 가능' ? ElevatorIcon1 : ElevatorIcon2;
+  const iconSrc = status === '사용 가능' || status === '확인 불가' ? ElevatorIcon1 : ElevatorIcon2;
 
   return (
     <StyledElevatorMarker $status={status}>
@@ -27,7 +27,7 @@ const StyledElevatorMarker = styled.div<{ $status: string }>`
   cursor: pointer;
   position: absolute;
   top: -45px;
-  z-index: 88;
+  z-index: 10;
   filter: drop-shadow(0px 0px 10.8px rgba(68, 81, 69, 0.3));
 
   & > .triangle {
@@ -39,6 +39,8 @@ const StyledElevatorMarker = styled.div<{ $status: string }>`
     background-color: ${({ $status }) => {
       if ($status === '사용 가능') {
         return '#0EB000';
+      } else if ($status === '확인 불가') {
+        return '#565656';
       } else {
         return '#DB3535';
       }
@@ -64,6 +66,8 @@ const StyledElevator = styled.div<{ $status: string }>`
   background-color: ${({ $status }) => {
     if ($status === '사용 가능') {
       return '#0EB000';
+    } else if ($status === '확인 불가') {
+      return '#565656';
     } else {
       return '#DB3535';
     }

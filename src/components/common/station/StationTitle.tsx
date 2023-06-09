@@ -5,9 +5,7 @@ import { StationTitleProps } from '../../../types/stationType';
 const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
   return (
     <StyledStationTitleWrapper $color={color} $type={type || ''}>
-      <Badge lineId={line} isActive={true}>
-        {line}
-      </Badge>
+      <Badge lineId={line} isActive={true} />
       {title}
     </StyledStationTitleWrapper>
   );

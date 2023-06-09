@@ -19,14 +19,14 @@ const StyledMapDetailView = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #f2f4f6;
-  z-index: 99;
+  z-index: 50;
 `;
 
 const StyledImageWrapper = styled.div`
   position: absolute;
-  top: 10%;
+  top: 100px;
   overflow: auto;
-  height: 60%;
+  height: 50%;
 
   & > img {
     width: 220%;

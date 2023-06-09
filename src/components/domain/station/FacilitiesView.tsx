@@ -49,10 +49,11 @@ const StyledFacilitiesView = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  padding-top: 60px;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #fff;
-  z-index: 99;
+  z-index: 50;
 
   & > .updateDate {
     height: 36px;
