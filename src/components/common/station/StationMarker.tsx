@@ -44,7 +44,7 @@ export default StationMarker;
 const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean; $level: number }>`
   cursor: pointer;
   position: absolute;
-  top: -45px;
+  top: ${({ $isActive, $level }) => ($isActive && $level < 5 ? '-50px' : '-40px')};
   z-index: 10;
   filter: drop-shadow(0px 0px 10.8px rgba(68, 81, 69, 0.3));
 
@@ -52,12 +52,12 @@ const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean; $lev
     position: absolute;
     bottom: ${({ $isActive, $level }) => ($isActive && $level < 5 ? '-55px' : '-45px')};
     left: 50%;
-    /* height: 15px;
-    width: 15px; */
     color: ${({ $color }) => $color};
-    /* background-color: ${({ $color }) => $color}; */
     transform: translateX(-50%);
     z-index: 90;
+    /* height: 15px;
+    width: 15px; */
+    /* background-color: ${({ $color }) => $color}; */
   }
 `;
 
@@ -73,7 +73,7 @@ const StyledStation = styled.div<{ $color: string }>`
   border-radius: 30px;
   font-size: 12px;
   font-weight: bold;
-  line-height: 20px;
+  line-height: 19px;
   background-color: ${({ $color }) => $color};
   transform: translateX(-50%);
   white-space: nowrap;

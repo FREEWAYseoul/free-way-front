@@ -73,7 +73,7 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     width: 100%;
     height: 100%;
     font-size: 1rem;
-    color: #000;
+    color: #808080;
     background-color: #fff;
 
     ${({ $isActive }) =>
@@ -83,8 +83,9 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
       `}
 
     & > svg {
-      width: auto;
-      height: 30px;
+      max-height: 34px;
+      width: 34px;
+      /* height: auto; */
     }
 
     & > P {

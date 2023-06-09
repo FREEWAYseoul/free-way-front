@@ -21,7 +21,7 @@ export default Badge;
 
 const StyledBadge = styled.span<{ $isActive: boolean; $color: string }>`
   cursor: pointer;
-  padding: 1px 2px 0;
+  padding: 1px 6px 0;
   min-width: 20px;
   height: 20px;
   border-radius: 10px;

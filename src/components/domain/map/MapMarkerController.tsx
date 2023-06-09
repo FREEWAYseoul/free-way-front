@@ -18,11 +18,10 @@ const MapMarkerController = () => {
   /**
    * station marker move
    */
-  const moveStation = async (stationId: number, lat: number, lng: number) => {
+  const moveStation = async (lat: number, lng: number) => {
     const moveLatLon = new kakao.maps.LatLng(lat, lng);
     kakaoMap.setLevel(3);
     kakaoMap.panTo(moveLatLon);
-    handleChangeStation(stationId);
     handleShowController(true);
   };
 
@@ -40,6 +39,10 @@ const MapMarkerController = () => {
       kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
     };
   }, [isShow]);
+
+  useEffect(() => {
+    moveStation(station.stationCoordinate.latitude, station.stationCoordinate.longitude);
+  }, [station]);
 
   useEffect(() => {
     kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
@@ -93,9 +96,7 @@ const MapMarkerController = () => {
             <CustomOverlay
               key={item.stationName + idx}
               coordinate={item.coordinate}
-              onClick={() =>
-                moveStation(item.stationId, item.coordinate.latitude, item.coordinate.longitude)
-              }
+              onClick={() => handleChangeStation(item.stationId)}
             >
               <StationMarker
                 info={item}

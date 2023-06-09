@@ -15,11 +15,13 @@ const StationMap = ({ title, line }: StationMapProps) => {
   return (
     <StyledStationMap $color={color.color}>
       <div className='stationLine'>
-        <span onClick={() => handleChangeStation(station.previousStation.stationId)}>
-          {station.previousStation.stationName}
-        </span>
-        {station.branchStation && (
-          <span onClick={() => handleChangeStation(Number(station?.branchStation?.stationId))}>
+        {station.previousStation?.stationName && (
+          <span onClick={() => handleChangeStation(station.previousStation.stationId)}>
+            {station.previousStation.stationName}
+          </span>
+        )}
+        {station.branchStation?.stationName && (
+          <span onClick={() => handleChangeStation(Number(station.branchStation?.stationId))}>
             {' '}
             · {station.branchStation.stationName}
           </span>
@@ -29,9 +31,11 @@ const StationMap = ({ title, line }: StationMapProps) => {
         <StationTitle title={title} line={line} color={color.color} />
       </div>
       <div className='stationLine'>
-        <span onClick={() => handleChangeStation(station.nextStation.stationId)}>
-          {station.nextStation.stationName}
-        </span>
+        {station.nextStation?.stationName && (
+          <span onClick={() => handleChangeStation(station.nextStation.stationId)}>
+            {station.nextStation.stationName}
+          </span>
+        )}
       </div>
     </StyledStationMap>
   );
