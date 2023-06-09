@@ -1,16 +1,16 @@
 import styled, { css } from 'styled-components';
-import { ReactComponent as Line1 } from '../../../assets/icons/lines/line-1.svg';
-import { ReactComponent as Line2 } from '../../../assets/icons/lines/line-2.svg';
-import { ReactComponent as Line3 } from '../../../assets/icons/lines/line-3.svg';
-import { ReactComponent as Line4 } from '../../../assets/icons/lines/line-4.svg';
-import { ReactComponent as Line5 } from '../../../assets/icons/lines/line-5.svg';
-import { ReactComponent as Line6 } from '../../../assets/icons/lines/line-6.svg';
-import { ReactComponent as Line7 } from '../../../assets/icons/lines/line-7.svg';
-import { ReactComponent as Line8 } from '../../../assets/icons/lines/line-8.svg';
-import { ReactComponent as Line9 } from '../../../assets/icons/lines/line-9.svg';
-import { ReactComponent as LineK1 } from '../../../assets/icons/lines/line-K1.svg';
-import { ReactComponent as LineK4 } from '../../../assets/icons/lines/line-K4.svg';
-import { ReactComponent as LineD1 } from '../../../assets/icons/lines/line-D1.svg';
+import { ReactComponent as Line1 } from '../../../assets/lines/line-1.svg';
+import { ReactComponent as Line2 } from '../../../assets/lines/line-2.svg';
+import { ReactComponent as Line3 } from '../../../assets/lines/line-3.svg';
+import { ReactComponent as Line4 } from '../../../assets/lines/line-4.svg';
+import { ReactComponent as Line5 } from '../../../assets/lines/line-5.svg';
+import { ReactComponent as Line6 } from '../../../assets/lines/line-6.svg';
+import { ReactComponent as Line7 } from '../../../assets/lines/line-7.svg';
+import { ReactComponent as Line8 } from '../../../assets/lines/line-8.svg';
+import { ReactComponent as Line9 } from '../../../assets/lines/line-9.svg';
+import { ReactComponent as LineK1 } from '../../../assets/lines/line-K1.svg';
+import { ReactComponent as LineK4 } from '../../../assets/lines/line-K4.svg';
+import { ReactComponent as LineD1 } from '../../../assets/lines/line-D1.svg';
 
 import useAutofill from '../../../hooks/useAutofill';
 import { FC, SVGProps, useEffect, useState } from 'react';

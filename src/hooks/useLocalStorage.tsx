@@ -5,7 +5,6 @@ const useLocalStorage = () => {
   const { searchHistory, filteredStations, setSearchHistory } = useSearchContext();
   const addSearchHistory = useCallback(() => {
     if (!filteredStations) {
-      alert('여기');
       return;
     }
     setSearchHistory([...searchHistory, ...filteredStations]);
