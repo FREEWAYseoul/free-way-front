@@ -54,7 +54,11 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
 export default SearchBar;
 
 const StyledSearchBarWrapper = styled.div`
-  height: 55px;
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+  height: 75px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
@@ -65,7 +69,7 @@ const StyledSearchBarWrapper = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 const StyledLeftSection = styled.div`
