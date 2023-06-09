@@ -55,7 +55,8 @@ const StyledToastMessageWrapper = styled.div<WrapperProps>`
 
   transform: translate(-50%, -50%);
 
-  width: 24rem;
+  width: inherit;
+  max-width: 475px;
   padding: 1rem 1.2rem;
   box-shadow: 0 0 15px 0 var(--black-40);
   background: rgba(78, 89, 104, 0.95);
