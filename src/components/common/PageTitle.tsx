@@ -22,7 +22,7 @@ export const Text = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 1.8em;
   line-height: 25px;
   margin-bottom: 10px;
 `;
