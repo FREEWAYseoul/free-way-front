@@ -9,16 +9,34 @@ interface StationMapProps {
 }
 
 const StationMap = ({ title, line }: StationMapProps) => {
-  const { handleShowInfo } = useResultContext();
+  const { station, handleShowInfo, handleChangeStation } = useResultContext();
   const color = STATION_LINE_COLORS[line];
 
   return (
-    <StyledStationMap $color={color.color}>
-      <div className='stationLine'>역삼</div>
+    <StyledStationMap $color={color?.color}>
+      <div className='stationLine'>
+        {station.previousStation?.stationName && (
+          <span onClick={() => handleChangeStation(station.previousStation.stationId)}>
+            {station.previousStation.stationName}
+          </span>
+        )}
+        {station.branchStation?.stationName && (
+          <span onClick={() => handleChangeStation(Number(station.branchStation?.stationId))}>
+            {' '}
+            · {station.branchStation.stationName}
+          </span>
+        )}
+      </div>
       <div className='stationTitleBox' onClick={() => handleShowInfo(false)}>
         <StationTitle title={title} line={line} color={color.color} />
       </div>
-      <div className='stationLine'>교대</div>
+      <div className='stationLine'>
+        {station.nextStation?.stationName && (
+          <span onClick={() => handleChangeStation(station.nextStation.stationId)}>
+            {station.nextStation.stationName}
+          </span>
+        )}
+      </div>
     </StyledStationMap>
   );
 };
@@ -49,6 +67,10 @@ const StyledStationMap = styled.div<{ $color: string }>`
     line-height: 20px;
     color: #fff;
     background-color: ${({ $color }) => $color};
+
+    & > span {
+      cursor: pointer;
+    }
 
     &:first-child {
       border-radius: 16px 0 0 16px;

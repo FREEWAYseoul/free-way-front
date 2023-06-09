@@ -4,11 +4,11 @@ import ElevatorIcon2 from '../../../assets/icons/elevator2.svg';
 
 interface ElevatorMarkerProps {
   text: string;
-  status: '사용 가능' | '공사 중' | '알 수 없음';
+  status: '사용 가능' | '공사 중' | '보수 중' | '확인 불가';
 }
 
 const ElevatorMarker = ({ text, status }: ElevatorMarkerProps) => {
-  const iconSrc = status === '사용 가능' ? ElevatorIcon1 : ElevatorIcon2;
+  const iconSrc = status === '사용 가능' || status === '확인 불가' ? ElevatorIcon1 : ElevatorIcon2;
 
   return (
     <StyledElevatorMarker $status={status}>
@@ -16,7 +16,20 @@ const ElevatorMarker = ({ text, status }: ElevatorMarkerProps) => {
         <img src={iconSrc} />
         {text}
       </StyledElevator>
-      <div className='triangle'></div>
+      <div className='triangle'>
+        <svg
+          width='11'
+          height='14'
+          viewBox='0 0 11 14'
+          fill='currentColor'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M7.27588 12.1259C6.78377 13.6033 4.69402 13.6033 4.20191 12.1259L0.477791 0.945202L8.7529 0.945203C9.85849 0.945203 10.6393 2.02822 10.2899 3.07715L7.27588 12.1259Z'
+            fill='currentColor'
+          />
+        </svg>
+      </div>
     </StyledElevatorMarker>
   );
 };
@@ -26,25 +39,36 @@ export default ElevatorMarker;
 const StyledElevatorMarker = styled.div<{ $status: string }>`
   cursor: pointer;
   position: absolute;
-  top: -45px;
-  z-index: 88;
+  top: -50px;
+  z-index: 10;
   filter: drop-shadow(0px 0px 10.8px rgba(68, 81, 69, 0.3));
 
   & > .triangle {
     position: absolute;
-    bottom: -35px;
+    bottom: -47px;
     left: 50%;
-    height: 15px;
-    width: 15px;
-    background-color: ${({ $status }) => {
+    color: ${({ $status }) => {
       if ($status === '사용 가능') {
         return '#0EB000';
+      } else if ($status === '확인 불가') {
+        return '#565656';
       } else {
         return '#DB3535';
       }
     }};
-    transform: translateX(-50%) rotate(-45deg);
+    transform: translateX(-50%);
     z-index: -90;
+    /* height: 15px; */
+    /* width: 15px; */
+    /* background-color: ${({ $status }) => {
+      if ($status === '사용 가능') {
+        return '#0EB000';
+      } else if ($status === '확인 불가') {
+        return '#565656';
+      } else {
+        return '#DB3535';
+      }
+    }}; */
   }
 `;
 
@@ -64,6 +88,8 @@ const StyledElevator = styled.div<{ $status: string }>`
   background-color: ${({ $status }) => {
     if ($status === '사용 가능') {
       return '#0EB000';
+    } else if ($status === '확인 불가') {
+      return '#565656';
     } else {
       return '#DB3535';
     }

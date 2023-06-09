@@ -1,42 +1,54 @@
 type StationColor = {
-  [key: string]: { lineId: number; color: string };
+  [key: string]: { lineName: string | string; color: string };
 };
 
 export const STATION_LINE_COLORS: StationColor = {
   1: {
-    lineId: 1,
-    color: '#0d347f',
+    lineName: '1호선',
+    color: '#3B55AE',
   },
   2: {
-    lineId: 2,
+    lineName: '2호선',
     color: '#3b9f37',
   },
   3: {
-    lineId: 3,
-    color: '#DD5C32',
+    lineName: '3호선',
+    color: '#EF8F4C',
   },
   4: {
-    lineId: 4,
-    color: '#3165a8',
+    lineName: '4호선',
+    color: '#52B2E5',
   },
   5: {
-    lineId: 5,
-    color: '#703e8c',
+    lineName: '5호선',
+    color: '#884ED5',
   },
   6: {
-    lineId: 6,
-    color: '#904d23',
+    lineName: '6호선',
+    color: '#A9622A',
   },
   7: {
-    lineId: 7,
-    color: '#5b692e',
+    lineName: '7호선',
+    color: '#73772B',
   },
   8: {
-    lineId: 8,
-    color: '#c82363',
+    lineName: '8호선',
+    color: '#DD5794',
   },
   9: {
-    lineId: 9,
-    color: '#b39627',
+    lineName: '9호선',
+    color: '#C7A54E',
+  },
+  D1: {
+    lineName: '신분당선',
+    color: '#BE4049',
+  },
+  K1: {
+    lineName: '수인분당선',
+    color: '#F7D055',
+  },
+  K4: {
+    lineName: '경의중앙선',
+    color: '#82C9CB',
   },
 } as const;

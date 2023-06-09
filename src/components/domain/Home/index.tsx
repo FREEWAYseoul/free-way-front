@@ -16,7 +16,8 @@ type VoiceSearchProps = {
 };
 
 const Home = () => {
-  const { keywords, startListening, isListening } = useSearchContext();
+  const { keywords } = useSearchContext();
+  const { endListening, isListening } = useMic();
 
   const [isToastOpen, setIsToastOpen] = useState(false);
 
@@ -37,19 +38,18 @@ const Home = () => {
   };
 
   // 아래 주석은 유한 음성 테스트 자원을 위해 개발을 위한 임시 테스트 코드 입니다.
-  // temp
+  // temp;
   // const [isListening, setIsListening] = useState(false);
 
-  // temp
+  // temp;
   // const handleClick = () => {
   //   setIsListening((prev) => !prev);
   // };
 
   useEffect(() => {
     if (keywords[keywords.length - 1] === '역') {
-      startListening();
+      endListening();
     }
-
     activeToast();
   }, [keywords, endListening]);
 
@@ -63,38 +63,24 @@ const Home = () => {
         </NotiIconWrapper>
       </HomePageHeader>
       <HomePageTitle />
-      <HomeSearchBar />
+      <StyledHomeSearchBarWrapper>
+        <HomeSearchBar />
+      </StyledHomeSearchBarWrapper>
       {/* <TempMic id='test-button' onClick={handleClick}>
         Test
       </TempMic> */}
       {isListening() ? (
-        <>
-          <div
-            style={{
-              position: 'absolute',
-              left: '5.33%',
-              right: '5.33%',
-              top: '51.97%',
-              bottom: '39.16%',
-              flex: '1',
-            }}
-          >
-            <Player
-              src={'src/assets/lotties/purse.json'}
-              loop
-              autoplay
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-            ></Player>
-          </div>
-
+        <VoiceSearchWrapper>
+          <Player src={'src/assets/lotties/purse.json'} loop autoplay></Player>
           <MicContainer>
-            {keywords ? <span>{keywords}</span> : <span>듣고 있어요</span>}
+            {keywords ? (
+              <VoiceSearchText keywords={keywords}>{keywords}</VoiceSearchText>
+            ) : (
+              <VoiceSearchText keywords={keywords}>듣고 있어요</VoiceSearchText>
+            )}
             <MicIcon />
           </MicContainer>
-        </>
+        </VoiceSearchWrapper>
       ) : (
         <HomeSearchHistoryList />
       )}
@@ -173,9 +159,33 @@ const VoiceSearchWrapper = styled.div`
   height: 372px;
   top: 10%;
 `;
-        
+
 const MicContainer = styled.div`
-  position: inherit;
-  top: 150px;
-  right: -0.3px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const VoiceSearchText = styled.div<VoiceSearchProps>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -300%);
+  width: max-content;
+  min-width: 120px;
+  height: 35px;
+  border-radius: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => (props.keywords.length <= 0 ? 'transparent' : 'black')};
+  padding: 0 10px;
+  color: white;
+  font-size: 18px;
 `;
