@@ -13,7 +13,7 @@ import { ReactComponent as LineK4 } from '../../../assets/lines/line-K4.svg';
 import { ReactComponent as LineD1 } from '../../../assets/lines/line-D1.svg';
 
 import useAutofill from '../../../hooks/useAutofill';
-import { FC, SVGProps, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type SearchItemProps = {
   id?: string;
@@ -29,7 +29,9 @@ type StyledStatusProps = {
 
 const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
   const { handleAutofillClick } = useAutofill();
-  const [svg, setSVG] = useState<FC<SVGProps<SVGSVGElement>>>();
+  // const [svg, setSVG] = useState<FC<SVGProps<SVGSVGElement>>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [svg, setSVG] = useState<any>();
 
   useEffect(() => {
     switch (line) {
@@ -73,6 +75,10 @@ const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
         throw new Error(`Invalid Line Id ${line}`);
     }
   }, [line]);
+
+  useEffect(() => {
+    console.log(svg);
+  }, [svg]);
 
   return (
     <SearchItemWrapper id={id} onClick={handleAutofillClick} isFocus={isFocus}>
