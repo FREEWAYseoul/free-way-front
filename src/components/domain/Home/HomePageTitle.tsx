@@ -3,7 +3,7 @@ import PageTitle from '../../common/PageTitle';
 
 const HomePageTitle = () => {
   return (
-    <StyledHomePageTitleWrapper id='title-wrapper'>
+    <StyledHomePageTitleWrapper>
       <PageTitle upperLine='엘레베이터가' lowerLine='궁금한 지하철역은?' />
     </StyledHomePageTitleWrapper>
   );
