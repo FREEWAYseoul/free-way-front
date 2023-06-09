@@ -8,16 +8,16 @@ interface BadgeProps {
 }
 
 const Badge = ({ lineId, isActive, handleOnClick }: BadgeProps) => {
-  const color = STATION_LINE_COLORS[lineId] || 'red';
+  const color = STATION_LINE_COLORS[lineId];
 
   return (
     <StyledBadge
       $isActive={isActive}
-      $isText={typeof color.lineId === 'string'}
-      $color={color.color}
+      $isText={isNaN(Number(lineId))}
+      $color={color?.color}
       onClick={handleOnClick}
     >
-      {color.lineId}
+      {isNaN(Number(lineId)) ? color.lineName : lineId}
     </StyledBadge>
   );
 };
