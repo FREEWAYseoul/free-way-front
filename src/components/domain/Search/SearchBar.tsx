@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import Button from '../../common/Button';
 import { useSearchContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
+import { ReactComponent as ChevronIcon } from '../../../assets/icons/chevron.svg';
 import { useNavigate } from 'react-router-dom';
 import useMic from '../../../hooks/useMic';
 import useSearchBar from '../../../hooks/useSearchBar';
+import VoiceSearchField from '../Home/VoiceSearchField';
 
 type SearchBarProps = {
   placeholder: string;
@@ -13,18 +15,21 @@ type SearchBarProps = {
 } & PropsWithChildren;
 
 const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
-  const { keywords, inputRef } = useSearchContext();
+  const { keywords, inputRef, setKeywords } = useSearchContext();
   const { handleSubmit, handleTyping } = useSearchBar();
   const { startListening, endListening, isListening } = useMic();
   const navigate = useNavigate();
   const handleGoBack = () => {
+    setKeywords('');
     navigate('/');
   };
   return (
     <>
       <StyledSearchBarWrapper>
         <StyledLeftSection>
-          <Button handleClick={handleGoBack}>{'<'}</Button>
+          <Button handleClick={handleGoBack}>
+            <ChevronIcon style={{ width: '24px', height: '24px' }} />
+          </Button>
         </StyledLeftSection>
         <form
           onSubmit={handleSubmit}
@@ -41,12 +46,12 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
           />
         </form>
         <StyledRightSection>
-          <Button handleMouseDown={startListening} handleMouseUp={endListening}>
+          <Button handleClick={startListening}>
             <MicIcon />
           </Button>
         </StyledRightSection>
       </StyledSearchBarWrapper>
-      {isListening() && <p>{listeningMessage}</p>}
+      {isListening() && <VoiceSearchField />}
     </>
   );
 };
@@ -58,7 +63,7 @@ const StyledSearchBarWrapper = styled.div`
   top: 0;
 
   width: 100%;
-  max-width: 575px;
+  max-width: 375px;
   height: 75px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -66,6 +71,7 @@ const StyledSearchBarWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   grid-gap: 10px;
+  background-color: #ffffff;
 
   font-family: 'Pretendard';
   font-style: normal;
@@ -89,6 +95,7 @@ const StyledSearchBarInput = styled.input`
 `;
 
 const StyledRightSection = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -26,7 +26,7 @@ const Search = () => {
       content = <SearchList data={filteredStations} />;
     }
   } else if (!keywords && recentSearchHistory.length > 0) {
-    content = <SearchList data={recentSearchHistory} />;
+    content = <SearchList label='최근 기록' data={recentSearchHistory} />;
   } else {
     content = <div></div>;
   }
@@ -53,7 +53,7 @@ const Search = () => {
             <SearchLoading />
           </>
         ) : (
-          <ContentContainer>{content}</ContentContainer>
+          <>{content}</>
         )}
       </DropdownBox>
     </SearchWrapper>
@@ -65,25 +65,12 @@ export default Search;
 const SearchWrapper = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: #f2f4f6;
 `;
 
 const DropdownBox = styled.div`
   position: fixed;
   top: 75px;
-`;
-
-const ContentContainer = styled.div`
-  min-width: 375px;
-  height: 528px;
-  border-radius: 5px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: relative;
+  width: 100%;
+  max-height: 50%;
 `;

@@ -14,6 +14,6 @@ export default HomePageTitle;
 const StyledHomePageTitleWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  padding: 0 24px;
+  align-items: flex-end;
+  padding: 0 25px;
 `;

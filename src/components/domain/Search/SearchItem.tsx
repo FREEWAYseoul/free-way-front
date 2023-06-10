@@ -76,15 +76,30 @@ const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
     }
   }, [line]);
 
-  useEffect(() => {
-    console.log(svg);
-  }, [svg]);
+  const modifyStatus = (status: string) => {
+    switch (status) {
+      case '모두 사용 가능':
+        return '사용가능';
+      case '일부 사용 가능':
+        return '일부가능';
+      case '확인 불가':
+        return '확인불가';
+      case '모두 사용 불가능':
+        return '사용불가능';
+      default:
+        console.error('Invalid station status');
+    }
+  };
 
   return (
     <SearchItemWrapper id={id} onClick={handleAutofillClick} isFocus={isFocus}>
-      <Text>{name}</Text>
-      <Status status={status}>{status}</Status>
-      <StyledLineSVG>{svg}</StyledLineSVG>
+      <SearchItemLeftSection>
+        <Text>{name}</Text>
+        <Status status={status}>{modifyStatus(status)}</Status>
+      </SearchItemLeftSection>
+      <SearchItemRightSection>
+        <StyledLineSVG>{svg}</StyledLineSVG>
+      </SearchItemRightSection>
     </SearchItemWrapper>
   );
 };
@@ -92,29 +107,44 @@ const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
 export default SearchItem;
 
 const SearchItemWrapper = styled.li<{ isFocus?: boolean }>`
-  position: relative;
+  margin-bottom: 5px;
 
-  display: flex;
-  align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(217, 217, 217, 0.5);
-  text-decoration: none;
+  width: 100%;
+  height: 43px;
+  padding: 10px 20px;
+
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 
   cursor: pointer;
   &:hover {
     background-color: #edf5f5;
     cursor: pointer;
   }
-  background-color: ${(props) => (props.isFocus ? '#edf5f5' : '#fff')};
+  background-color: ${(props) => (props.isFocus ? '#edf5f5' : 'transparent')};
+`;
+
+const SearchItemLeftSection = styled.section`
+  display: flex;
+  align-items: center;
+`;
+
+const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #495074;
+  margin-right: 6px;
 `;
 
 const Status = styled.div<StyledStatusProps>`
   width: max-content;
-  padding: 0 10px;
+  padding: 4px 8px;
   height: 21px;
   border-radius: 30px;
   font-size: 12px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,25 +166,21 @@ const Status = styled.div<StyledStatusProps>`
           color: #96a1b2;
           background-color: rgba(203, 208, 217, 0.4);
         `;
-      case `사용 불가`:
+      case '모두 사용 불가능':
         return css`
           color:#E56E73,
           background-color: rgba(229, 110, 115, 0.2);
         `;
+      default:
+        console.error('Invalid station status');
     }
   }}
 `;
 
-const StyledLineSVG = styled.div`
-  position: absolute;
-  right: 0;
+const SearchItemRightSection = styled.section`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
-const Text = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  color: #495074;
-  margin-right: 10px;
-`;
+const StyledLineSVG = styled.div``;

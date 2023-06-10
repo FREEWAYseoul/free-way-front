@@ -60,8 +60,12 @@ const VoiceSearchText = styled.div<VoiceSearchProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.keywords.length <= 0 ? 'transparent' : 'black')};
+  background-color: ${(props) => (props.keywords.length <= 0 ? '#595959' : 'black')};
   padding: 0 10px;
   color: white;
   font-size: 18px;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  line-height: 21px;
 `;

@@ -20,9 +20,9 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
-  max-width: 475px;
+  max-width: 375px;
   width: 100%;
-  height: 100vh;
+  height: 817px;
   background-size: contain;
   background-repeat: no-repeat;
 `;

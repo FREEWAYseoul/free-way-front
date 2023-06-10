@@ -23,6 +23,6 @@ export const Text = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 1.8em;
-  line-height: 25px;
+  line-height: 30px;
   margin-bottom: 10px;
 `;

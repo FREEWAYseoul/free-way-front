@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
@@ -30,11 +30,11 @@ const Home = () => {
       startListening();
     }
   };
-  useEffect(() => {
-    if (keywords[keywords.length - 1] === '역') {
-      endListening();
-    }
-  }, [keywords, endListening]);
+  // useEffect(() => {
+  //   if (keywords[keywords.length - 1] === '역') {
+  //     endListening();
+  //   }
+  // }, [keywords, endListening]);
 
   return (
     <HomeWrapper id='home-container'>
@@ -57,7 +57,8 @@ const HomeWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr 3fr 4fr;
+  grid-template-rows: 1fr 2.1fr 2fr 4fr;
+  position: relative;
 `;
 const ChildrenWrapper = styled.div`
   display: flex;

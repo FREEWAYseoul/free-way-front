@@ -12,8 +12,8 @@ const SearchList = ({ label, data }: Props) => {
   const { autofillRef, selectedIdx } = useSearchContext();
 
   return (
-    <StyledListWrapper id='search-list-wrapper' ref={autofillRef}>
-      <StyledLabel>{label}</StyledLabel>
+    <StyledListWrapper ref={autofillRef}>
+      {label && <StyledLabel>{label}</StyledLabel>}
       {data.map((station, idx) => (
         <SearchItem
           key={station.stationId}
@@ -30,21 +30,18 @@ const SearchList = ({ label, data }: Props) => {
 
 export default SearchList;
 
-const StyledListWrapper = styled.ul`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  min-height: 240px;
-  max-height: 50%;
-  padding: 10px;
-  overflow-y: auto;
+const StyledListWrapper = styled.div`
+  overflow-y: hidden;
 `;
 
 const StyledLabel = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding: 13px 17px;
+
   color: #96a1b2;
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  line-height: 19px;
 `;
