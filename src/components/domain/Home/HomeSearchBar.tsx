@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
-import useMic from '../../../hooks/useMic';
 import { useNavigate } from 'react-router-dom';
 
-const HomeSearchBar = () => {
-  const { startListening } = useMic();
+type Props = {
+  handleClick: () => void;
+};
+
+const HomeSearchBar = ({ handleClick }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -14,7 +16,7 @@ const HomeSearchBar = () => {
           역이름을 입력해주세요.
         </TypingSearchSection>
         <VoiceSearchSection id='mic'>
-          <VoiceSearchButton onClick={startListening}>
+          <VoiceSearchButton onClick={handleClick}>
             <MicIcon />
           </VoiceSearchButton>
         </VoiceSearchSection>
@@ -72,6 +74,7 @@ const VoiceSearchSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 `;
 
 const VoiceSearchButton = styled.button`
