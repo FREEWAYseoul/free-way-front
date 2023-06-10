@@ -19,6 +19,7 @@ export interface ElevatorProps {
   elevatorId: number;
   elevatorCoordinate: CoordinateProps;
   elevatorStatus: '사용 가능' | '공사 중' | '보수 중' | '확인 불가';
+  exitNumber: number;
 }
 
 export interface StationProps {

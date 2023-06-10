@@ -117,7 +117,7 @@ const MapMarkerController = () => {
                 longitude: item.elevatorCoordinate.longitude,
               }}
             >
-              <ElevatorMarker text='EV' status={item.elevatorStatus} />
+              <ElevatorMarker text={item.exitNumber} status={item.elevatorStatus} />
             </CustomOverlay>
           ))}
         </div>
