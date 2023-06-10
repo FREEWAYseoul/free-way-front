@@ -6,7 +6,7 @@ const MapDetailView = ({ src, isDrag }: { src: string; isDrag: boolean }) => {
     <StyledMapDetailView>
       {src ? (
         <StyledImageWrapper $isDrag={isDrag}>
-          <img src={src} alt='내부지도' width={'100%'} />
+          <img src={src.replace('http', 'https')} alt='내부지도' width={'100%'} />
         </StyledImageWrapper>
       ) : (
         <StyledNotFound>
@@ -25,7 +25,8 @@ const StyledMapDetailView = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%;
   background-color: #f2f4f6;
   z-index: 50;
 `;
