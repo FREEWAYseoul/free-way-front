@@ -11,7 +11,8 @@ interface StationButtonProps {
 
 const StationButton = ({ title, isActive, children, handleChangeTab, tel }: StationButtonProps) => {
   const handleTelLinkClick = () => {
-    window.open(`tel:${tel}`, '_blank');
+    // window.open(`tel:${tel}`, '_blank');
+    document.location.href = `tel:${tel}`;
   };
 
   return (

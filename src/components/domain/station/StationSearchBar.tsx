@@ -43,7 +43,7 @@ const StyledStationSearchBar = styled.div`
   align-items: center;
   gap: 14px;
   top: 0;
-  padding: 0 13px;
+  padding: 0 23px 0 13px;
   height: 59px;
   width: 100%;
   background-color: #fff;

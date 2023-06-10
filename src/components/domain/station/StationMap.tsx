@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { STATION_LINE_COLORS } from '../../../constants/color';
 import StationTitle from '../../common/station/StationTitle';
 import { useResultContext } from './ResultContext';
+import { titleEclipse } from '../../../utils/format';
 
 interface StationMapProps {
   title: string;
@@ -17,13 +18,13 @@ const StationMap = ({ title, line }: StationMapProps) => {
       <div className='stationLine'>
         {station.previousStation?.stationName && (
           <span onClick={() => handleChangeStation(station.previousStation.stationId)}>
-            {station.previousStation.stationName}
+            {titleEclipse(station.previousStation.stationName)}
           </span>
         )}
         {station.branchStation?.stationName && (
           <span onClick={() => handleChangeStation(Number(station.branchStation?.stationId))}>
             {' '}
-            · {station.branchStation.stationName}
+            · {titleEclipse(station.branchStation.stationName)}
           </span>
         )}
       </div>
@@ -33,7 +34,7 @@ const StationMap = ({ title, line }: StationMapProps) => {
       <div className='stationLine'>
         {station.nextStation?.stationName && (
           <span onClick={() => handleChangeStation(station.nextStation.stationId)}>
-            {station.nextStation.stationName}
+            {titleEclipse(station.nextStation.stationName)}
           </span>
         )}
       </div>
