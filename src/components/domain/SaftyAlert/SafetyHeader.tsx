@@ -42,6 +42,7 @@ const StyledHeader = styled.div`
     position: absolute;
     top: 50%;
     left: 13px;
+    padding: 0;
     background: none;
     border: none;
     transform: translateY(-50%);
