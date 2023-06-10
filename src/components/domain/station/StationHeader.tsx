@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import CloseIcon from '../../../assets/icons/close.svg';
 import { useResultContext } from './ResultContext';
 import { useStationInfo } from '../../../api/stations';
 import { StationProps } from '../../../types/stationType';
 import { useEffect, useState } from 'react';
 import Badge from '../../common/station/Badge';
-import { useNavigate } from 'react-router-dom';
 
 interface BadgeProps {
   lineId: string | number;
@@ -13,22 +11,21 @@ interface BadgeProps {
 }
 
 const StationHeader = () => {
-  const navigate = useNavigate();
-  const { station, handleChangeStation } = useResultContext();
+  const { station, isDrag, handleChangeStation, handleShowInfo } = useResultContext();
   const { data: stationData, isLoading } = useStationInfo();
   const [badges, setBadges] = useState<BadgeProps[]>([]);
-
-  const handleMoveSearch = () => {
-    navigate('/search');
-  };
 
   useEffect(() => {
     if (!isLoading) {
       const filterStation = stationData.filter(
         (item: StationProps) => item.stationName === station.stationName
       );
+      const sortStation = filterStation.sort((a: StationProps, b: StationProps) =>
+        String(a.lineId).localeCompare(String(b.lineId))
+      );
+
       setBadges(
-        filterStation.map((item: StationProps) => ({
+        sortStation.map((item: StationProps) => ({
           lineId: item.lineId,
           stationId: item.stationId,
         }))
@@ -39,7 +36,10 @@ const StationHeader = () => {
 
   return (
     <StyledStationInfoHeader>
-      <div>
+      <div className='sliceBar' onClick={() => handleShowInfo(!isDrag)}>
+        <div className='bar'></div>
+      </div>
+      <div className='badgeBox'>
         {badges.length > 0 &&
           badges.map((item) => (
             <Badge
@@ -50,9 +50,6 @@ const StationHeader = () => {
             />
           ))}
       </div>
-      <button onClick={handleMoveSearch}>
-        <img src={CloseIcon} alt='닫기' />
-      </button>
     </StyledStationInfoHeader>
   );
 };
@@ -61,24 +58,29 @@ export default StationHeader;
 
 const StyledStationInfoHeader = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 12px 24px 12px 16px;
+  padding: 0 24px 12px 16px;
 
-  & > div {
+  & > .sliceBar {
+    cursor: pointer;
+    width: 100%;
+    padding: 6px 0px 3px 8px;
+    height: 13px;
+
+    & > .bar {
+      margin: 0 auto;
+      width: 15%;
+      height: 100%;
+      border-radius: 4px;
+      background-color: #989898;
+    }
+  }
+
+  & > .badgeBox {
     display: flex;
     align-items: center;
     gap: 9px;
-  }
-
-  & > button {
-    cursor: pointer;
-    background-color: inherit;
-    height: 100%;
-    border: none;
-    & > img {
-      width: auto;
-      height: 100%;
-    }
+    width: 100%;
   }
 `;

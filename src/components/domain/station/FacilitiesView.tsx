@@ -1,5 +1,14 @@
 import styled, { css } from 'styled-components';
 import { FacilitiesProps } from '../../../types/stationType';
+import { useEffect, useState } from 'react';
+
+interface NowDateProps {
+  month: number;
+  date: number;
+  hours: string | number;
+  minutes: string | number;
+  dayOfWeek: string;
+}
 
 const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
   const facilitiesData = [
@@ -95,9 +104,36 @@ const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
     },
   ];
 
+  const [nowDate, setNowDate] = useState<NowDateProps>({
+    month: 0,
+    date: 0,
+    hours: '0',
+    minutes: '0',
+    dayOfWeek: '0',
+  });
+
+  const nowDateFormat = () => {
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+
+    const now = new Date();
+
+    const month = now.getMonth() + 1;
+    const hours = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
+    const minutes = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
+    const date = now.getDate();
+    const dayOfWeek = week[now.getDay()];
+
+    return { month, date, hours, minutes, dayOfWeek };
+  };
+
+  useEffect(() => {
+    const date = nowDateFormat();
+    setNowDate(date);
+  }, []);
+
   return (
     <StyledFacilitiesView>
-      <div className='updateDate'>0/00 0요일 00:00 업데이트 완료</div>
+      <div className='updateDate'>{`${nowDate.month}/${nowDate.date} ${nowDate.dayOfWeek}요일 ${nowDate.hours}:${nowDate.minutes} 업데이트 완료`}</div>
       <StyledFacilitiesBox>
         {facilitiesData.map((item) => (
           <StyledFacilitiesItem
@@ -153,6 +189,7 @@ const StyledFacilitiesItem = styled.li<{ $isActive: boolean }>`
   align-items: center;
   gap: 8px;
   padding: 15px 20px;
+  font-weight: 600;
   color: ${({ $isActive }) => ($isActive ? '#434343' : 'rgba(67, 67, 67, 0.5)')};
   border-bottom: 1px solid #d9d9d9;
 
