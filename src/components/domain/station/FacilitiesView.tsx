@@ -100,10 +100,15 @@ const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
       <div className='updateDate'>0/00 0요일 00:00 업데이트 완료</div>
       <StyledFacilitiesBox>
         {facilitiesData.map((item) => (
-          <StyledFacilitiesItem key={item.name} $isActive={facilities[item.name]}>
+          <StyledFacilitiesItem
+            key={item.name}
+            $isActive={facilities ? facilities[item.name] : false}
+          >
             <span className='icon'>{item.icon}</span>
             {item.title}
-            <span className='status'>{facilities[item.name] ? '사용가능' : '사용불가'}</span>
+            <span className='status'>
+              {facilities ? (facilities[item.name] ? '사용가능' : '사용불가') : '사용불가'}
+            </span>
           </StyledFacilitiesItem>
         ))}
       </StyledFacilitiesBox>
