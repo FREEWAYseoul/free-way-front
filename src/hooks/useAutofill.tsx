@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { useSearchContext } from '../components/domain/Search/SearchContext';
 import useSearchBar from './useSearchBar';
+import { useNavigate } from 'react-router-dom';
+import useLocalStorage from './useLocalStorage';
 
 const useAutofill = () => {
   const {
@@ -14,6 +16,8 @@ const useAutofill = () => {
     setKeywords,
   } = useSearchContext();
   const { focusOnSearchInput } = useSearchBar();
+  const { addSearchHistory } = useLocalStorage();
+  const navigate = useNavigate();
 
   const handleAutofillClick = useCallback(
     (e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>) => {
@@ -22,8 +26,18 @@ const useAutofill = () => {
       setSelectedStationInfo(selectedStation[0]);
       setKeywords(selectedStation[0].stationName);
       focusOnSearchInput();
+      addSearchHistory();
+      navigate('/result');
     },
-    [focusOnSearchInput, matchingData, searchHistory, setKeywords, setSelectedStationInfo]
+    [
+      focusOnSearchInput,
+      addSearchHistory,
+      navigate,
+      matchingData,
+      searchHistory,
+      setKeywords,
+      setSelectedStationInfo,
+    ]
   );
 
   const handleKeydown = useCallback(
