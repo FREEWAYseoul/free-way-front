@@ -3,7 +3,7 @@ import PageTitle from '../../common/PageTitle';
 
 const HomePageTitle = () => {
   return (
-    <StyledHomePageTitleWrapper id='homepage-title-container'>
+    <StyledHomePageTitleWrapper>
       <PageTitle upperLine='엘레베이터가' lowerLine='궁금한 지하철역은?' />
     </StyledHomePageTitleWrapper>
   );
@@ -12,9 +12,8 @@ const HomePageTitle = () => {
 export default HomePageTitle;
 
 const StyledHomePageTitleWrapper = styled.div`
-  position: absolute;
-  left: 5.33%;
-  right: 5.33%;
-  top: 8.16%;
-  bottom: 61.97%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 24px;
 `;
