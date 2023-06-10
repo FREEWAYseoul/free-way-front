@@ -48,7 +48,7 @@ const StyledStationMap = styled.div<{ $color: string }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 25px 20px 20px;
 
   & > .stationTitleBox {
     cursor: pointer;
@@ -82,8 +82,8 @@ const StyledStationMap = styled.div<{ $color: string }>`
         left: 12px;
         height: 8px;
         width: 8px;
-        border-left: 1px solid #fff;
-        border-bottom: 1px solid #fff;
+        border-left: 1.5px solid #fff;
+        border-bottom: 1.5px solid #fff;
         background-color: initial;
         transform: translateY(-50%) rotate(45deg);
       }
@@ -99,8 +99,8 @@ const StyledStationMap = styled.div<{ $color: string }>`
         right: 12px;
         height: 8px;
         width: 8px;
-        border-left: 1px solid #fff;
-        border-bottom: 1px solid #fff;
+        border-left: 1.5px solid #fff;
+        border-bottom: 1.5px solid #fff;
         background-color: initial;
         transform: translateY(-50%) rotate(-135deg);
       }

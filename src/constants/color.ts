@@ -40,15 +40,15 @@ export const STATION_LINE_COLORS: StationColor = {
     color: '#C7A54E',
   },
   D1: {
-    lineName: '신분당선',
+    lineName: '신분당',
     color: '#BE4049',
   },
   K1: {
-    lineName: '수인분당선',
+    lineName: '수인분당',
     color: '#F7D055',
   },
   K4: {
-    lineName: '경의중앙선',
+    lineName: '경의중앙',
     color: '#82C9CB',
   },
 } as const;

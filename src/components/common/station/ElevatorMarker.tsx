@@ -58,17 +58,6 @@ const StyledElevatorMarker = styled.div<{ $status: string }>`
     }};
     transform: translateX(-50%);
     z-index: -90;
-    /* height: 15px; */
-    /* width: 15px; */
-    /* background-color: ${({ $status }) => {
-      if ($status === '사용 가능') {
-        return '#0EB000';
-      } else if ($status === '확인 불가') {
-        return '#565656';
-      } else {
-        return '#DB3535';
-      }
-    }}; */
   }
 `;
 
@@ -80,7 +69,7 @@ const StyledElevator = styled.div<{ $status: string }>`
   align-items: center;
   gap: 5px;
   left: 50%;
-  padding: 6px 12px;
+  padding: 6px 13px;
   border-radius: 30px;
   color: #fff;
   font-size: 15px;

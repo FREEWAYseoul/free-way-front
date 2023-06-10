@@ -58,7 +58,8 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     left: -4px;
     width: 1px;
     height: 60%;
-    background-color: #d9d9d9;
+    background-color: #000;
+    opacity: 0.25;
     z-index: 99;
   }
 
@@ -79,6 +80,7 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     ${({ $isActive }) =>
       $isActive &&
       css`
+        font-weight: 600;
         color: #316bff;
       `}
 
