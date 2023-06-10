@@ -10,7 +10,7 @@ const HomeSearchHistoryList = () => {
   if (recentSearchHistory.length) {
     content = <SearchList label='최근 검색' data={recentSearchHistory} />;
   } else {
-    content = <AdBox>이런 혜택은 어떠세요?</AdBox>;
+    content = <AdBox>최근 검색어가 없습니다.</AdBox>;
   }
 
   return <StyledHomeSearchListWrapper>{content}</StyledHomeSearchListWrapper>;
