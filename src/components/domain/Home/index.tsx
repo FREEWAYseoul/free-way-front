@@ -1,14 +1,10 @@
 import { useEffect } from 'react';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
 import { useSearchContext } from '../Search/SearchContext';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
-import HomeSearchHistoryList from './HomeSearchHistoryList';
 import useMic from '../../../hooks/useMic';
-import SafetyAlert from './SafteAlert';
-import VoiceSearchField from './VoiceSearchField';
 import SafetyAlert from './SafteAlert';
 import VoiceSearchField from './VoiceSearchField';
 
@@ -34,12 +30,7 @@ const Home = () => {
   return (
     <HomeWrapper id='home-container'>
       <SafetyAlert />
-      <SafetyAlert />
       <HomePageTitle />
-      <HomeSearchBar />
-      <ChildrenWrapper>
-        {isListening() ? <VoiceSearchField /> : <HomeSearchHistoryList />}
-      </ChildrenWrapper>
       <HomeSearchBar />
       <ChildrenWrapper>
         {isListening() ? <VoiceSearchField /> : <HomeSearchHistoryList />}
