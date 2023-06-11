@@ -43,7 +43,7 @@ export const useStationInfo = () => {
   });
 };
 
-export const fetchGetStation = async (stationId: number) => {
+export const fetchGetStation = async (stationId: string | number) => {
   try {
     const res = await axios({
       method: 'get',
