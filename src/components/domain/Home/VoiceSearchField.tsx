@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'react-lottie';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
+import animationDatan from '../../../assets/lotties/purse.json';
 import { useSearchContext } from '../Search/SearchContext';
 
 type VoiceSearchProps = {
@@ -9,9 +10,18 @@ type VoiceSearchProps = {
 
 const VoiceSearchField = () => {
   const { keywords } = useSearchContext();
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationDatan,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
+
   return (
     <VoiceSearchWrapper>
-      <Player src={'src/assets/lotties/purse.json'} loop autoplay></Player>
+      <Lottie options={defaultOptions} height={400} width={400} />
       <MicContainer>
         {keywords ? (
           <VoiceSearchText keywords={keywords}>{keywords}</VoiceSearchText>
