@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
 import CustomOverlay from '../../common/station/CustomOverlay';

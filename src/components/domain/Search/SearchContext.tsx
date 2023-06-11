@@ -15,7 +15,7 @@ import { Station } from '../../../api/stations';
 type SearchState = {
   keywords: string;
   searchHistory: Station[];
-  stationId: number;
+  stationId: string | number;
   autofillRef: RefObject<HTMLUListElement>;
   inputRef: RefObject<HTMLInputElement>;
   selectedIdx: number;
@@ -49,7 +49,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const value = {
     keywords,
     searchHistory,
-    stationId: selectedStationInfo ? Number(selectedStationInfo.stationId) : 150,
+    stationId: selectedStationInfo ? selectedStationInfo.stationId : 150,
     matchingData,
     autofillRef,
     inputRef,
