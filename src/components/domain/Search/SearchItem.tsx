@@ -168,7 +168,7 @@ const Status = styled.div<StyledStatusProps>`
         `;
       case '모두 사용 불가능':
         return css`
-          color:#E56E73,
+          color: #e56e73;
           background-color: rgba(229, 110, 115, 0.2);
         `;
       default:
