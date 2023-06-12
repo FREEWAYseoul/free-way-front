@@ -10,6 +10,7 @@ const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
   const navigate = useNavigate();
 
   const handleMoveHome = () => {
+    resetKeywords();
     navigate('/');
   };
 

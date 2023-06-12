@@ -24,7 +24,7 @@ export interface ElevatorProps {
 
 export interface StationProps {
   lineId: number;
-  stationId: number;
+  stationId: string;
   stationName: string;
   stationStatus: string;
   availableElevatorsNumber?: number;
@@ -49,7 +49,7 @@ export interface StationDetailProps extends StationInfoProps {
   facilities: FacilitiesProps;
   elevators: ElevatorProps[];
   transferStations: {
-    stationId: number;
+    stationId: string;
     lineId: string;
   }[];
 }

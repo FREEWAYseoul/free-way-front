@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { ReactComponent as NotiIcon } from '../../assets/icons/noti-icon.svg';
+import { ReactComponent as NotiIcon } from '../../assets/icons/하얀종.svg';
 
 type ToastMessageProps = {
   content: string;
@@ -15,7 +15,7 @@ const ToastMessage = ({ content, onClick, isOpen }: ToastMessageProps) => {
   return (
     <StyledToastMessageWrapper onClick={onClick} isOpen={isOpen}>
       <StyledToastMessageLeftSection>
-        <NotiIcon onClick={onClick} />
+        <NotiIcon style={{ width: '18px', height: '18px', fill: '#ffffff' }} onClick={onClick} />
       </StyledToastMessageLeftSection>
       <StyledToastMessageRightSection>
         <StyledToastMessageContent>{content}</StyledToastMessageContent>
@@ -56,17 +56,19 @@ const StyledToastMessageWrapper = styled.div<WrapperProps>`
   transform: translate(-50%, -50%);
 
   width: inherit;
-  max-width: 475px;
+  max-width: 335px;
+  margin: 0 20px;
   padding: 1rem 1.2rem;
   box-shadow: 0 0 15px 0 var(--black-40);
   background: rgba(78, 89, 104, 0.95);
   border-radius: 17.3333px;
   color: #ffffff;
+  font-weight: bold;
 
   display: flex;
   opacity: 0;
   animation-name: ${(props) => (props.isOpen ? fadeIn : fadeOut)};
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-fill-mode: forwards;
 `;
 
@@ -76,11 +78,14 @@ const StyledToastMessageLeftSection = styled.section`
   justify-content: flex-start;
   align-items: center;
   margin-right: 10px;
-  padding-top: 10px;
+  padding-top: 14px;
 `;
-const StyledToastMessageRightSection = styled.section``;
+const StyledToastMessageRightSection = styled.section`
+  width: 283px;
+`;
+
 const StyledToastMessageContent = styled.div`
-  line-height: 1.2;
+  line-height: 1.5;
   letter-spacing: 0.29px;
   margin-top: 0.6rem;
 `;

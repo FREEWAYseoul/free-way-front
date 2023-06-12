@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
-  max-width: 475px;
+  max-width: 375px;
   width: 100%;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);

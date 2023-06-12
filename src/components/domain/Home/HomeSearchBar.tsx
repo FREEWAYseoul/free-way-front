@@ -1,24 +1,26 @@
 import styled from 'styled-components';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
-import useMic from '../../../hooks/useMic';
 import { useNavigate } from 'react-router-dom';
 
-const HomeSearchBar = () => {
-  const { startListening } = useMic();
+type Props = {
+  handleClick: () => void;
+};
+
+const HomeSearchBar = ({ handleClick }: Props) => {
   const navigate = useNavigate();
 
   return (
     <Wrapper>
-      <StyledHomeSearchBarWrapper>
+      <StyledHomeSearchBar>
         <TypingSearchSection onClick={() => navigate('/search')}>
           역이름을 입력해주세요.
         </TypingSearchSection>
         <VoiceSearchSection id='mic'>
-          <VoiceSearchButton onClick={startListening}>
+          <VoiceSearchButton onClick={handleClick}>
             <MicIcon />
           </VoiceSearchButton>
         </VoiceSearchSection>
-      </StyledHomeSearchBarWrapper>
+      </StyledHomeSearchBar>
     </Wrapper>
   );
 };
@@ -28,10 +30,11 @@ export default HomeSearchBar;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 35px;
 `;
 
-const StyledHomeSearchBarWrapper = styled.div`
+const StyledHomeSearchBar = styled.div`
   width: 90%;
 
   display: grid;
@@ -47,6 +50,7 @@ const StyledHomeSearchBarWrapper = styled.div`
 const TypingSearchSection = styled.section`
   grid: 1;
 
+  padding-top: 2px;
   padding-left: 27px;
   display: flex;
   justify-content: flex-start;
@@ -72,6 +76,7 @@ const VoiceSearchSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 `;
 
 const VoiceSearchButton = styled.button`

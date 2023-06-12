@@ -38,6 +38,7 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
     setIsShow(flag);
   };
 
+
   const handleChangeStation = async (stationId: number | string) => {
     const res = await fetchGetStation(stationId);
     if (res) {

@@ -7,7 +7,7 @@ import Badge from '../../common/station/Badge';
 
 interface BadgeProps {
   lineId: string | number;
-  stationId: number;
+  stationId: string;
 }
 
 const StationHeader = () => {
