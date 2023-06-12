@@ -38,7 +38,7 @@ type SearchContext = SearchState & SearchAction;
 const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
-  const [keywords, setKeywords] = useState<string>('');
+  const [keywords, setKeywords] = useState<string | undefined>('');
   const [searchHistory, setSearchHistory] = useState<Station[]>([]);
   const [matchingData, setMatchingData] = useState<Station[]>([]);
   const [selectedStationInfo, setSelectedStationInfo] = useState<Station | undefined>();
@@ -64,10 +64,6 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     setMatchingData,
     setSearchHistory,
   };
-
-  useEffect(() => {
-    setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]'));
-  }, []);
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
 };

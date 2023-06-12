@@ -1,19 +1,8 @@
 import styled, { css } from 'styled-components';
-import { ReactComponent as Line1 } from '../../../assets/lines/line-1.svg';
-import { ReactComponent as Line2 } from '../../../assets/lines/line-2.svg';
-import { ReactComponent as Line3 } from '../../../assets/lines/line-3.svg';
-import { ReactComponent as Line4 } from '../../../assets/lines/line-4.svg';
-import { ReactComponent as Line5 } from '../../../assets/lines/line-5.svg';
-import { ReactComponent as Line6 } from '../../../assets/lines/line-6.svg';
-import { ReactComponent as Line7 } from '../../../assets/lines/line-7.svg';
-import { ReactComponent as Line8 } from '../../../assets/lines/line-8.svg';
-import { ReactComponent as Line9 } from '../../../assets/lines/line-9.svg';
-import { ReactComponent as LineK1 } from '../../../assets/lines/line-K1.svg';
-import { ReactComponent as LineK4 } from '../../../assets/lines/line-K4.svg';
-import { ReactComponent as LineD1 } from '../../../assets/lines/line-D1.svg';
-
-import useAutofill from '../../../hooks/useAutofill';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useSearchBar from '../../../hooks/useSearchBar';
+import { convertStationIdToSVG, modifyStatus } from '../../../utils/station';
 
 type SearchItemProps = {
   id?: string;
@@ -28,71 +17,28 @@ type StyledStatusProps = {
 };
 
 const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
-  const { handleAutofillClick } = useAutofill();
   // const [svg, setSVG] = useState<FC<SVGProps<SVGSVGElement>>>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [svg, setSVG] = useState<any>();
 
-  useEffect(() => {
-    switch (line) {
-      case '1':
-        setSVG(Line1);
-        return;
-      case '2':
-        setSVG(Line2);
-        return;
-      case '3':
-        setSVG(Line3);
-        return;
-      case '4':
-        setSVG(Line4);
-        return;
-      case '5':
-        setSVG(Line5);
-        return;
-      case '6':
-        setSVG(Line6);
-        return;
-      case '7':
-        setSVG(Line7);
-        return;
-      case '8':
-        setSVG(Line8);
-        return;
-      case '9':
-        setSVG(Line9);
-        return;
-      case 'K1':
-        setSVG(LineK1);
-        return;
-      case 'K4':
-        setSVG(LineK4);
-        return;
-      case 'D1':
-        setSVG(LineD1);
-        return;
-      default:
-        throw new Error(`Invalid Line Id ${line}`);
-    }
-  }, [line]);
+  const { selectStation, saveStation } = useSearchBar();
+  const navigate = useNavigate();
 
-  const modifyStatus = (status: string) => {
-    switch (status) {
-      case '모두 사용 가능':
-        return '사용가능';
-      case '일부 사용 가능':
-        return '일부가능';
-      case '확인 불가':
-        return '확인불가';
-      case '모두 사용 불가능':
-        return '사용불가능';
-      default:
-        console.error('Invalid station status');
-    }
+  const handleClick = (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>
+  ) => {
+    const selectedStation = selectStation(e.currentTarget.id);
+    if (!selectedStation) return;
+    saveStation(selectedStation);
+    navigate('/result');
   };
 
+  useEffect(() => {
+    setSVG(convertStationIdToSVG(line));
+  }, [line]);
+
   return (
-    <SearchItemWrapper id={id} onClick={handleAutofillClick} isFocus={isFocus}>
+    <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus}>
       <SearchItemLeftSection>
         <Text>{name}</Text>
         <Status status={status}>{modifyStatus(status)}</Status>
@@ -110,6 +56,7 @@ const SearchItemWrapper = styled.li<{ isFocus?: boolean }>`
   margin-bottom: 5px;
 
   width: 100%;
+  max-width: 375px;
   height: 43px;
   padding: 10px 20px;
 

@@ -5,19 +5,17 @@ import { useSearchContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
 import { ReactComponent as ChevronIcon } from '../../../assets/icons/chevron.svg';
 import { useNavigate } from 'react-router-dom';
-import useMic from '../../../hooks/useMic';
 import useSearchBar from '../../../hooks/useSearchBar';
-import VoiceSearchField from '../Home/VoiceSearchField';
 
 type SearchBarProps = {
   placeholder: string;
   listeningMessage?: string;
+  handleClick?: () => void;
 } & PropsWithChildren;
 
-const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
+const SearchBar = ({ placeholder, handleClick }: SearchBarProps) => {
   const { keywords, inputRef, setKeywords } = useSearchContext();
   const { handleSubmit, handleTyping } = useSearchBar();
-  const { startListening, endListening, isListening } = useMic();
   const navigate = useNavigate();
   const handleGoBack = () => {
     setKeywords('');
@@ -46,12 +44,11 @@ const SearchBar = ({ placeholder, listeningMessage }: SearchBarProps) => {
           />
         </form>
         <StyledRightSection>
-          <Button handleClick={startListening}>
+          <Button handleClick={handleClick}>
             <MicIcon />
           </Button>
         </StyledRightSection>
       </StyledSearchBarWrapper>
-      {isListening() && <VoiceSearchField />}
     </>
   );
 };

@@ -1,50 +1,48 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import SearchList from './SearchList';
 import SearchBar from './SearchBar';
 import { useSearchContext } from './SearchContext';
 import { useStationInfo } from '../../../api/stations';
-import { useEffect } from 'react';
 import useSearchBar from '../../../hooks/useSearchBar';
-import useLocalStorage from '../../../hooks/useLocalStorage';
 import SearchLoading from './SearchLoading';
 import ProgressBar from '../../common/ProgressBar';
-import NotFound from './NotFound';
+import useMic from '../../../hooks/useMic';
 
 const Search = () => {
-  const { keywords, filteredStations, setFilteredStations } = useSearchContext();
-  const { getMatchingData, focusOnSearchInput } = useSearchBar();
-  const { getFourRecentSearchHistory } = useLocalStorage();
+  const { keywords, setFilteredStations } = useSearchContext();
+  const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStationInfo();
-  const recentSearchHistory = getFourRecentSearchHistory();
+  const { startListening, endListening } = useMic();
+  const [isListening, setIsListening] = useState(false);
+  const content = convertKeywordsToContent(keywords, isListening);
 
-  let content = null;
-
-  if (keywords) {
-    if (!filteredStations.length) {
-      content = <NotFound>"{keywords}" 검색 결과가 없습니다.</NotFound>;
+  const handleClick = () => {
+    if (isListening) {
+      setIsListening((prev) => !prev);
+      endListening();
     } else {
-      content = <SearchList data={filteredStations} />;
+      setIsListening((prev) => !prev);
+      startListening();
     }
-  } else if (!keywords && recentSearchHistory.length > 0) {
-    content = <SearchList label='최근 기록' data={recentSearchHistory} />;
-  } else {
-    content = <div></div>;
-  }
+  };
 
   useEffect(() => {
-    if (data) {
-      const temp = getMatchingData(data);
-      setFilteredStations(temp);
+    if (keywords) {
+      const filteredStations = getFilteredStations(keywords);
+      setFilteredStations(filteredStations);
     }
+
     focusOnSearchInput();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keywords, data, getMatchingData]);
+  }, [keywords, data]);
 
   return (
     <SearchWrapper>
       <SearchBar
         placeholder='역이름을 입력해주세요.'
         listeningMessage='듣고 있습니다! 역이름을 말해주세요.'
+        handleClick={handleClick}
       />
       <DropdownBox>
         {isLoading ? (

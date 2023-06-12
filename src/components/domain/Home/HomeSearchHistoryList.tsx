@@ -1,14 +1,13 @@
 import SearchList from '../Search/SearchList';
 import styled from 'styled-components';
-import useLocalStorage from '../../../hooks/useLocalStorage';
+import { useSearchContext } from '../Search/SearchContext';
 
 const HomeSearchHistoryList = () => {
-  const { getFourRecentSearchHistory } = useLocalStorage();
-  const recentSearchHistory = getFourRecentSearchHistory();
+  const { searchHistory } = useSearchContext();
 
   let content = null;
-  if (recentSearchHistory.length) {
-    content = <SearchList label='최근 검색' data={recentSearchHistory} />;
+  if (searchHistory.length) {
+    content = <SearchList label='최근 검색' data={searchHistory} />;
   } else {
     content = <HomeNotFoundBox>최근 검색어가 없습니다.</HomeNotFoundBox>;
   }
