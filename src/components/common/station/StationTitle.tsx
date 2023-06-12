@@ -1,14 +1,7 @@
 import styled, { css } from 'styled-components';
 import Badge from './Badge';
 import { StationTitleProps } from '../../../types/stationType';
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const titleEclipse = (title: string) => {
-  if (title.length > 6) {
-    return [...title].splice(0, 6).join('') + '...';
-  }
-  return title;
-};
+import { titleEclipse } from '../../../utils/format';
 
 const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
   return (

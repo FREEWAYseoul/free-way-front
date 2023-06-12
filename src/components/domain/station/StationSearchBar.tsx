@@ -42,9 +42,9 @@ const StyledStationSearchBar = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
-  gap: 17px;
+  gap: 14px;
   top: 0;
-  padding: 0 20px;
+  padding: 0 23px 0 13px;
   height: 59px;
   width: 100%;
   background-color: #fff;
@@ -55,15 +55,18 @@ const StyledStationSearchBar = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0;
+    font-weight: bold;
     border: none;
     background-color: inherit;
   }
 
   & > p {
     cursor: pointer;
+    padding-top: 3px;
+    margin: 0;
     flex: 1;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 500;
   }
 `;

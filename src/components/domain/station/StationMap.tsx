@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { STATION_LINE_COLORS } from '../../../constants/color';
 import StationTitle from '../../common/station/StationTitle';
 import { useResultContext } from './ResultContext';
+import { titleEclipse } from '../../../utils/format';
 
 interface StationMapProps {
   title: string;
@@ -17,13 +18,13 @@ const StationMap = ({ title, line }: StationMapProps) => {
       <div className='stationLine'>
         {station.previousStation?.stationName && (
           <span onClick={() => handleChangeStation(station.previousStation.stationId)}>
-            {station.previousStation.stationName}
+            {titleEclipse(station.previousStation.stationName)}
           </span>
         )}
         {station.branchStation?.stationName && (
           <span onClick={() => handleChangeStation(Number(station.branchStation?.stationId))}>
             {' '}
-            · {station.branchStation.stationName}
+            · {titleEclipse(station.branchStation.stationName)}
           </span>
         )}
       </div>
@@ -33,7 +34,7 @@ const StationMap = ({ title, line }: StationMapProps) => {
       <div className='stationLine'>
         {station.nextStation?.stationName && (
           <span onClick={() => handleChangeStation(station.nextStation.stationId)}>
-            {station.nextStation.stationName}
+            {titleEclipse(station.nextStation.stationName)}
           </span>
         )}
       </div>
@@ -48,7 +49,7 @@ const StyledStationMap = styled.div<{ $color: string }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 25px 20px 20px;
 
   & > .stationTitleBox {
     cursor: pointer;
@@ -82,8 +83,8 @@ const StyledStationMap = styled.div<{ $color: string }>`
         left: 12px;
         height: 8px;
         width: 8px;
-        border-left: 1px solid #fff;
-        border-bottom: 1px solid #fff;
+        border-left: 1.5px solid #fff;
+        border-bottom: 1.5px solid #fff;
         background-color: initial;
         transform: translateY(-50%) rotate(45deg);
       }
@@ -99,8 +100,8 @@ const StyledStationMap = styled.div<{ $color: string }>`
         right: 12px;
         height: 8px;
         width: 8px;
-        border-left: 1px solid #fff;
-        border-bottom: 1px solid #fff;
+        border-left: 1.5px solid #fff;
+        border-bottom: 1.5px solid #fff;
         background-color: initial;
         transform: translateY(-50%) rotate(-135deg);
       }

@@ -26,21 +26,28 @@ export default Badge;
 
 const StyledBadge = styled.span<{ $isActive: boolean; $isText: boolean; $color: string }>`
   cursor: pointer;
-  padding: 1px 6px 0;
+  padding: 0 6px;
   min-width: 20px;
   height: 20px;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 20px;
   text-align: center;
   background-color: #fff;
+  border: 1.5px solid ${({ $color }) => $color};
 
-  ${({ $isText }) =>
-    !$isText &&
-    css`
-      padding: 1px 2px 0;
-      width: 20px;
-    `}
+  ${({ $isText }) => {
+    return !$isText
+      ? css`
+          padding: 0 2px;
+          width: 20px;
+        `
+      : css`
+          font-size: 0.75rem;
+          font-weight: 600;
+          line-height: 1.2rem;
+        `;
+  }}
 
   ${({ $isActive, $color }) => {
     return $isActive
@@ -50,7 +57,6 @@ const StyledBadge = styled.span<{ $isActive: boolean; $isText: boolean; $color: 
         `
       : css`
           color: ${$color};
-          border: 1px solid ${$color};
         `;
   }}
 `;
