@@ -13,7 +13,7 @@ export interface ReactContextValueProps {
   isDrag: boolean;
   isShow: boolean;
   handleChangeTab: (arg1: string) => void;
-  handleChangeStation: (arg1: number) => void;
+  handleChangeStation: (arg1: string) => void;
   handleShowInfo: (arg1: boolean) => void;
   handleShowController: (arg1: boolean) => void;
 }
@@ -38,7 +38,7 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
     setIsShow(flag);
   };
 
-  const handleChangeStation = async (stationId: number) => {
+  const handleChangeStation = async (stationId: string) => {
     const res = await fetchGetStation(stationId);
     if (res) {
       setStation(res);
