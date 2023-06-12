@@ -14,7 +14,13 @@ const useMic = () => {
       setKeywords(result);
     },
     onEnd: () => {
-      // if (keywords) navigate('/search');
+      const selectedStation = selectStationByKeywords(keywords);
+      if (!selectedStation) {
+        alert('일치하는 역이 없습니다! 다시 한 번 말씀해주세요!');
+        return;
+      }
+      saveStation(selectedStation);
+      navigate('/result');
     },
   });
 
@@ -23,18 +29,11 @@ const useMic = () => {
     listen({ lang: 'ko-KR' });
     const timer = setTimeout(() => {
       stop();
-      const selectedStation = selectStationByKeywords(keywords);
-      if (!selectedStation) {
-        alert('일치하는 역이 없습니다! 다시 한 번 말씀해주세요!');
-        return;
-      }
-      saveStation(selectedStation);
-      navigate('/result');
     }, 3000);
     return () => {
       clearTimeout(timer);
     };
-  }, [setKeywords, listen, stop, selectStationByKeywords, keywords, saveStation, navigate]);
+  }, [setKeywords, listen, stop]);
 
   const endListening = useCallback(() => {
     stop();
