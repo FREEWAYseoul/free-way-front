@@ -25,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]').slice(-4));
-  }, []);
+  }, [setSearchHistory]);
 
   return (
     <HomeWrapper id='home-container'>

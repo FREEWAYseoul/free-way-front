@@ -6,7 +6,6 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from 'react';
