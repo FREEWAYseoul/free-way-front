@@ -21,13 +21,13 @@ const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [svg, setSVG] = useState<any>();
 
-  const { selectStation, saveStation } = useSearchBar();
+  const { selectStationById, saveStation } = useSearchBar();
   const navigate = useNavigate();
 
   const handleClick = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>
   ) => {
-    const selectedStation = selectStation(e.currentTarget.id);
+    const selectedStation = selectStationById(e.currentTarget.id);
     if (!selectedStation) return;
     saveStation(selectedStation);
     navigate('/result');
