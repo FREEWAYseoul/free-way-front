@@ -3,7 +3,6 @@ import { STATION_LINE_COLORS } from '../../../constants/color';
 import StationTitle from '../../common/station/StationTitle';
 import { useResultContext } from './ResultContext';
 import { titleEclipse } from '../../../utils/format';
-import { useEffect } from 'react';
 
 interface StationMapProps {
   title: string;
