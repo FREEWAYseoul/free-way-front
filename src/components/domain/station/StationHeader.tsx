@@ -60,7 +60,7 @@ const StyledStationInfoHeader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 24px 12px 16px;
+  padding: 0 24px 11px 16px;
 
   & > .sliceBar {
     cursor: pointer;
