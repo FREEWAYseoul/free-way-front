@@ -32,7 +32,7 @@ export interface StationProps {
 }
 
 export interface StationInfoProps {
-  stationId: number;
+  stationId: number | string;
   stationName: string;
 }
 

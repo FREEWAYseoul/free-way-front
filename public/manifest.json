@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "프리웨이",
-  "short_name": "프리웨이",
+  "name": "FREEWAY",
+  "short_name": "FREEWAY",
   "icons": [
     {
       "src": "/images/android-icon-36x36.png",

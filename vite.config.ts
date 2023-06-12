@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         // target: 'http://116.123.68.210:8080',
-        target: 'http://Free-Way-env.eba-hd2dnvmn.ap-northeast-2.elasticbeanstalk.com',
+        target: 'http://freeway.ap-northeast-2.elasticbeanstalk.com',
         changeOrigin: true,
         secure: false,
       },
