@@ -22,7 +22,7 @@ const StationMap = ({ title, line }: StationMapProps) => {
           </span>
         )}
         {station.branchStation?.stationName && (
-          <span onClick={() => handleChangeStation(Number(station.branchStation?.stationId))}>
+          <span onClick={() => handleChangeStation(station.branchStation?.stationId as string)}>
             {' '}
             · {titleEclipse(station.branchStation.stationName)}
           </span>

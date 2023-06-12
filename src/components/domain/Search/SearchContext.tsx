@@ -14,7 +14,7 @@ import { Station } from '../../../api/stations';
 type SearchState = {
   keywords: string;
   searchHistory: Station[];
-  stationId: number;
+  stationId: string;
   matchingData: Station[];
   selectedStationInfo: Station | undefined;
   filteredStations: Station[];
@@ -37,7 +37,7 @@ type SearchContext = SearchState & SearchAction;
 const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
-  const [keywords, setKeywords] = useState<string | undefined>('');
+  const [keywords, setKeywords] = useState<string>('');
   const [searchHistory, setSearchHistory] = useState<Station[]>([]);
   const [matchingData, setMatchingData] = useState<Station[]>([]);
   const [selectedStationInfo, setSelectedStationInfo] = useState<Station | undefined>();
@@ -49,7 +49,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const value = {
     keywords,
     searchHistory,
-    stationId: selectedStationInfo ? selectedStationInfo.stationId : 150,
+    stationId: selectedStationInfo ? selectedStationInfo.stationId : '150',
     matchingData,
     selectedStationInfo,
     selectedIdx,

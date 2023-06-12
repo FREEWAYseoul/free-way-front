@@ -30,7 +30,9 @@ const SearchList = ({ label, data }: Props) => {
 
 export default SearchList;
 
-const StyledListWrapper = styled.div`
+const StyledListWrapper = styled.ul`
+  padding: 0;
+  margin: 0;
   overflow-y: hidden;
 `;
 
