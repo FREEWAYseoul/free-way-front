@@ -16,11 +16,12 @@ type SearchState = {
   keywords: string;
   searchHistory: Station[];
   stationId: number;
+  matchingData: Station[];
+  selectedStationInfo: Station | undefined;
+  filteredStations: Station[];
+  selectedIdx: number;
   autofillRef: RefObject<HTMLUListElement>;
   inputRef: RefObject<HTMLInputElement>;
-  selectedIdx: number;
-  matchingData: Station[];
-  filteredStations: Station[];
 };
 
 type SearchAction = {
@@ -37,10 +38,10 @@ type SearchContext = SearchState & SearchAction;
 const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
-  const [keywords, setKeywords] = useState<string>('');
+  const [keywords, setKeywords] = useState<string | undefined>('');
   const [searchHistory, setSearchHistory] = useState<Station[]>([]);
   const [matchingData, setMatchingData] = useState<Station[]>([]);
-  const [selectedStationInfo, setSelectedStationInfo] = useState<Station>();
+  const [selectedStationInfo, setSelectedStationInfo] = useState<Station | undefined>();
   const [filteredStations, setFilteredStations] = useState<Station[] | []>([]);
   const [selectedIdx, setSelectedIdx] = useState<number>(-1);
   const autofillRef = useRef<HTMLUListElement>(null);
@@ -51,10 +52,11 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     searchHistory,
     stationId: selectedStationInfo ? Number(selectedStationInfo.stationId) : 150,
     matchingData,
-    autofillRef,
-    inputRef,
+    selectedStationInfo,
     selectedIdx,
     filteredStations,
+    autofillRef,
+    inputRef,
     setSelectedIdx,
     setSelectedStationInfo,
     setKeywords,
@@ -62,10 +64,6 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
     setMatchingData,
     setSearchHistory,
   };
-
-  useEffect(() => {
-    setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]'));
-  }, []);
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
 };
