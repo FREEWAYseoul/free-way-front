@@ -1,21 +1,22 @@
 import { useCallback } from 'react';
-import { useSearchContext } from '../components/domain/Search/SearchContext';
+import { Station } from '../api/stations';
 
 const useLocalStorage = () => {
-  const { searchHistory, filteredStations, setSearchHistory } = useSearchContext();
-  const addSearchHistory = useCallback(() => {
-    if (!filteredStations) {
-      return;
-    }
-    setSearchHistory([...searchHistory, ...filteredStations]);
-    localStorage.setItem('최근 검색', JSON.stringify([...searchHistory, ...filteredStations]));
-  }, [filteredStations, searchHistory, setSearchHistory]);
-
-  const getFourRecentSearchHistory = () => {
-    return searchHistory.filter((v) => v !== null).slice(0, 4);
+  const removeDuplication = (selectedStationInfo: Station, data: Station[]) => {
+    return data.filter((station) => station.stationId !== selectedStationInfo.stationId);
   };
 
-  return { addSearchHistory, getFourRecentSearchHistory };
+  const addSearchHistory = useCallback((selectedStationInfo: Station) => {
+    if (!selectedStationInfo || selectedStationInfo == undefined) {
+      return;
+    }
+    const data = JSON.parse(localStorage.getItem('최근 검색') || '[]');
+    const dataWithoutDuplication = removeDuplication(selectedStationInfo, data);
+    const newData = [...dataWithoutDuplication, selectedStationInfo];
+    localStorage.setItem('최근 검색', JSON.stringify(newData));
+  }, []);
+
+  return { addSearchHistory };
 };
 
 export default useLocalStorage;

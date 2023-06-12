@@ -11,7 +11,8 @@ interface StationButtonProps {
 
 const StationButton = ({ title, isActive, children, handleChangeTab, tel }: StationButtonProps) => {
   const handleTelLinkClick = () => {
-    window.open(`tel:${tel}`, '_blank');
+    // window.open(`tel:${tel}`, '_blank');
+    document.location.href = `tel:${tel}`;
   };
 
   return (
@@ -58,7 +59,8 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     left: -4px;
     width: 1px;
     height: 60%;
-    background-color: #d9d9d9;
+    background-color: #000;
+    opacity: 0.25;
     z-index: 99;
   }
 
@@ -79,6 +81,7 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     ${({ $isActive }) =>
       $isActive &&
       css`
+        font-weight: 600;
         color: #316bff;
       `}
 

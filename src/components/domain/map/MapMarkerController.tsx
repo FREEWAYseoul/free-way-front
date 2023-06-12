@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
 import CustomOverlay from '../../common/station/CustomOverlay';
@@ -14,6 +14,7 @@ const MapMarkerController = () => {
     useResultContext();
   const { kakaoMap, stationMarkers, elevatorMarkers, setStationMarker, myMarker, setMyMarker } =
     useMap();
+  const [isMyPostion, setIsMyPosition] = useState<boolean>(false);
 
   /**
    * station marker move
@@ -25,28 +26,20 @@ const MapMarkerController = () => {
     handleShowController(true);
   };
 
-  useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', setStationMarker);
+  const handleMoveMyPosition = () => {
+    if (!isMyPostion) {
+      setIsMyPosition(true);
+    } else if (myMarker) {
+      kakaoMap.setCenter(
+        new kakao.maps.LatLng(
+          Number(myMarker?.getPosition().getLat()),
+          Number(myMarker?.getPosition().getLng())
+        )
+      );
+    }
+  };
 
-    return () => {
-      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', setStationMarker);
-    };
-  }, [stationMarkers]);
-
-  useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
-    return () => {
-      kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
-    };
-  }, [isShow]);
-
-  useEffect(() => {
-    moveStation(station.stationCoordinate.latitude, station.stationCoordinate.longitude);
-  }, [station]);
-
-  useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
-
+  const initMyMarker = () => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -69,25 +62,90 @@ const MapMarkerController = () => {
       }
     );
 
+    return watchId;
+  };
+
+  useEffect(() => {
+    let watchId = 0;
+    if (isMyPostion) {
+      watchId = initMyMarker();
+    }
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+    };
+  }, [isMyPostion]);
+
+  useEffect(() => {
+    if (myMarker) {
+      kakaoMap.setCenter(
+        new kakao.maps.LatLng(
+          Number(myMarker?.getPosition().getLat()),
+          Number(myMarker?.getPosition().getLng())
+        )
+      );
+    }
+  }, [myMarker]);
+
+  useEffect(() => {
+    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', setStationMarker);
+
+    return () => {
+      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', setStationMarker);
+    };
+  }, [stationMarkers]);
+
+  useEffect(() => {
+    kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
+    return () => {
+      kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
+    };
+  }, [isShow]);
+
+  useEffect(() => {
+    moveStation(station.stationCoordinate.latitude, station.stationCoordinate.longitude);
+  }, [station]);
+
+  // useEffect(() => {
+  //   const watchId = navigator.geolocation.watchPosition(
+  //     (position) => {
+  //       const { latitude, longitude } = position.coords;
+  //       const currentPosition = new kakao.maps.LatLng(latitude, longitude);
+
+  //       if (!myMarker) {
+  //         // 마커 생성
+  //         const newMarker = new kakao.maps.CustomOverlay({
+  //           position: currentPosition,
+  //           content: `<img src="${MyMarkerIcon}" />`,
+  //         });
+  //         newMarker.setMap(kakaoMap);
+  //         setMyMarker(newMarker);
+  //       } else {
+  //         myMarker.setPosition(currentPosition);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+
+  //   return () => {
+  //     myMarker?.setMap(null);
+  //     navigator.geolocation.clearWatch(watchId);
+  //   };
+  // }, [myMarker]);
+
+  useEffect(() => {
+    kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
     return () => {
       myMarker?.setMap(null);
       kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
-      navigator.geolocation.clearWatch(watchId);
     };
-  }, [myMarker]);
+  }, []);
 
   return (
     <>
-      <StyledMyMarker
-        onClick={() =>
-          kakaoMap.setCenter(
-            new kakao.maps.LatLng(
-              Number(myMarker?.getPosition().getLat()),
-              Number(myMarker?.getPosition().getLng())
-            )
-          )
-        }
-      >
+      <StyledMyMarker onClick={handleMoveMyPosition}>
         <img src={TargetIcon} />
       </StyledMyMarker>
       {stationMarkers.length > 0 && (
@@ -136,8 +194,8 @@ const StyledMyMarker = styled.div`
   align-items: center;
   left: 17px;
   bottom: 260px;
-  width: 37px;
-  height: 37px;
+  width: 44px;
+  height: 44px;
   border-radius: 7px;
   border: 0.833333px solid #f3f3f3;
   background-color: #fff;

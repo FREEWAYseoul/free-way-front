@@ -4,8 +4,7 @@ import AlertItem from './AlertItem';
 const SafetyAlertBox = () => {
   return (
     <StyledSafetyAlrertBox>
-      <h1>6/8 목요일</h1>
-      <AlertItem />
+      <h1>2023년 6월 10일 수요일</h1>
       <AlertItem />
       <AlertItem />
     </StyledSafetyAlrertBox>
@@ -15,11 +14,12 @@ const SafetyAlertBox = () => {
 export default SafetyAlertBox;
 
 const StyledSafetyAlrertBox = styled.div`
+  padding: 0 20px;
+
   & > h1 {
     display: flex;
     align-items: center;
     margin: 0;
-    padding-left: 16px;
     height: 40px;
     color: rgba(0, 0, 0, 0.5);
     font-size: 1.125rem;

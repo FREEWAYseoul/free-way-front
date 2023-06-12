@@ -8,6 +8,8 @@ const GlobalStyle = createGlobalStyle`
   html,
   body {
     overflow: hidden;
+    font-family: 'Pretendard';
+    font-style: normal;
   }
 
   * {

@@ -11,7 +11,7 @@ const HomeSearchBar = ({ handleClick }: Props) => {
 
   return (
     <Wrapper>
-      <StyledHomeSearchBarWrapper>
+      <StyledHomeSearchBar>
         <TypingSearchSection onClick={() => navigate('/search')}>
           역이름을 입력해주세요.
         </TypingSearchSection>
@@ -20,7 +20,7 @@ const HomeSearchBar = ({ handleClick }: Props) => {
             <MicIcon />
           </VoiceSearchButton>
         </VoiceSearchSection>
-      </StyledHomeSearchBarWrapper>
+      </StyledHomeSearchBar>
     </Wrapper>
   );
 };
@@ -30,10 +30,11 @@ export default HomeSearchBar;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 35px;
 `;
 
-const StyledHomeSearchBarWrapper = styled.div`
+const StyledHomeSearchBar = styled.div`
   width: 90%;
 
   display: grid;
@@ -49,6 +50,7 @@ const StyledHomeSearchBarWrapper = styled.div`
 const TypingSearchSection = styled.section`
   grid: 1;
 
+  padding-top: 2px;
   padding-left: 27px;
   display: flex;
   justify-content: flex-start;

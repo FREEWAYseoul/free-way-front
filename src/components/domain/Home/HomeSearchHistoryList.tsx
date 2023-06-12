@@ -1,16 +1,15 @@
 import SearchList from '../Search/SearchList';
 import styled from 'styled-components';
-import useLocalStorage from '../../../hooks/useLocalStorage';
+import { useSearchContext } from '../Search/SearchContext';
 
 const HomeSearchHistoryList = () => {
-  const { getFourRecentSearchHistory } = useLocalStorage();
-  const recentSearchHistory = getFourRecentSearchHistory();
+  const { searchHistory } = useSearchContext();
 
   let content = null;
-  if (recentSearchHistory.length) {
-    content = <SearchList label='최근 검색' data={recentSearchHistory} />;
+  if (searchHistory.length) {
+    content = <SearchList label='최근 검색' data={searchHistory} />;
   } else {
-    content = <AdBox>이런 혜택은 어떠세요?</AdBox>;
+    content = <HomeNotFoundBox>최근 검색어가 없습니다.</HomeNotFoundBox>;
   }
 
   return <StyledHomeSearchListWrapper>{content}</StyledHomeSearchListWrapper>;
@@ -26,7 +25,7 @@ const StyledHomeSearchListWrapper = styled.div`
   max-height: 220px;
 `;
 
-const AdBox = styled.div`
+const HomeNotFoundBox = styled.div`
   width: 100%;
   height: 100%;
 

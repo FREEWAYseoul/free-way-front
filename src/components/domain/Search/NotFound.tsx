@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const NotFound = ({ children }: PropsWithChildren) => {
   return (
-    <Wrapper>
+    <Wrapper id='not-found'>
       <IconWrapper>
         <NotFoundIcon />
       </IconWrapper>
@@ -17,8 +17,12 @@ const NotFound = ({ children }: PropsWithChildren) => {
 export default NotFound;
 
 const Wrapper = styled.div`
+  width: 100%;
+  height: 50vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const IconWrapper = styled.div`

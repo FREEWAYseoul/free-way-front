@@ -3,29 +3,70 @@ import { Station } from '../api/stations';
 import { useSearchContext } from '../components/domain/Search/SearchContext';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from './useLocalStorage';
+import NotFound from '../components/domain/Search/NotFound';
+import SearchList from '../components/domain/Search/SearchList';
+import VoiceSearchField from '../components/domain/Home/VoiceSearchField';
+import { useStationInfo } from '../api/stations';
 
 const useSearchBar = () => {
   const navigate = useNavigate();
-  const { keywords, filteredStations, inputRef, setKeywords, setMatchingData } = useSearchContext();
+  const {
+    keywords,
+    filteredStations,
+    inputRef,
+    searchHistory,
+    setKeywords,
+    setSelectedStationInfo,
+  } = useSearchContext();
+  const { data } = useStationInfo();
   const { addSearchHistory } = useLocalStorage();
 
-  const getMatchingData = useCallback(
-    (data: Station[]) => {
-      const character = keywords?.replace('역', '').trim();
-      const matchingData = data.filter(
-        (data: Station) => character && data.stationName.includes(character)
-      );
-      setMatchingData(matchingData);
-      return matchingData;
-    },
-    [keywords, setMatchingData]
-  );
-
+  // 실행되는 곳: 모든 페이지 검색 input onChange시
   const handleTyping = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setKeywords(e.target.value);
     },
     [setKeywords]
+  );
+
+  // 함수 설명: 서버에서 받아온 데이터 중 keywords를 포함하는 데이터만 골라 반환하는 함수.
+  // 실행되는 곳: Search 페이지 useEffect시
+  const getFilteredStations = useCallback(
+    (keywords: string) => {
+      const character = keywords?.replace('역', '').trim();
+      const filteredStations = data.filter(
+        (data: Station) => character && data.stationName.includes(character)
+      );
+      return filteredStations;
+    },
+    [data]
+  );
+
+  // 함수 설명: 키워드를 포함하는 데이터 or 로컬 데이터 중 dropdownbox에서 선택한 것과 같은 데이터만 반환하는 함수
+  const selectStationById = useCallback(
+    (id: string) => {
+      const data = filteredStations.length ? filteredStations : searchHistory;
+      const selectedStation = data.filter((station) => station.stationId === id).at(-1);
+      return selectedStation;
+    },
+    [filteredStations, searchHistory]
+  );
+
+  const selectStationByKeywords = useCallback(
+    (keywords: string) => {
+      return getFilteredStations(keywords)[0];
+    },
+    [getFilteredStations]
+  );
+
+  // 함수 설명: 클릭 or submit된 역 정보를 저장(로컬과 리액트내)
+  const saveStation = useCallback(
+    (selectedStation: Station) => {
+      setSelectedStationInfo(selectedStation);
+      addSearchHistory(selectedStation);
+      setKeywords(selectedStation?.stationName);
+    },
+    [addSearchHistory, setKeywords, setSelectedStationInfo]
   );
 
   const handleSubmit = useCallback(
@@ -36,22 +77,57 @@ const useSearchBar = () => {
         return;
       } else {
         e.preventDefault();
-        addSearchHistory();
+        const selectedStation = selectStationByKeywords(keywords);
+        if (!selectedStation) return;
+        saveStation(selectedStation);
         navigate('/result');
       }
     },
-    [navigate, addSearchHistory, inputRef, filteredStations]
+    [inputRef, filteredStations.length, selectStationByKeywords, keywords, saveStation, navigate]
   );
-  const focusOnSearchInput = () => {
+
+  const focusOnSearchInput = useCallback(() => {
     const el: HTMLInputElement | null = document.querySelector('#search-bar');
     if (el) el.focus();
-  };
+  }, []);
 
   const resetKeywords = () => {
     setKeywords('');
   };
 
-  return { getMatchingData, handleSubmit, focusOnSearchInput, resetKeywords, handleTyping };
+  const convertKeywordsToContent = (keywords: string, isListening: boolean) => {
+    let content = <div></div>;
+
+    if (keywords) {
+      if (!filteredStations.length) {
+        content = <NotFound>"{keywords}" 검색 결과가 없습니다.</NotFound>;
+      } else {
+        content = <SearchList data={filteredStations} />;
+      }
+    } else if (!keywords && searchHistory.length > 0) {
+      content = <SearchList label='최근 기록' data={searchHistory} />;
+    } else {
+      content = <div></div>;
+    }
+
+    if (isListening) {
+      content = <VoiceSearchField />;
+    }
+
+    return content;
+  };
+
+  return {
+    handleTyping,
+    handleSubmit,
+    selectStationById,
+    selectStationByKeywords,
+    saveStation,
+    resetKeywords,
+    focusOnSearchInput,
+    getFilteredStations,
+    convertKeywordsToContent,
+  };
 };
 
 export default useSearchBar;

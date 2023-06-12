@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import NotFoundIcon from '../../../assets/icons/not-found.svg';
 
-const MapDetailView = ({ src }: { src: string }) => {
+const MapDetailView = ({ src, isDrag }: { src: string; isDrag: boolean }) => {
   return (
     <StyledMapDetailView>
       {src ? (
-        <StyledImageWrapper>
-          <img src={src} alt='내부지도' width={'100%'} />
+        <StyledImageWrapper $isDrag={isDrag}>
+          <img src={src.replace('http', 'https')} alt='내부지도' width={'100%'} />
         </StyledImageWrapper>
       ) : (
         <StyledNotFound>
@@ -25,16 +25,21 @@ const StyledMapDetailView = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%;
   background-color: #f2f4f6;
   z-index: 50;
 `;
 
-const StyledImageWrapper = styled.div`
+const StyledImageWrapper = styled.div<{ $isDrag: boolean }>`
   position: absolute;
-  top: 100px;
+  top: 90px;
   overflow: auto;
-  height: 45%;
+  height: ${({ $isDrag }) => {
+    return $isDrag ? css`calc(100% - 230px)` : css`calc(100% - 350px)`;
+  }};
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s;
 
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */

@@ -16,7 +16,7 @@ export default SafetyContents;
 const StyledContents = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 23px;
+  gap: 20px;
   height: calc(100% - 50px);
   padding-bottom: 80px;
   overflow: auto;
