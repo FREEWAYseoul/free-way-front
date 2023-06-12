@@ -55,9 +55,6 @@ const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean; $lev
     color: ${({ $color }) => $color};
     transform: translateX(-50%);
     z-index: 90;
-    /* height: 15px;
-    width: 15px; */
-    /* background-color: ${({ $color }) => $color}; */
   }
 `;
 

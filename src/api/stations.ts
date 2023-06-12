@@ -38,12 +38,12 @@ export const useStationInfo = () => {
     staleTime: Infinity,
     // enabled: !!keywords,
     // select: (data) =>{ data.filter(0, 10)},
-    onSuccess: (data) => console.log(data),
+    // onSuccess: (data) => console.log(data),
     onError: (e: Error) => console.log(e.message),
   });
 };
 
-export const fetchGetStation = async (stationId: number) => {
+export const fetchGetStation = async (stationId: string | number) => {
   try {
     const res = await axios({
       method: 'get',

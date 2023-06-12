@@ -6,7 +6,6 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -50,7 +49,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const value = {
     keywords,
     searchHistory,
-    stationId: selectedStationInfo ? Number(selectedStationInfo.stationId) : 150,
+    stationId: selectedStationInfo ? selectedStationInfo.stationId : 150,
     matchingData,
     selectedStationInfo,
     selectedIdx,
