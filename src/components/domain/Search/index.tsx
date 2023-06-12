@@ -72,5 +72,6 @@ const DropdownBox = styled.div`
   position: fixed;
   top: 75px;
   width: 100%;
+  max-width: 375px;
   max-height: 50%;
 `;
