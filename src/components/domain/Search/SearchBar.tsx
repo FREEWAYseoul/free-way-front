@@ -63,7 +63,7 @@ const StyledSearchBarWrapper = styled.div`
   width: 100%;
   max-width: 375px;
   height: 75px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   display: grid;
@@ -73,7 +73,7 @@ const StyledSearchBarWrapper = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 1.125rem;
 `;
 
 const StyledLeftSection = styled.div`
@@ -89,7 +89,10 @@ const StyledSearchBarInput = styled.input`
   max-width: 300px;
   border: none;
   outline: none;
+  padding-top: 3px;
   padding-left: 11px;
+  font-weight: 500;
+  line-height: 20px;
 `;
 
 const StyledRightSection = styled.div`
