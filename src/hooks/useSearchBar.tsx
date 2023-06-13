@@ -7,6 +7,7 @@ import NotFound from '../components/domain/Search/NotFound';
 import SearchList from '../components/domain/Search/SearchList';
 import VoiceSearchField from '../components/domain/Home/VoiceSearchField';
 import { useStationInfo } from '../api/stations';
+import useAutocomplete from './useAutocomplete';
 
 const useSearchBar = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const useSearchBar = () => {
     setSelectedStationInfo,
   } = useSearchContext();
   const { data } = useStationInfo();
+  const { autocomplete } = useAutocomplete();
   const { addSearchHistory } = useLocalStorage();
 
   // 실행되는 곳: 모든 페이지 검색 input onChange시
@@ -34,12 +36,14 @@ const useSearchBar = () => {
   const getFilteredStations = useCallback(
     (keywords: string) => {
       const character = keywords?.replace('역', '').trim();
-      const filteredStations = data.filter(
-        (data: Station) => character && data.stationName.includes(character)
+      const wordsStartingWithKeywords = autocomplete.searchPrefix(character);
+      const filteredStations = data.filter((station: Station) =>
+        wordsStartingWithKeywords.includes(station.stationName)
       );
+
       return filteredStations;
     },
-    [data]
+    [autocomplete, data]
   );
 
   // 함수 설명: 키워드를 포함하는 데이터 or 로컬 데이터 중 dropdownbox에서 선택한 것과 같은 데이터만 반환하는 함수
