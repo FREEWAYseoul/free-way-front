@@ -20,14 +20,14 @@ const StationButton = ({ title, isActive, children, handleChangeTab, tel }: Stat
       {tel ? (
         <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
           <div className='wrapper' onClick={handleTelLinkClick}>
-            {children}
+            <div className='iconWrapper'>{children}</div>
             <p>{title}</p>
           </div>
         </StyledButton>
       ) : (
         <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
           <div className='wrapper'>
-            {children}
+            <div className='iconWrapper'>{children}</div>
             <p>{title}</p>
           </div>
         </StyledButton>
@@ -52,18 +52,6 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     padding-bottom: 100%;
   }
 
-  &:not(:first-child)::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -4px;
-    width: 1px;
-    height: 60%;
-    background-color: #000;
-    opacity: 0.25;
-    z-index: 99;
-  }
-
   & .wrapper {
     cursor: pointer;
     position: absolute;
@@ -78,21 +66,42 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     color: #808080;
     background-color: #fff;
 
-    ${({ $isActive }) =>
-      $isActive &&
-      css`
-        font-weight: 600;
-        color: #316bff;
-      `}
+    & > .iconWrapper {
+      position: relative;
+      width: 100%;
 
-    & > svg {
-      max-height: 34px;
-      width: 34px;
-      /* height: auto; */
+      ${({ $isActive }) =>
+        $isActive &&
+        css`
+          font-weight: 600;
+          color: #316bff;
+        `}
+
+      & > svg {
+        max-height: 34px;
+        width: 34px;
+        /* height: auto; */
+      }
     }
 
     & > P {
       margin: 0;
+    }
+  }
+
+  &:not(:first-child) {
+    & .iconWrapper {
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -5.5px;
+        width: 1px;
+        height: 90%;
+        background-color: #000;
+        opacity: 0.25;
+        z-index: 99;
+      }
     }
   }
 `;
