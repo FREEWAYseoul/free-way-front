@@ -13,6 +13,7 @@ export const useMap = () => {
   const [myMarker, setMyMarker] = useState<kakao.maps.CustomOverlay | null>(null);
   const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
   const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>(station.elevators);
+  const [isMyPostion, setIsMyPosition] = useState<boolean>(false);
 
   if (!kakaoMap) {
     throw new Error('map이 존재하지 않습니다.');
@@ -57,6 +58,19 @@ export const useMap = () => {
     }
   };
 
+  const handleMoveMyPosition = () => {
+    if (!isMyPostion) {
+      setIsMyPosition(true);
+    } else if (myMarker) {
+      kakaoMap.setCenter(
+        new kakao.maps.LatLng(
+          Number(myMarker?.getPosition().getLat()),
+          Number(myMarker?.getPosition().getLng())
+        )
+      );
+    }
+  };
+
   useEffect(() => {
     if (!isLoading) {
       setStationMarker();
@@ -67,6 +81,17 @@ export const useMap = () => {
     setElevatorMarkers(station.elevators);
   }, [station]);
 
+  useEffect(() => {
+    if (myMarker) {
+      kakaoMap.setCenter(
+        new kakao.maps.LatLng(
+          Number(myMarker?.getPosition().getLat()),
+          Number(myMarker?.getPosition().getLng())
+        )
+      );
+    }
+  }, [myMarker]);
+
   return {
     kakaoMap,
     stationMarkers,
@@ -74,5 +99,7 @@ export const useMap = () => {
     elevatorMarkers,
     myMarker,
     setMyMarker,
+    isMyPostion,
+    handleMoveMyPosition,
   };
 };
