@@ -25,7 +25,7 @@ const StationSearchBar = ({ station }: { station: StationDetailProps }) => {
 
   return (
     <StyledStationSearchBar>
-      <button onClick={handleMoveHome}>
+      <button className='backBtn' onClick={handleMoveHome}>
         <img src={BackArrowIcon} alt='뒤로가기' />
       </button>
       <p onClick={handleMoveSearch}>{station.stationName}</p>
@@ -42,13 +42,13 @@ const StyledStationSearchBar = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 13px;
   top: 0;
   padding: 0 23px 0 13px;
-  height: 59px;
+  height: 75px;
   width: 100%;
   background-color: #fff;
-  box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 99;
 
   & button {
@@ -59,6 +59,15 @@ const StyledStationSearchBar = styled.div`
     font-weight: bold;
     border: none;
     background-color: inherit;
+  }
+
+  & .backBtn {
+    padding-left: 2px;
+
+    & > img {
+      width: 32px;
+      height: 36px;
+    }
   }
 
   & > p {
