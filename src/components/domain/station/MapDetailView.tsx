@@ -1,11 +1,14 @@
 import styled, { css } from 'styled-components';
 import NotFoundIcon from '../../../assets/icons/not-found.svg';
+import { SLIDER_RANGE } from '../../../constants/slide';
 
-const MapDetailView = ({ src, isDrag }: { src: string; isDrag: boolean }) => {
+const MapDetailView = ({ src, tabPosition }: { src: string; tabPosition: number }) => {
+  const position = SLIDER_RANGE.max - tabPosition;
+
   return (
     <StyledMapDetailView>
       {src ? (
-        <StyledImageWrapper $isDrag={isDrag}>
+        <StyledImageWrapper $tabPosition={230 + position}>
           <img src={src.replace('http', 'https')} alt='내부지도' width={'100%'} />
         </StyledImageWrapper>
       ) : (
@@ -25,19 +28,16 @@ const StyledMapDetailView = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  /* height: 100vh; */
   height: 100%;
   background-color: #f2f4f6;
   z-index: 50;
 `;
 
-const StyledImageWrapper = styled.div<{ $isDrag: boolean }>`
+const StyledImageWrapper = styled.div<{ $tabPosition: number }>`
   position: absolute;
   top: 90px;
   overflow: auto;
-  height: ${({ $isDrag }) => {
-    return $isDrag ? css`calc(100% - 230px)` : css`calc(100% - 350px)`;
-  }};
+  height: ${({ $tabPosition }) => css`calc(100% - ${$tabPosition}px)`};
   border: 1px solid #d9d9d9;
   transition: all 0.3s;
 
