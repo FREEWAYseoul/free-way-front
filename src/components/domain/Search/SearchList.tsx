@@ -6,9 +6,10 @@ import { useSearchContext } from './SearchContext';
 type Props = {
   label?: string;
   data: Station[];
+  type?: 'homepage' | 'searchpage';
 };
 
-const SearchList = ({ label, data }: Props) => {
+const SearchList = ({ label, data, type }: Props) => {
   const { autofillRef, selectedIdx } = useSearchContext();
 
   return (
@@ -22,6 +23,7 @@ const SearchList = ({ label, data }: Props) => {
           status={station.stationStatus}
           line={station.lineId}
           isFocus={selectedIdx === idx ? true : false}
+          type={type}
         />
       ))}
     </StyledListWrapper>

@@ -7,12 +7,15 @@ import useSearchBar from '../../../hooks/useSearchBar';
 import SearchLoading from './SearchLoading';
 import ProgressBar from '../../common/ProgressBar';
 import useMic from '../../../hooks/useMic';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const Search = () => {
   const { keywords, setFilteredStations } = useSearchContext();
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStationInfo();
   const { startListening, endListening } = useMic();
+  const { displaySearchHistoryInOrder } = useLocalStorage();
+
   const [isListening, setIsListening] = useState(false);
   const content = convertKeywordsToContent(keywords, isListening);
 
@@ -27,6 +30,8 @@ const Search = () => {
   };
 
   useEffect(() => {
+    displaySearchHistoryInOrder();
+
     if (keywords) {
       const filteredStations = getFilteredStations(keywords);
       setFilteredStations(filteredStations);
@@ -35,7 +40,7 @@ const Search = () => {
     focusOnSearchInput();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keywords, data]);
+  }, [keywords, data, displaySearchHistoryInOrder]);
 
   return (
     <SearchWrapper>
