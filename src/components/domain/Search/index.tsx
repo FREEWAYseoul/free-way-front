@@ -7,14 +7,16 @@ import useSearchBar from '../../../hooks/useSearchBar';
 import SearchLoading from './SearchLoading';
 import ProgressBar from '../../common/ProgressBar';
 import useMic from '../../../hooks/useMic';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const Search = () => {
-  const { keywords, setFilteredStations, searchHistory, setSearchHistory } = useSearchContext();
+  const { keywords, setFilteredStations, searchHistory } = useSearchContext();
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStationInfo();
   const { startListening, endListening } = useMic();
   const [isListening, setIsListening] = useState(false);
   const content = convertKeywordsToContent(keywords, isListening);
+  const { displaySearchHistoryInOrder } = useLocalStorage();
 
   const handleClick = () => {
     if (isListening) {
@@ -27,7 +29,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]').slice(-4));
+    displaySearchHistoryInOrder();
 
     if (keywords) {
       const filteredStations = getFilteredStations(keywords);
