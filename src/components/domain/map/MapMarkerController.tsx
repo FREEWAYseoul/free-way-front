@@ -53,10 +53,10 @@ const MapMarkerController = () => {
   }, [station]);
 
   useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
+    kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(false));
     return () => {
       myMarker?.setMap(null);
-      kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(true));
+      kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(false));
     };
   }, []);
 
@@ -87,7 +87,6 @@ const MapMarkerController = () => {
         navigator.geolocation.clearWatch(watchId);
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMyPostion, myMarker]);
 
   return (

@@ -7,11 +7,11 @@ import Badge from '../../common/station/Badge';
 
 interface BadgeProps {
   lineId: string | number;
-  stationId: string;
+  stationId: string | number;
 }
 
 const StationHeader = () => {
-  const { station, isDrag, handleChangeStation, handleShowInfo } = useResultContext();
+  const { station, isTabPostion, handleChangeStation, handleShowInfo } = useResultContext();
   const { data: stationData, isLoading } = useStationInfo();
   const [badges, setBadges] = useState<BadgeProps[]>([]);
 
@@ -36,7 +36,7 @@ const StationHeader = () => {
 
   return (
     <StyledStationInfoHeader>
-      <div className='sliceBar' onClick={() => handleShowInfo(!isDrag)}>
+      <div className='sliceBar' onClick={() => handleShowInfo(isTabPostion)}>
         <div className='bar'></div>
       </div>
       <div className='badgeBox'>
