@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSearchBar from '../../../hooks/useSearchBar';
 import { convertStationIdToSVG, modifyStatus } from '../../../utils/station';
+import { useSearchContext } from './SearchContext';
 
 type SearchItemProps = {
   id?: string;
@@ -21,7 +22,7 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
   // const [svg, setSVG] = useState<FC<SVGProps<SVGSVGElement>>>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [svg, setSVG] = useState<any>();
-
+  const { keywords } = useSearchContext();
   const { selectStationById, saveStation } = useSearchBar();
   const navigate = useNavigate();
 
@@ -34,6 +35,10 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
     navigate('/result');
   };
 
+  const isKeyword = (char: string) => {
+    return keywords.includes(char);
+  };
+
   useEffect(() => {
     setSVG(convertStationIdToSVG(line));
   }, [line]);
@@ -41,7 +46,11 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
   return (
     <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus} type={type}>
       <SearchItemLeftSection>
-        <Text>{name}</Text>
+        <Text>
+          {name.split('').map((c) => (
+            <Char isKeyword={isKeyword(c)}>{c}</Char>
+          ))}
+        </Text>
         <Status status={status}>{modifyStatus(status)}</Status>
       </SearchItemLeftSection>
       <SearchItemRightSection>
@@ -70,8 +79,7 @@ const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'se
     cursor: pointer;
   }
   background-color: ${(props) => (props.isFocus ? '#edf5f5' : 'transparent')};
-
-  border-bottom: ${(props) => props.type === 'searchpage' && '1px solid rgba(217, 217, 217,0.5)'};
+  border-bottom: ${(props) => props.type !== 'homepage' && '1px solid rgba(217, 217, 217,0.5)'};
 `;
 
 const SearchItemLeftSection = styled.section`
@@ -84,8 +92,13 @@ const Text = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  color: #495074;
+  color: rgba(73, 80, 116, 0.5);
+
   margin-right: 6px;
+`;
+
+const Char = styled.span<{ isKeyword?: boolean }>`
+  color: ${(props) => (props.isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
 `;
 
 const Status = styled.div<StyledStatusProps>`

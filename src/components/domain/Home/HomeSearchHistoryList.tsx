@@ -7,7 +7,7 @@ const HomeSearchHistoryList = () => {
 
   let content = null;
   if (searchHistory.length) {
-    content = <SearchList label='최근 검색' data={searchHistory} />;
+    content = <SearchList label='최근 검색' type='homepage' data={searchHistory} />;
   } else {
     content = <HomeNotFoundBox>최근 검색어가 없습니다.</HomeNotFoundBox>;
   }
