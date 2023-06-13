@@ -1,14 +1,21 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import StationMap from './StationMap';
 import StationButtonGroup from './StationButtonGroup';
 import { useResultContext } from './ResultContext';
 import StationHeader from './StationHeader';
 
 const StationInfoBox = () => {
-  const { station, isDrag, isShow } = useResultContext();
+  const { station, isShow, tabPosition, handleTouchStart, handleTouchMove, handleTouchEnd } =
+    useResultContext();
 
   return (
-    <StyledStationInfoBox $isDrag={isDrag} $isShow={isShow}>
+    <StyledStationInfoBox
+      $isShow={isShow}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      style={{ transform: `translateY(${tabPosition}px)` }}
+    >
       <StationHeader />
       <Divider />
       <StationMap title={station.stationName} line={station.lineId} />
@@ -19,7 +26,7 @@ const StationInfoBox = () => {
 
 export default StationInfoBox;
 
-const StyledStationInfoBox = styled.div<{ $isDrag: boolean; $isShow: boolean }>`
+const StyledStationInfoBox = styled.div<{ $isShow: boolean }>`
   position: absolute;
   display: ${({ $isShow }) => ($isShow ? 'flex' : 'none')};
   flex-direction: column;
@@ -33,12 +40,6 @@ const StyledStationInfoBox = styled.div<{ $isDrag: boolean; $isShow: boolean }>`
   z-index: 99;
   transition: all 0.3s;
   box-shadow: 0px 0px 13.3333px rgba(68, 81, 69, 0.1);
-
-  ${({ $isDrag }) =>
-    $isDrag &&
-    css`
-      bottom: -120px;
-    `}
 `;
 
 const Divider = styled.div`

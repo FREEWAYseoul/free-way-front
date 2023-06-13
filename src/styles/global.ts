@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
     font-family: 'Pretendard';
     font-style: normal;
+    overscroll-behavior: none;
   }
 
   * {

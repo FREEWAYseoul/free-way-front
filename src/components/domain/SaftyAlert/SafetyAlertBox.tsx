@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import AlertItem from './AlertItem';
+import { SafetyAlertItemProps, SafetyAlertProps } from '../../../types/alertType';
 
-const SafetyAlertBox = () => {
+const SafetyAlertBox = ({ info }: { info: SafetyAlertProps }) => {
   return (
     <StyledSafetyAlrertBox>
-      <h1>2023년 6월 10일 수요일</h1>
-      <AlertItem />
-      <AlertItem />
+      <h1>{info.date}</h1>
+      {info.contents.map((item: SafetyAlertItemProps) => (
+        <AlertItem key={item.date} info={item} />
+      ))}
     </StyledSafetyAlrertBox>
   );
 };
