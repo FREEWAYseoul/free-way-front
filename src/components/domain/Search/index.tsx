@@ -9,7 +9,7 @@ import ProgressBar from '../../common/ProgressBar';
 import useMic from '../../../hooks/useMic';
 
 const Search = () => {
-  const { keywords, setFilteredStations } = useSearchContext();
+  const { keywords, setFilteredStations, searchHistory, setSearchHistory } = useSearchContext();
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStationInfo();
   const { startListening, endListening } = useMic();
@@ -27,6 +27,8 @@ const Search = () => {
   };
 
   useEffect(() => {
+    setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]').slice(-4));
+
     if (keywords) {
       const filteredStations = getFilteredStations(keywords);
       setFilteredStations(filteredStations);
@@ -35,7 +37,7 @@ const Search = () => {
     focusOnSearchInput();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keywords, data]);
+  }, [keywords, data, searchHistory]);
 
   return (
     <SearchWrapper>
