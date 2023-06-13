@@ -88,7 +88,6 @@ const StyledSearchBarInput = styled.input`
   max-width: 300px;
   border: none;
   outline: none;
-  padding-left: 5%;
 `;
 
 const StyledRightSection = styled.div`

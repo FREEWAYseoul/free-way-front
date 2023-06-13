@@ -12,7 +12,7 @@ export default ProgressBar;
 
 const ProgressBarContainer = styled.div`
   width: 100%;
-  height: 1px;
+  height: 4px;
   background-color: #f2f2f2;
   border-radius: 5px;
   overflow: hidden;
@@ -20,7 +20,7 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBarFill = styled.div`
   height: 100%;
-  background-color: #3498db;
+  background-color: #316bff;
   animation: progress-animation 1s linear infinite;
   @keyframes progress-animation {
     0% {
