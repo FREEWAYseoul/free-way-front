@@ -7,16 +7,17 @@ import useSearchBar from './useSearchBar';
 const useMic = () => {
   const navigate = useNavigate();
   const { keywords, setKeywords } = useSearchContext();
-  const { selectStationByKeywords, saveStation } = useSearchBar();
+  const { selectStationByKeywords, saveStation, resetKeywords } = useSearchBar();
 
   const { listen, stop, listening } = useSpeechRecognition({
     onResult: (result: string) => {
-      setKeywords(result);
+      setKeywords(result.replace(' ', ''));
     },
     onEnd: () => {
       const selectedStation = selectStationByKeywords(keywords);
       if (!selectedStation) {
         alert('일치하는 역이 없습니다! 다시 한 번 말씀해주세요!');
+        resetKeywords();
         return;
       }
       saveStation(selectedStation);
@@ -25,7 +26,7 @@ const useMic = () => {
   });
 
   const startListening = useCallback(() => {
-    setKeywords('');
+    resetKeywords();
     listen({ lang: 'ko-KR' });
     const timer = setTimeout(() => {
       stop();
@@ -33,7 +34,7 @@ const useMic = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [setKeywords, listen, stop]);
+  }, [listen, resetKeywords, stop]);
 
   const endListening = useCallback(() => {
     stop();

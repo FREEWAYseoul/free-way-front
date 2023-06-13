@@ -10,7 +10,7 @@ import useMic from '../../../hooks/useMic';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const Search = () => {
-  const { keywords, setFilteredStations, searchHistory } = useSearchContext();
+  const { keywords, setFilteredStations } = useSearchContext();
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStationInfo();
   const { startListening, endListening } = useMic();
