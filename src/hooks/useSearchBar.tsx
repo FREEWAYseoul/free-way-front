@@ -105,7 +105,7 @@ const useSearchBar = () => {
         content = <SearchList data={filteredStations} />;
       }
     } else if (!keywords && searchHistory.length > 0) {
-      content = <SearchList label='최근 기록' data={searchHistory} />;
+      content = <SearchList label='최근 기록' type={'searchpage'} data={searchHistory} />;
     } else {
       content = <div></div>;
     }

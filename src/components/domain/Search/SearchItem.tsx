@@ -10,13 +10,14 @@ type SearchItemProps = {
   status: string;
   line?: string;
   isFocus?: boolean;
+  type?: 'homepage' | 'searchpage';
 };
 
 type StyledStatusProps = {
   status: string;
 };
 
-const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
+const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) => {
   // const [svg, setSVG] = useState<FC<SVGProps<SVGSVGElement>>>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [svg, setSVG] = useState<any>();
@@ -38,7 +39,7 @@ const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
   }, [line]);
 
   return (
-    <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus}>
+    <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus} type={type}>
       <SearchItemLeftSection>
         <Text>{name}</Text>
         <Status status={status}>{modifyStatus(status)}</Status>
@@ -52,7 +53,7 @@ const SearchItem = ({ name, status, id, line, isFocus }: SearchItemProps) => {
 
 export default SearchItem;
 
-const SearchItemWrapper = styled.li<{ isFocus?: boolean }>`
+const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
   margin-bottom: 5px;
 
   width: 100%;
@@ -69,6 +70,8 @@ const SearchItemWrapper = styled.li<{ isFocus?: boolean }>`
     cursor: pointer;
   }
   background-color: ${(props) => (props.isFocus ? '#edf5f5' : 'transparent')};
+
+  border-bottom: ${(props) => props.type === 'searchpage' && '1px solid rgba(217, 217, 217,0.5)'};
 `;
 
 const SearchItemLeftSection = styled.section`

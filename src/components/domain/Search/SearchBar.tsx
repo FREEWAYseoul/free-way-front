@@ -28,21 +28,22 @@ const SearchBar = ({ placeholder, handleClick }: SearchBarProps) => {
           <Button handleClick={handleGoBack}>
             <ChevronIcon style={{ width: '24px', height: '24px' }} />
           </Button>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <StyledSearchBarInput
+              id='search-bar'
+              value={keywords || ''}
+              type='text'
+              placeholder={placeholder}
+              onChange={handleTyping}
+              // onKeyDown={handleKeydown}
+              ref={inputRef}
+            />
+          </form>
         </StyledLeftSection>
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        >
-          <StyledSearchBarInput
-            id='search-bar'
-            value={keywords || ''}
-            type='text'
-            placeholder={placeholder}
-            onChange={handleTyping}
-            // onKeyDown={handleKeydown}
-            ref={inputRef}
-          />
-        </form>
+
         <StyledRightSection>
           <Button handleClick={handleClick}>
             <MicIcon />
@@ -66,8 +67,7 @@ const StyledSearchBarWrapper = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
-  grid-gap: 10px;
+  grid-template-columns: 8fr 2fr;
   background-color: #ffffff;
 
   font-family: 'Pretendard';
@@ -78,8 +78,9 @@ const StyledSearchBarWrapper = styled.div`
 
 const StyledLeftSection = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: flex-start;
+  padding-left: 13px;
 `;
 
 const StyledSearchBarInput = styled.input`
@@ -88,7 +89,7 @@ const StyledSearchBarInput = styled.input`
   max-width: 300px;
   border: none;
   outline: none;
-  padding-left: 5%;
+  padding-left: 11px;
 `;
 
 const StyledRightSection = styled.div`

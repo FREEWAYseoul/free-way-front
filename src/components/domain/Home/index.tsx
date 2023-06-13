@@ -6,12 +6,12 @@ import HomeSearchHistoryList from './HomeSearchHistoryList';
 import useMic from '../../../hooks/useMic';
 import SafetyAlert from './SafteAlert';
 import VoiceSearchField from './VoiceSearchField';
-import { useSearchContext } from '../Search/SearchContext';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const Home = () => {
-  const { setSearchHistory } = useSearchContext();
   const { startListening, endListening } = useMic();
   const [isListening, setIsListening] = useState(false);
+  const { displaySearchHistoryInOrder } = useLocalStorage();
 
   const handleClick = () => {
     if (isListening) {
@@ -24,8 +24,8 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setSearchHistory(JSON.parse(localStorage.getItem('최근 검색') || '[]').slice(-4));
-  }, [setSearchHistory]);
+    displaySearchHistoryInOrder();
+  }, [displaySearchHistoryInOrder]);
 
   return (
     <HomeWrapper id='home-container'>
