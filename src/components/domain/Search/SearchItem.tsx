@@ -47,8 +47,10 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
     <SearchItemWrapper id={id} onClick={handleClick} isFocus={isFocus} type={type}>
       <SearchItemLeftSection>
         <Text>
-          {name.split('').map((c) => (
-            <Char isKeyword={isKeyword(c)}>{c}</Char>
+          {name.split('').map((c, idx) => (
+            <Char key={idx} isKeyword={isKeyword(c)}>
+              {c}
+            </Char>
           ))}
         </Text>
         <Status status={status}>{modifyStatus(status)}</Status>
@@ -63,15 +65,15 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
 export default SearchItem;
 
 const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
-  margin-bottom: 5px;
-
   width: 100%;
   max-width: 375px;
-  height: 43px;
+  height: 57px;
   padding: 10px 20px;
+  font-weight: 600;
 
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   cursor: pointer;
   &:hover {
@@ -108,9 +110,7 @@ const Status = styled.div<StyledStatusProps>`
   border-radius: 30px;
   font-size: 12px;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   cursor: pointer;
   ${(props) => {
     switch (props.status) {
@@ -146,4 +146,11 @@ const SearchItemRightSection = styled.section`
   align-items: center;
 `;
 
-const StyledLineSVG = styled.div``;
+const StyledLineSVG = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 28px;
+  min-height: 28px;
+`;
