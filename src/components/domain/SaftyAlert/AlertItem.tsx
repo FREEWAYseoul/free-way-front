@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { SafetyAlertItemProps } from '../../../types/alertType';
 
-const AlertItem = () => {
+const AlertItem = ({ info }: { info: SafetyAlertItemProps }) => {
   return (
     <StyledAlertItem>
-      <span>오후 13:11</span>
-      <h2>{`[6월 3일 서울월드컵경기장 대규모 종교행사, 지하철 혼잡 주의]`}</h2>
-      <p>{`6월 3일(토) 서울월드컵경기장에서 대규모 종교행사가 예정되어 있습니다. 6호선 월드컵경기장역, 마포구청역, 디지털미디어시티역 주변이 다소 혼잡 할 수 있으니 이 점 참고하여 열차를 이용해 주시기 바랍니다.`}</p>
+      <span>{info.date}</span>
+      <h2>{info.title}</h2>
+      <p>{info.description}</p>
     </StyledAlertItem>
   );
 };
