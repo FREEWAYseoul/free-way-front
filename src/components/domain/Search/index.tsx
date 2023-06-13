@@ -14,9 +14,10 @@ const Search = () => {
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStationInfo();
   const { startListening, endListening } = useMic();
+  const { displaySearchHistoryInOrder } = useLocalStorage();
+
   const [isListening, setIsListening] = useState(false);
   const content = convertKeywordsToContent(keywords, isListening);
-  const { displaySearchHistoryInOrder } = useLocalStorage();
 
   const handleClick = () => {
     if (isListening) {
