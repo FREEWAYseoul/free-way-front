@@ -39,7 +39,7 @@ const Search = () => {
     focusOnSearchInput();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keywords, data, searchHistory]);
+  }, [keywords, data, displaySearchHistoryInOrder]);
 
   return (
     <SearchWrapper>
