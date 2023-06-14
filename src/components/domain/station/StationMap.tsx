@@ -21,7 +21,7 @@ const StationMap = ({ title, line }: StationMapProps) => {
             className='activeLine'
             onClick={() => handleChangeStation(station.previousStation.stationId)}
           >
-            {titleEclipse(station.previousStation.stationName)}
+            {titleEclipse(station.previousStation.stationName, 4)}
           </span>
         ) : (
           <span className='emptyLine'>이전역 없음</span>
@@ -32,12 +32,17 @@ const StationMap = ({ title, line }: StationMapProps) => {
             onClick={() => handleChangeStation(String(station.branchStation?.stationId))}
           >
             {' '}
-            · {titleEclipse(station.branchStation.stationName)}
+            · {titleEclipse(station.branchStation.stationName, 4)}
           </span>
         )}
       </div>
       <div className='stationTitleBox' onClick={() => handleChangeStation(station.stationId)}>
-        <StationTitle title={title} line={line} color={color.color} />
+        <StationTitle
+          title={title}
+          line={line}
+          color={color.color}
+          type={isNaN(Number(line)) ? 'marker' : 'title'}
+        />
       </div>
       <div className={`stationLine ${station.nextStation?.stationName || 'empty'}`}>
         {station.nextStation?.stationName ? (
@@ -45,7 +50,7 @@ const StationMap = ({ title, line }: StationMapProps) => {
             className='activeLine'
             onClick={() => handleChangeStation(station.nextStation.stationId)}
           >
-            {titleEclipse(station.nextStation.stationName)}
+            {titleEclipse(station.nextStation.stationName, 4)}
           </span>
         ) : (
           <span className='emptyLine'>다음역 없음</span>
