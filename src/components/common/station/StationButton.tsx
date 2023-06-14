@@ -66,16 +66,15 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     color: #808080;
     background-color: #fff;
 
+    ${({ $isActive }) =>
+      $isActive &&
+      css`
+        font-weight: 600;
+        color: #316bff;
+      `}
     & > .iconWrapper {
       position: relative;
       width: 100%;
-
-      ${({ $isActive }) =>
-        $isActive &&
-        css`
-          font-weight: 600;
-          color: #316bff;
-        `}
 
       & > svg {
         max-height: 34px;
