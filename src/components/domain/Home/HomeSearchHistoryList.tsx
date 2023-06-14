@@ -19,9 +19,8 @@ export default HomeSearchHistoryList;
 
 const StyledHomeSearchListWrapper = styled.div`
   position: absolute;
-  bottom: 20%;
-  width: 90%;
-  height: 20%;
+  top: 6px;
+
   max-height: 220px;
 `;
 

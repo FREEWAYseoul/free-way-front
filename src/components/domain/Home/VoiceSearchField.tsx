@@ -21,7 +21,7 @@ const VoiceSearchField = () => {
 
   return (
     <VoiceSearchWrapper>
-      <Lottie options={defaultOptions} height={400} width={400} />
+      <Lottie options={defaultOptions} height={375} width={375} />
       <MicContainer>
         {keywords ? (
           <VoiceSearchText keywords={keywords}>{keywords}</VoiceSearchText>

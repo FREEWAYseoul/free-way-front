@@ -49,11 +49,12 @@ const useSearchBar = () => {
   // 함수 설명: 키워드를 포함하는 데이터 or 로컬 데이터 중 dropdownbox에서 선택한 것과 같은 데이터만 반환하는 함수
   const selectStationById = useCallback(
     (id: string) => {
-      const data = filteredStations.length ? filteredStations : searchHistory;
+      const data = keywords ? filteredStations : searchHistory;
+      console.log('data', data);
       const selectedStation = data.filter((station) => station.stationId === id).at(-1);
       return selectedStation;
     },
-    [filteredStations, searchHistory]
+    [filteredStations, searchHistory, keywords]
   );
 
   const selectStationByKeywords = useCallback(

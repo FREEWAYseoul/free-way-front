@@ -43,7 +43,8 @@ const StyledLabel = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  padding: 13px 17px;
+  margin: 14px 24px;
+  margin-top: 6px;
 
   color: #96a1b2;
   font-weight: 600;
