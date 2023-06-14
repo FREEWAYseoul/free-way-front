@@ -36,6 +36,14 @@ const StyledListWrapper = styled.ul`
   padding: 0;
   margin: 0;
   overflow-y: hidden;
+  width: 100%;
+  padding-left: 24px;
+  padding-right: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const StyledLabel = styled.div`
@@ -43,8 +51,8 @@ const StyledLabel = styled.div`
   justify-content: flex-start;
   align-items: center;
 
-  margin: 14px 24px;
   margin-top: 6px;
+  margin-bottom: 14px;
 
   color: #96a1b2;
   font-weight: 600;

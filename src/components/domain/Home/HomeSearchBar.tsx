@@ -32,14 +32,17 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   padding-top: 35px;
+  margin-left: 24px;
 `;
 
 const StyledHomeSearchBar = styled.div`
-  width: 335px;
+  width: 100%;
   height: 72px;
 
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 12.21px;
 
   height: 75px;
   background: #ffffff;

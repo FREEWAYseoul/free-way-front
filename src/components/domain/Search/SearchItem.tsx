@@ -65,11 +65,10 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
 export default SearchItem;
 
 const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
-  width: 335px;
+  width: 100%;
   height: 43px;
   font-weight: 600;
-  margin-left: 24px;
-  margin-right: 16px;
+
   margin-bottom: 5px;
 
   display: flex;

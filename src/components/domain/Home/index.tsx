@@ -47,6 +47,9 @@ const HomeWrapper = styled.div`
   display: grid;
   grid-template-rows: 1fr 2.1fr 2fr 4fr;
   position: relative;
+  & > div {
+    margin: 0px 20px;
+  }
 `;
 const ChildrenWrapper = styled.div`
   display: flex;

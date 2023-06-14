@@ -61,7 +61,7 @@ const StyledSearchBarWrapper = styled.div`
   top: 0;
 
   width: 100%;
-  max-width: 375px;
+  max-width: 475px;
   height: 75px;
   /* border-radius: 4px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
