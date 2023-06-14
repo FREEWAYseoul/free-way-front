@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { ElevatorProps, StationProps } from '../types/stationType';
 import { useResultContext } from '../components/domain/station/ResultContext';
 import { useStationInfo } from '../api/stations';
+import MyMarkerIcon from '../assets/icons/myMarker.png';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
 
@@ -13,7 +14,6 @@ export const useMap = () => {
   const [myMarker, setMyMarker] = useState<kakao.maps.CustomOverlay | null>(null);
   const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
   const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>(station.elevators);
-  const [isMyPostion, setIsMyPosition] = useState<boolean>(false);
 
   if (!kakaoMap) {
     throw new Error('map이 존재하지 않습니다.');
@@ -58,17 +58,25 @@ export const useMap = () => {
     }
   };
 
-  const handleMoveMyPosition = () => {
-    if (!isMyPostion) {
-      setIsMyPosition(true);
-    } else if (myMarker) {
+  const refreshMyMarker = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      const currentPosition = new kakao.maps.LatLng(latitude, longitude);
+      myMarker?.setMap(null);
+      const marker = new kakao.maps.CustomOverlay({
+        position: currentPosition,
+        content: `<img src='${MyMarkerIcon}' alt="내 위치"/>`,
+      });
+      marker.setMap(kakaoMap);
+      setMyMarker(marker);
+
       kakaoMap.setCenter(
         new kakao.maps.LatLng(
           Number(myMarker?.getPosition().getLat()),
           Number(myMarker?.getPosition().getLng())
         )
       );
-    }
+    });
   };
 
   useEffect(() => {
@@ -98,8 +106,6 @@ export const useMap = () => {
     setStationMarker,
     elevatorMarkers,
     myMarker,
-    setMyMarker,
-    isMyPostion,
-    handleMoveMyPosition,
+    refreshMyMarker,
   };
 };
