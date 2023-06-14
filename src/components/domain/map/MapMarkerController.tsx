@@ -22,7 +22,7 @@ const MapMarkerController = () => {
     isMyPostion,
     handleMoveMyPosition,
   } = useMap();
-  const [isStartMyMarker, setStartMyMarker] = useState<boolean>(false);
+  const [isStartMyMarker, setIsStartMyMarker] = useState<boolean>(false);
 
   /**
    * station marker move
@@ -68,7 +68,7 @@ const MapMarkerController = () => {
         const { latitude, longitude } = position.coords;
         const currentPosition = new kakao.maps.LatLng(latitude, longitude);
 
-        if (!isStartMyMarker && !myMarker) {
+        if (!myMarker) {
           // 마커 생성
           const marker = new kakao.maps.CustomOverlay({
             position: currentPosition,
@@ -76,8 +76,8 @@ const MapMarkerController = () => {
           });
           marker.setMap(kakaoMap);
           setMyMarker(marker);
-          setStartMyMarker(true);
-        } else {
+          setIsStartMyMarker(true);
+        } else if (isStartMyMarker) {
           myMarker?.setPosition(currentPosition);
         }
       });
@@ -87,7 +87,7 @@ const MapMarkerController = () => {
         navigator.geolocation.clearWatch(watchId);
       };
     }
-  }, [isMyPostion, myMarker]);
+  }, [isMyPostion, myMarker, isStartMyMarker]);
 
   return (
     <>
