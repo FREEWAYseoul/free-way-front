@@ -48,7 +48,7 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
       <SearchItemLeftSection>
         <Text>
           {name.split('').map((c, idx) => (
-            <Char key={idx} isKeyword={isKeyword(c)}>
+            <Char key={idx} isKeyword={isKeyword(c)} type={type}>
               {c}
             </Char>
           ))}
@@ -65,11 +65,12 @@ const SearchItem = ({ name, status, id, line, isFocus, type }: SearchItemProps) 
 export default SearchItem;
 
 const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
-  width: 100%;
-  max-width: 375px;
-  height: 57px;
-  padding: 10px 20px;
+  width: 335px;
+  height: 43px;
   font-weight: 600;
+  margin-left: 24px;
+  margin-right: 16px;
+  margin-bottom: 5px;
 
   display: flex;
   align-items: center;
@@ -99,8 +100,9 @@ const Text = styled.div`
   margin-right: 6px;
 `;
 
-const Char = styled.span<{ isKeyword?: boolean }>`
+const Char = styled.span<{ isKeyword?: boolean; type?: 'homepage' | 'searchpage' }>`
   color: ${(props) => (props.isKeyword ? 'rgba(73, 80, 116, 1)' : 'rgba(73, 80, 116, 0.5)')};
+  color: ${(props) => props.type === 'homepage' && 'rgba(73, 80, 116, 1)'};
 `;
 
 const Status = styled.div<StyledStatusProps>`

@@ -35,7 +35,8 @@ const Wrapper = styled.div`
 `;
 
 const StyledHomeSearchBar = styled.div`
-  width: 90%;
+  width: 335px;
+  height: 72px;
 
   display: grid;
   grid-template-columns: 3fr 1fr;
