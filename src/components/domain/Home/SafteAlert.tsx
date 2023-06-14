@@ -65,8 +65,8 @@ const HomePageHeader = styled.div`
 `;
 
 const NotiIconWrapper = styled.div`
-  width: max-content;
-  height: max-content;
+  min-width: 29px;
+  min-height: 30px;
   position: relative;
   cursor: pointer;
   transition: 0.2s ease-in-out;
