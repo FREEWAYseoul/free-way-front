@@ -1,28 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
 import CustomOverlay from '../../common/station/CustomOverlay';
 import StationMarker from '../../common/station/StationMarker';
 import ElevatorMarker from '../../common/station/ElevatorMarker';
 import TargetIcon from '../../../assets/icons/target.svg';
-import MyMarkerIcon from '../../../assets/icons/myMarker.png';
 import styled from 'styled-components';
 
 const MapMarkerController = () => {
   const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
     useResultContext();
-  const {
-    kakaoMap,
-    stationMarkers,
-    elevatorMarkers,
-    setStationMarker,
-    myMarker,
-    setMyMarker,
-    isMyPostion,
-    handleMoveMyPosition,
-  } = useMap();
-  const [isStartMyMarker, setIsStartMyMarker] = useState<boolean>(false);
+  const { kakaoMap, stationMarkers, elevatorMarkers, setStationMarker, myMarker, refreshMyMarker } =
+    useMap();
 
   /**
    * station marker move
@@ -61,37 +51,37 @@ const MapMarkerController = () => {
     };
   }, []);
 
-  useEffect(() => {
-    let watchId = 0;
-    if (isMyPostion) {
-      watchId = navigator.geolocation.watchPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        const currentPosition = new kakao.maps.LatLng(latitude, longitude);
+  // useEffect(() => {
+  //   let watchId = 0;
+  //   if (isMyPostion) {
+  //     watchId = navigator.geolocation.watchPosition((position) => {
+  //       const { latitude, longitude } = position.coords;
+  //       const currentPosition = new kakao.maps.LatLng(latitude, longitude);
 
-        if (!myMarker) {
-          // 마커 생성
-          const marker = new kakao.maps.CustomOverlay({
-            position: currentPosition,
-            content: `<img src='${MyMarkerIcon}' alt="내 위치"/>`,
-          });
-          marker.setMap(kakaoMap);
-          setMyMarker(marker);
-          setIsStartMyMarker(true);
-        } else if (isStartMyMarker) {
-          myMarker?.setPosition(currentPosition);
-        }
-      });
+  //       if (!myMarker) {
+  //         // 마커 생성
+  //         const marker = new kakao.maps.CustomOverlay({
+  //           position: currentPosition,
+  //           content: `<img src='${MyMarkerIcon}' alt="내 위치"/>`,
+  //         });
+  //         marker.setMap(kakaoMap);
+  //         setMyMarker(marker);
+  //         setIsStartMyMarker(true);
+  //       } else if (isStartMyMarker) {
+  //         myMarker?.setPosition(currentPosition);
+  //       }
+  //     });
 
-      return () => {
-        myMarker?.setMap(null);
-        navigator.geolocation.clearWatch(watchId);
-      };
-    }
-  }, [isMyPostion, myMarker, isStartMyMarker]);
+  //     return () => {
+  //       myMarker?.setMap(null);
+  //       navigator.geolocation.clearWatch(watchId);
+  //     };
+  //   }
+  // }, [isMyPostion, myMarker, isStartMyMarker]);
 
   return (
     <>
-      <StyledMyMarker onClick={handleMoveMyPosition}>
+      <StyledMyMarker onClick={refreshMyMarker}>
         <img src={TargetIcon} />
       </StyledMyMarker>
       {stationMarkers.length > 0 && (
