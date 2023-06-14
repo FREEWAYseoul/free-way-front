@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMap } from '../../../hooks/useMap';
 import { useResultContext } from '../station/ResultContext';
 import CustomOverlay from '../../common/station/CustomOverlay';
@@ -22,6 +22,7 @@ const MapMarkerController = () => {
     isMyPostion,
     handleMoveMyPosition,
   } = useMap();
+  const [isStartMyMarker, setStartMyMarker] = useState<boolean>(false);
 
   /**
    * station marker move
@@ -67,18 +68,17 @@ const MapMarkerController = () => {
         const { latitude, longitude } = position.coords;
         const currentPosition = new kakao.maps.LatLng(latitude, longitude);
 
-        if (!myMarker) {
+        if (!isStartMyMarker && !myMarker) {
           // 마커 생성
-          console.log('생성');
           const marker = new kakao.maps.CustomOverlay({
             position: currentPosition,
             content: `<img src='${MyMarkerIcon}' alt="내 위치"/>`,
           });
           marker.setMap(kakaoMap);
           setMyMarker(marker);
+          setStartMyMarker(true);
         } else {
-          console.log('이동');
-          myMarker.setPosition(currentPosition);
+          myMarker?.setPosition(currentPosition);
         }
       });
 
