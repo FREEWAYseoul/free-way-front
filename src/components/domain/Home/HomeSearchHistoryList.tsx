@@ -25,8 +25,10 @@ const StyledHomeSearchListWrapper = styled.div`
 `;
 
 const HomeNotFoundBox = styled.div`
-  width: 100%;
-  height: 100%;
+  margin-top: 126px;
+
+  width: 335px;
+  height: 206px;
 
   background-color: #f2f4f6;
   border-radius: 10px;
