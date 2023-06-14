@@ -7,7 +7,7 @@ const StationTitle = ({ line, title, color, type }: StationTitleProps) => {
   return (
     <StyledStationTitleWrapper $color={color} $type={type || ''}>
       <Badge lineId={line} isActive={true} />
-      {type !== 'marker' ? titleEclipse(title) : title}
+      {type !== 'marker' ? titleEclipse(title, 6) : title}
     </StyledStationTitleWrapper>
   );
 };

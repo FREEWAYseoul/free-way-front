@@ -89,7 +89,7 @@ const StyledSearchBarInput = styled.input`
   max-width: 300px;
   border: none;
   outline: none;
-  padding-top: 3px;
+  padding-top: 4px;
   padding-left: 11px;
   font-weight: 500;
   line-height: 20px;
