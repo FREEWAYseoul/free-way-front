@@ -39,8 +39,6 @@ const StyledListWrapper = styled.ul`
 
   overflow-y: hidden;
   width: 100%;
-  padding-left: 24px;
-  padding-right: 16px;
 
   display: flex;
   flex-direction: column;
