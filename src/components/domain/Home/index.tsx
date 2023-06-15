@@ -4,7 +4,7 @@ import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
 import useMic from '../../../hooks/useMic';
-import SafetyAlert from './SafteAlert';
+import SafetyAlert from './SafteyAlert';
 import VoiceSearchField from './VoiceSearchField';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
@@ -44,13 +44,13 @@ export default Home;
 const HomeWrapper = styled.div`
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: 1fr 2.1fr 2fr 4fr;
-  position: relative;
+  padding: 0 24px;
 `;
+
 const ChildrenWrapper = styled.div`
+  padding-top: 74px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
 `;

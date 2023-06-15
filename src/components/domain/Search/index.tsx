@@ -43,7 +43,7 @@ const Search = () => {
   }, [keywords, data, displaySearchHistoryInOrder]);
 
   return (
-    <SearchWrapper>
+    <SearchWrapper id='search-container'>
       <SearchBar
         placeholder='역이름을 입력해주세요.'
         listeningMessage='듣고 있습니다! 역이름을 말해주세요.'
@@ -51,10 +51,10 @@ const Search = () => {
       />
       <DropdownBox>
         {isLoading ? (
-          <>
+          <SkeletonWrapper>
             <ProgressBar />
             <SearchLoading />
-          </>
+          </SkeletonWrapper>
         ) : (
           <>{content}</>
         )}
@@ -72,10 +72,14 @@ const SearchWrapper = styled.div`
 `;
 
 const DropdownBox = styled.div`
-  position: fixed;
-  top: 75px;
-  width: 100%;
-  max-width: 375px;
+  margin-top: 15px;
   max-height: 50%;
-  margin-top: 13px;
+  padding-right: 16px;
+  padding-left: 20px;
+
+  width: 100%;
+`;
+
+const SkeletonWrapper = styled.div`
+  margin-top: -15px;
 `;
