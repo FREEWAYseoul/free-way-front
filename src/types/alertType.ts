@@ -1,10 +1,10 @@
 export interface SafetyAlertItemProps {
-  date: string;
-  title: string;
-  description: string;
+  summary: string;
+  content: string;
+  time: string;
 }
 
 export interface SafetyAlertProps {
   date: string;
-  contents: SafetyAlertItemProps[];
+  notifications: SafetyAlertItemProps[];
 }
