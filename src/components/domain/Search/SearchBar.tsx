@@ -57,11 +57,7 @@ const SearchBar = ({ placeholder, handleClick }: SearchBarProps) => {
 export default SearchBar;
 
 const StyledSearchBarWrapper = styled.div`
-  position: fixed;
-  top: 0;
-
   width: 100%;
-  max-width: 375px;
   height: 75px;
   /* border-radius: 4px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
