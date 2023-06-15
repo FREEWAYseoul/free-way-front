@@ -11,7 +11,7 @@ const useMic = () => {
 
   const { listen, stop, listening } = useSpeechRecognition({
     onResult: (result: string) => {
-      setKeywords(result);
+      setKeywords(result.replace(/\s/, ''));
     },
     onEnd: () => {
       const selectedStation = selectStationByKeywords(keywords);
