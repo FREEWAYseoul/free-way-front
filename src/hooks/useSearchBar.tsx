@@ -35,7 +35,7 @@ const useSearchBar = () => {
   // 실행되는 곳: Search 페이지 useEffect시
   const getFilteredStations = useCallback(
     (keywords: string) => {
-      const character = keywords?.replace('역', '').trim();
+      const character = keywords?.replace(/역$/, '').trim();
       const wordsStartingWithKeywords = autocomplete.searchPrefix(character);
       const filteredStations = data.filter((station: Station) =>
         wordsStartingWithKeywords.includes(station.stationName)
@@ -50,8 +50,7 @@ const useSearchBar = () => {
   const selectStationById = useCallback(
     (id: string) => {
       const data = keywords ? filteredStations : searchHistory;
-      console.log('data', data);
-      const selectedStation = data.filter((station) => station.stationId === id).at(-1);
+      const selectedStation = data.filter((station) => station.stationId == id).at(-1);
       return selectedStation;
     },
     [filteredStations, searchHistory, keywords]
