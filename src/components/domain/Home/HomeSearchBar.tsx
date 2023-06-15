@@ -28,11 +28,12 @@ const HomeSearchBar = ({ handleClick }: Props) => {
 export default HomeSearchBar;
 
 const Wrapper = styled.div`
+  margin: 0px -4px;
+  padding-top: 35px;
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 35px;
-  margin-left: 24px;
 `;
 
 const StyledHomeSearchBar = styled.div`

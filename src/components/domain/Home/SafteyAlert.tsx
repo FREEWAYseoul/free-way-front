@@ -41,12 +41,12 @@ const SafetyAlert = () => {
 export default SafetyAlert;
 
 const Wrapper = styled.div`
-  margin: 0 8px;
+  width: 100%;
+  /* padding-top: 50px; */
 `;
 
 const HomePageHeader = styled.div`
   width: 100%;
-  max-width: 475px;
 
   display: flex;
   justify-content: flex-end;

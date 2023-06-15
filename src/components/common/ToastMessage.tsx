@@ -49,18 +49,18 @@ const fadeOut = keyframes`
 `;
 
 const StyledToastMessageWrapper = styled.div<WrapperProps>`
-  transform: translate(-50%, -50%);
+  z-index: 99;
 
-  width: 100%;
+  width: inherit;
   padding: 1rem 1.2rem;
   box-shadow: 0 0 15px 0 var(--black-40);
   background: rgba(78, 89, 104, 0.95);
   border-radius: 17.3333px;
   color: #ffffff;
   font-weight: bold;
-
   display: flex;
   opacity: 0;
+
   animation-name: ${(props) => (props.isOpen ? fadeIn : fadeOut)};
   animation-duration: 1s;
   animation-fill-mode: forwards;
