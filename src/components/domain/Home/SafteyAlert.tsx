@@ -42,7 +42,8 @@ export default SafetyAlert;
 
 const Wrapper = styled.div`
   width: 100%;
-  /* padding-top: 50px; */
+  padding-top: 30px;
+  position: relative;
 `;
 
 const HomePageHeader = styled.div`
