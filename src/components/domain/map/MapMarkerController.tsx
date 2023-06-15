@@ -91,6 +91,7 @@ const MapMarkerController = () => {
               key={item.stationName + idx}
               coordinate={item.coordinate}
               onClick={() => handleChangeStation(item.stationId)}
+              zIndex={10}
             >
               <StationMarker
                 info={item}
