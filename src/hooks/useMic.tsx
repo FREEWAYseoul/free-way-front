@@ -12,11 +12,12 @@ const useMic = () => {
   const { listen, stop, listening } = useSpeechRecognition({
     onResult: (result: string) => {
       setKeywords(result);
+      alert('test');
     },
     onEnd: () => {
       const selectedStation = selectStationByKeywords(keywords);
-      if (!selectedStation) {
-        alert('일치하는 역이 없습니다! 다시 한 번 말씀해주세요!');
+      if (!selectedStation || !keywords) {
+        alert('일치하는 역이 없습니다. 다시 한 번 말씀해주세요.');
         resetKeywords();
         return;
       }
