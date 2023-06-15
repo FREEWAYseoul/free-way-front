@@ -3,31 +3,38 @@ import { useNavigate } from 'react-router-dom';
 import ToastMessage from '../../common/ToastMessage';
 import styled from 'styled-components';
 import { ReactComponent as NotiIcon } from '../../../assets/icons/종.svg';
+import { useAlert } from '../../../hooks/useAlert';
 
 const SafetyAlert = () => {
+  const { toastMessage } = useAlert();
   const [isToastOpen, setIsToastOpen] = useState(true);
 
   const navigate = useNavigate();
-  const tempContent = '6월 3일 서울월드컵경기장 대규모 종교행사, 지하철 혼잡주의';
   const handleClick = () => {
     navigate('/safetyAlert');
   };
   const activeToast = () => {
-    const timer = setTimeout(() => {
-      setIsToastOpen(false);
-    }, 2500);
-    return () => {
-      clearTimeout(timer);
-    };
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setIsToastOpen(false);
+      }, 2500);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
   };
+
   useEffect(() => {
     activeToast();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toastMessage]);
 
   return (
     <>
       <Wrapper>
-        <ToastMessage content={tempContent} onClick={handleClick} isOpen={isToastOpen} />
+        {toastMessage && (
+          <ToastMessage content={toastMessage} onClick={handleClick} isOpen={isToastOpen} />
+        )}
         <HomePageHeader>
           <NotiIconWrapper id='this-is-noti' onClick={handleClick}>
             <NotiIcon />

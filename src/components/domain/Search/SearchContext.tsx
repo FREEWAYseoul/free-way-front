@@ -49,7 +49,7 @@ export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const value = {
     keywords,
     searchHistory,
-    stationId: selectedStationInfo ? selectedStationInfo.stationId : '150',
+    stationId: selectedStationInfo ? selectedStationInfo.stationId : '70',
     matchingData,
     selectedStationInfo,
     selectedIdx,
