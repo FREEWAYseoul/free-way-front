@@ -28,7 +28,6 @@ const SafetyAlert = () => {
     <>
       <ToastMessage content={tempContent} onClick={handleClick} isOpen={isToastOpen} />
       <Wrapper>
-        {/* <StatusBar /> */}
         <HomePageHeader>
           <NotiIconWrapper id='this-is-noti' onClick={handleClick}>
             <NotiIcon />
@@ -45,23 +44,12 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-// const StatusBar = styled.div`
-//   width: 100%;
-//   height: 50px;
-//   background-color: gray;
-// `;
-
 const HomePageHeader = styled.div`
-  position: fixed;
-  top: 64px;
-
   width: 100%;
-  max-width: 375px;
 
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 10px 25px;
 `;
 
 const NotiIconWrapper = styled.div`

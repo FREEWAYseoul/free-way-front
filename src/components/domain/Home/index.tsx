@@ -44,9 +44,7 @@ export default Home;
 const HomeWrapper = styled.div`
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: 1fr 2.1fr 2fr 4fr;
-  position: relative;
+  padding: 0 24px;
 `;
 const ChildrenWrapper = styled.div`
   display: flex;

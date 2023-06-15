@@ -33,18 +33,19 @@ const SearchList = ({ label, data, type }: Props) => {
 export default SearchList;
 
 const StyledListWrapper = styled.ul`
+  // ul 자체에서 주는 css 무효화
   padding: 0;
   margin: 0;
+
   overflow-y: hidden;
 `;
 
 const StyledLabel = styled.div`
+  margin-bottom: 15px;
+
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
-  margin: 14px 24px;
-  margin-top: 6px;
 
   color: #96a1b2;
   font-weight: 600;
