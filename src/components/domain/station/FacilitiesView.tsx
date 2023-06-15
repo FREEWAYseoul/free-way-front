@@ -1,10 +1,12 @@
 import styled, { css } from 'styled-components';
 import { FacilitiesProps } from '../../../types/stationType';
 import { useEffect, useState } from 'react';
+import { nowDateFormat } from '../../../utils/format';
 
-interface NowDateProps {
-  month: number;
-  date: number;
+interface DateProps {
+  year?: number;
+  month: string | number;
+  date: string | number;
   hours: string | number;
   minutes: string | number;
   dayOfWeek: string;
@@ -104,27 +106,13 @@ const FacilitiesView = ({ facilities }: { facilities: FacilitiesProps }) => {
     },
   ];
 
-  const [nowDate, setNowDate] = useState<NowDateProps>({
+  const [nowDate, setNowDate] = useState<DateProps>({
     month: 0,
     date: 0,
     hours: '0',
     minutes: '0',
     dayOfWeek: '0',
   });
-
-  const nowDateFormat = () => {
-    const week = ['일', '월', '화', '수', '목', '금', '토'];
-
-    const now = new Date();
-
-    const month = now.getMonth() + 1;
-    const hours = now.getHours() < 10 ? '0' + now.getHours() : now.getHours();
-    const minutes = now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes();
-    const date = now.getDate();
-    const dayOfWeek = week[now.getDay()];
-
-    return { month, date, hours, minutes, dayOfWeek };
-  };
 
   useEffect(() => {
     const date = nowDateFormat();
@@ -158,7 +146,7 @@ const StyledFacilitiesView = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  padding-top: 60px;
+  padding-top: 75px;
   width: 100%;
   height: 100%;
   background-color: #fff;

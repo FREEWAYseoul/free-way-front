@@ -35,7 +35,7 @@ const StyledMapDetailView = styled.div`
 
 const StyledImageWrapper = styled.div<{ $tabPosition: number }>`
   position: absolute;
-  top: 90px;
+  top: 95px;
   overflow: auto;
   height: ${({ $tabPosition }) => css`calc(100% - ${$tabPosition}px)`};
   border: 1px solid #d9d9d9;

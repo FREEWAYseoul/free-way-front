@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import AlertItem from './AlertItem';
 import { SafetyAlertItemProps, SafetyAlertProps } from '../../../types/alertType';
+import { dateFormat } from '../../../utils/format';
 
 const SafetyAlertBox = ({ info }: { info: SafetyAlertProps }) => {
   return (
     <StyledSafetyAlrertBox>
-      <h1>{info.date}</h1>
-      {info.contents.map((item: SafetyAlertItemProps) => (
-        <AlertItem key={item.date} info={item} />
+      <h1>{dateFormat(info.date)}</h1>
+      {info.notifications.map((item: SafetyAlertItemProps) => (
+        <AlertItem key={item.time} info={item} />
       ))}
     </StyledSafetyAlrertBox>
   );
@@ -24,7 +25,8 @@ const StyledSafetyAlrertBox = styled.div`
     margin: 0;
     height: 40px;
     color: rgba(0, 0, 0, 0.5);
-    font-size: 1.125rem;
+    font-size: 1rem;
+    font-weight: 600;
     border-bottom: 1px solid #d9d9d9;
   }
 `;

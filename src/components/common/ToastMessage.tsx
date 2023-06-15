@@ -49,6 +49,7 @@ const fadeOut = keyframes`
 `;
 
 const StyledToastMessageWrapper = styled.div<WrapperProps>`
+  position: absolute;
   z-index: 99;
 
   width: inherit;
