@@ -67,6 +67,7 @@ export default SearchItem;
 const SearchItemWrapper = styled.li<{ isFocus?: boolean; type?: 'homepage' | 'searchpage' }>`
   margin-bottom: 5px;
 
+  width: 100%;
   height: 43px;
   font-weight: 600;
   display: flex;
