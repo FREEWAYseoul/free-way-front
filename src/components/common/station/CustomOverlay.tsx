@@ -6,9 +6,10 @@ interface CustomOverlayProps {
   coordinate: CoordinateProps;
   onClick?: () => void;
   children: React.ReactNode;
+  zIndex?: number;
 }
 
-const CustomOverlay = ({ coordinate, onClick, children }: CustomOverlayProps) => {
+const CustomOverlay = ({ coordinate, onClick, children, zIndex }: CustomOverlayProps) => {
   const { kakaoMap } = useMap();
 
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,7 @@ const CustomOverlay = ({ coordinate, onClick, children }: CustomOverlayProps) =>
       position: markerPosition,
       clickable: true,
       content: overlayRef?.current || '<div></div>',
+      zIndex: zIndex ? zIndex : 0,
     });
 
     marker.setMap(kakaoMap);
