@@ -18,15 +18,13 @@ const HomeSearchHistoryList = () => {
 export default HomeSearchHistoryList;
 
 const StyledHomeSearchListWrapper = styled.div`
-  position: absolute;
-  top: 6px;
-
+  width: 100%;
   max-height: 220px;
 `;
 
 const HomeNotFoundBox = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 206px;
 
   background-color: #f2f4f6;
   border-radius: 10px;

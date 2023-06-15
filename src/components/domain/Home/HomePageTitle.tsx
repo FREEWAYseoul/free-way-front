@@ -15,4 +15,5 @@ const StyledHomePageTitleWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+  padding-top: 103px;
 `;

@@ -4,7 +4,7 @@ import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
 import useMic from '../../../hooks/useMic';
-import SafetyAlert from './SafteAlert';
+import SafetyAlert from './SafteyAlert';
 import VoiceSearchField from './VoiceSearchField';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
@@ -46,9 +46,11 @@ const HomeWrapper = styled.div`
   height: 100%;
   padding: 0 24px;
 `;
+
 const ChildrenWrapper = styled.div`
+  padding-top: 74px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
 `;

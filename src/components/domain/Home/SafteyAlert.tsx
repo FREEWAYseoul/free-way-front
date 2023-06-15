@@ -26,8 +26,8 @@ const SafetyAlert = () => {
 
   return (
     <>
-      <ToastMessage content={tempContent} onClick={handleClick} isOpen={isToastOpen} />
       <Wrapper>
+        <ToastMessage content={tempContent} onClick={handleClick} isOpen={isToastOpen} />
         <HomePageHeader>
           <NotiIconWrapper id='this-is-noti' onClick={handleClick}>
             <NotiIcon />
@@ -42,6 +42,7 @@ export default SafetyAlert;
 
 const Wrapper = styled.div`
   width: 100%;
+  /* padding-top: 50px; */
 `;
 
 const HomePageHeader = styled.div`
