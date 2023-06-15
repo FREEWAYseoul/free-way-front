@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { STATION_LINE_COLORS } from '../../../constants/color';
 import StationTitle from '../../common/station/StationTitle';
 import { useResultContext } from './ResultContext';
-import { titleEclipse } from '../../../utils/format';
 
 interface StationMapProps {
   title: string;
@@ -14,26 +13,17 @@ const StationMap = ({ title, line }: StationMapProps) => {
   const color = STATION_LINE_COLORS[line];
 
   return (
-    <StyledStationMap $color={color?.color}>
-      <div className={`stationLine ${station.previousStation?.stationName || 'empty'}`}>
+    <StyledStationMap $color={color?.color} $length={station.stationName.length}>
+      <div className={`stationLine ${station.previousStation?.stationName ? '' : 'empty'}`}>
         {station.previousStation?.stationName ? (
           <span
             className='activeLine'
             onClick={() => handleChangeStation(station.previousStation.stationId)}
           >
-            {titleEclipse(station.previousStation.stationName, 4)}
+            {station.previousStation.stationName}
           </span>
         ) : (
           <span className='emptyLine'>이전역 없음</span>
-        )}
-        {station.branchStation?.stationName && (
-          <span
-            className='activeLine'
-            onClick={() => handleChangeStation(String(station.branchStation?.stationId))}
-          >
-            {' '}
-            · {titleEclipse(station.branchStation.stationName, 4)}
-          </span>
         )}
       </div>
       <div className='stationTitleBox' onClick={() => handleChangeStation(station.stationId)}>
@@ -44,16 +34,25 @@ const StationMap = ({ title, line }: StationMapProps) => {
           type={isNaN(Number(line)) ? 'marker' : 'title'}
         />
       </div>
-      <div className={`stationLine ${station.nextStation?.stationName || 'empty'}`}>
+      <div className={`stationLine ${station.nextStation?.stationName ? '' : 'empty'}`}>
         {station.nextStation?.stationName ? (
           <span
             className='activeLine'
             onClick={() => handleChangeStation(station.nextStation.stationId)}
           >
-            {titleEclipse(station.nextStation.stationName, 4)}
+            {station.nextStation.stationName}
           </span>
         ) : (
           <span className='emptyLine'>다음역 없음</span>
+        )}
+        {station.branchStation?.stationName && (
+          <span
+            className='activeLine'
+            onClick={() => handleChangeStation(String(station.branchStation?.stationId))}
+          >
+            {' '}
+            · {station.branchStation.stationName}
+          </span>
         )}
       </div>
     </StyledStationMap>
@@ -62,12 +61,13 @@ const StationMap = ({ title, line }: StationMapProps) => {
 
 export default StationMap;
 
-const StyledStationMap = styled.div<{ $color: string }>`
+const StyledStationMap = styled.div<{ $color: string; $length: number }>`
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px 27px;
+  white-space: nowrap;
 
   & > .stationTitleBox {
     cursor: pointer;
@@ -79,13 +79,16 @@ const StyledStationMap = styled.div<{ $color: string }>`
   }
 
   & > .stationLine {
-    flex: 1;
+    /* flex: 1; */
+    width: 50%;
     position: relative;
     padding: 5px 24px;
     height: 28px;
     line-height: 20px;
     color: #fff;
     background-color: ${({ $color }) => $color};
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     & > .activeLine {
       cursor: pointer;
@@ -101,6 +104,7 @@ const StyledStationMap = styled.div<{ $color: string }>`
     }
 
     &:first-child {
+      padding-right: ${({ $length }) => ($length > 4 ? '80px' : '60px')};
       border-radius: 16px 0 0 16px;
 
       &:not(.empty):before {
@@ -118,6 +122,7 @@ const StyledStationMap = styled.div<{ $color: string }>`
     }
 
     &:last-child {
+      padding-left: ${({ $length }) => ($length > 4 ? '80px' : '60px')};
       text-align: end;
       border-radius: 0 16px 16px 0;
       &:not(.empty):before {

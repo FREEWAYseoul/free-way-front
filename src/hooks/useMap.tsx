@@ -7,6 +7,7 @@ import MyMarkerIcon from '../assets/icons/myMarker.png';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useMap = () => {
   const { station } = useResultContext();
   const kakaoMap = useContext(KakaoMapContext);
