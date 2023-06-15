@@ -50,8 +50,7 @@ const useSearchBar = () => {
   const selectStationById = useCallback(
     (id: string) => {
       const data = keywords ? filteredStations : searchHistory;
-      console.log('data', data);
-      const selectedStation = data.filter((station) => station.stationId === id).at(-1);
+      const selectedStation = data.filter((station) => station.stationId == id).at(-1);
       return selectedStation;
     },
     [filteredStations, searchHistory, keywords]
