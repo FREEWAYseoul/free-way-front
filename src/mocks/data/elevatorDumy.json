@@ -1,57 +1,59 @@
-[
-  {
-    "title": "노원",
-    "lat": "37.65512772903856",
-    "lng": "127.06057673060545"
+{
+  "stationId": "211",
+  "stationName": "성수",
+  "lineId": "2",
+  "lineName": "2호선",
+  "stationCoordinate": {
+    "latitude": "37.5445888153751",
+    "longitude": "127.056066999327"
   },
-  {
-    "title": "노원",
-    "lat": "37.65483555899676",
-    "lng": "127.06071320176618"
+  "stationStatus": "사용 가능",
+  "stationContact": "02-6110-2111",
+  "stationImageUrl": "http://data.seoul.go.kr/contents/stn_img/image_2_15.gif",
+  "nextStation": {
+    "stationId": "212",
+    "stationName": "건대입구"
   },
-  {
-    "title": "노원",
-    "lat": "37.65644233924894",
-    "lng": "127.06323280237103"
+  "previousStation": {
+    "stationId": "210",
+    "stationName": "뚝섬"
   },
-  {
-    "title": "노원",
-    "lat": "37.65608880453136",
-    "lng": "127.06302935894196"
+  "branchStation": {
+    "stationId": "244",
+    "stationName": "용답"
   },
-  {
-    "title": "노원",
-    "lat": "37.65609169935713",
-    "lng": "127.06282271528931"
+  "facilities": {
+    "elevator": true,
+    "wheelchairLift": false,
+    "disabledToilet": true,
+    "transitParkingLot": false,
+    "unmannedCivilApplicationIssuingMachine": false,
+    "currencyExchangeKiosk": false,
+    "trainTicketOffice": false,
+    "feedingRoom": true
   },
-  {
-    "title": "노원",
-    "lat": "37.656289440954396",
-    "lng": "127.06275633467037"
-  },
-  {
-    "title": "창동",
-    "lat": "37.65347202122307",
-    "lng": "127.04879134229733"
-  },
-  {
-    "title": "창동",
-    "lat": "37.652965136831206",
-    "lng": "127.04662624555345"
-  },
-  {
-    "title": "창동",
-    "lat": "37.65339581008838",
-    "lng": "127.04870732948308"
-  },
-  {
-    "title": "쌍문",
-    "lat": "37.648604930017555",
-    "lng": "127.03491226633054"
-  },
-  {
-    "title": "수유",
-    "lat": "37.63823406870083",
-    "lng": "127.02611923318311"
-  }
-]
+  "transferStations": [
+    {
+      "stationId": "2729",
+      "lineId": "7"
+    }
+  ],
+  "elevators": [
+    {
+      "elevatorId": 42,
+      "elevatorCoordinate": {
+        "latitude": "37.544948554327775",
+        "longitude": "127.0553622228127"
+      },
+      "elevatorStatus": "사용 가능"
+    },
+    {
+      "elevatorId": 43,
+      "elevatorCoordinate": {
+        "latitude": "37.54467031883598",
+        "longitude": "127.05529847239829"
+      },
+      "elevatorStatus": "사용 가능"
+    }
+  ]
+}
