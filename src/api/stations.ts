@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-const SERVER_API = `/api/stations/search?keyword=`;
-
 export type Coordinate = {
   latitude: string;
   longitude: string;
@@ -21,7 +19,7 @@ export const fetchStations = async () => {
   try {
     const res = await axios({
       method: 'get',
-      url: SERVER_API,
+      url: '/api/stations/search',
     });
     if (res.status === 200) {
       return res.data;
