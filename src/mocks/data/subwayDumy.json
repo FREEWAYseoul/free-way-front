@@ -3,28 +3,42 @@
     "lineId": 4,
     "stationId": 1,
     "stationName": "노원",
-    "stationStatus": "시용가능",
-    "position": { "lat": 37.654602985808424, "lng": 127.06053750741678 }
+    "stationStatus": "사용가능",
+    "availableElevatorsNumber": 1,
+    "coordinate": { "latitude": 37.654602985808424, "longitude": 127.06053750741678 }
   },
   {
     "lineId": 4,
     "stationId": 2,
     "stationName": "창동",
-    "stationStatus": "시용가능",
-    "position": { "lat": 37.65323939675669, "lng": 127.04766306716449 }
+    "stationStatus": "사용가능",
+    "availableElevatorsNumber": 1,
+    "coordinate": { "latitude": 37.65323939675669, "longitude": 127.04766306716449 }
   },
   {
     "lineId": 4,
     "stationId": 3,
     "stationName": "쌍문",
-    "stationStatus": "시용가능",
-    "position": { "lat": 37.648630896732186, "lng": 127.03467426892156 }
+    "stationStatus": "사용가능",
+    "availableElevatorsNumber": 1,
+    "coordinate": { "latitude": 37.648630896732186, "longitude": 127.03467426892156 }
   },
   {
     "lineId": 4,
     "stationId": 4,
     "stationName": "수유",
-    "stationStatus": "시용가능",
-    "position": { "lat": 37.63776741273997, "lng": 127.02528813696772 }
+    "stationStatus": "사용가능",
+    "availableElevatorsNumber": 1,
+    "coordinate": { "latitude": 37.63776741273997, "longitude": 127.02528813696772 }
+  },
+  {
+    "lineId": 2,
+    "stationId": 5,
+    "stationName": "성수",
+    "stationStatus": "사용가능",
+    "coordinate": {
+      "latitude": 37.5445888153751,
+      "longitude": 127.056066999327
+    }
   }
 ]
