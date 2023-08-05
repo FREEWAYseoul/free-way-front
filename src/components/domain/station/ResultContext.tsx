@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { StationDetailProps } from '../../../types/stationType';
-import { fetchGetStation } from '../../../api/stations';
 import { SLIDER_RANGE } from '../../../constants/slide';
+import { useStationInfo } from '../../../api/stations';
 
 interface ResultContextProviderProps {
   children: React.ReactNode;
@@ -30,6 +30,8 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
   const [station, setStation] = useState<StationDetailProps>(initStation);
   const [isShow, setIsShow] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<string>('엘리베이터');
+  const [stationId, setStationId] = useState<number>(Number(initStation.stationId));
+  const { data, isLoading } = useStationInfo(stationId);
 
   // 드래그 슬라이드 관련
   const [isTabPostion, setIsTabPosition] = useState<boolean>(false);
@@ -91,13 +93,16 @@ export const ResultContextProvider = ({ children, initStation }: ResultContextPr
   };
 
   const handleChangeStation = async (stationId: number | string) => {
-    const res = await fetchGetStation(stationId);
-    if (res) {
-      setStation(res);
+    setStationId(Number(stationId));
+  };
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setStation(data);
       setIsTabPosition(false);
       setTabPosition(SLIDER_RANGE.min);
     }
-  };
+  }, [isLoading, data]);
 
   const contextValue = {
     station,

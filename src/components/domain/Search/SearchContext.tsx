@@ -9,15 +9,15 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Station } from '../../../api/stations';
+import { StationProps } from '../../../types/stationType';
 
 type SearchState = {
   keywords: string;
-  searchHistory: Station[];
+  searchHistory: StationProps[];
   stationId: string;
-  matchingData: Station[];
-  selectedStationInfo: Station | undefined;
-  filteredStations: Station[];
+  matchingData: StationProps[];
+  selectedStationInfo: StationProps | undefined;
+  filteredStations: StationProps[];
   selectedIdx: number;
   autofillRef: RefObject<HTMLUListElement>;
   inputRef: RefObject<HTMLInputElement>;
@@ -25,11 +25,11 @@ type SearchState = {
 
 type SearchAction = {
   setSelectedIdx: Dispatch<SetStateAction<number>>;
-  setSelectedStationInfo: Dispatch<SetStateAction<Station | undefined>>;
+  setSelectedStationInfo: Dispatch<SetStateAction<StationProps | undefined>>;
   setKeywords: Dispatch<SetStateAction<string>>;
-  setFilteredStations: Dispatch<SetStateAction<Station[] | []>>;
-  setMatchingData: Dispatch<SetStateAction<Station[] | []>>;
-  setSearchHistory: Dispatch<SetStateAction<Station[] | []>>;
+  setFilteredStations: Dispatch<SetStateAction<StationProps[] | []>>;
+  setMatchingData: Dispatch<SetStateAction<StationProps[] | []>>;
+  setSearchHistory: Dispatch<SetStateAction<StationProps[] | []>>;
 };
 
 type SearchContext = SearchState & SearchAction;
@@ -38,10 +38,10 @@ const SearchContext = createContext<SearchContext | null>(null);
 
 export const SearchContextProvider = ({ children }: PropsWithChildren) => {
   const [keywords, setKeywords] = useState<string>('');
-  const [searchHistory, setSearchHistory] = useState<Station[]>([]);
-  const [matchingData, setMatchingData] = useState<Station[]>([]);
-  const [selectedStationInfo, setSelectedStationInfo] = useState<Station | undefined>();
-  const [filteredStations, setFilteredStations] = useState<Station[] | []>([]);
+  const [searchHistory, setSearchHistory] = useState<StationProps[]>([]);
+  const [matchingData, setMatchingData] = useState<StationProps[]>([]);
+  const [selectedStationInfo, setSelectedStationInfo] = useState<StationProps | undefined>();
+  const [filteredStations, setFilteredStations] = useState<StationProps[] | []>([]);
   const [selectedIdx, setSelectedIdx] = useState<number>(-1);
   const autofillRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);

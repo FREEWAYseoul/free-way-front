@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const KAKAO_API_KEY = 'cec114bc0d57490db0173a420c4f31de';
+const KAKAO_API_KEY = import.meta.env.VITE_KAKAO_API_KEY;
 const KAKAO_MAP_SCRIPT_ID = 'kakaoMapScript';
 
 interface KakaoMapScriptLoaderProps {

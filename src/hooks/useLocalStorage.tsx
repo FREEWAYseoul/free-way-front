@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
-import { Station } from '../api/stations';
 import { useSearchContext } from '../components/domain/Search/SearchContext';
+import { StationProps } from '../types/stationType';
 
 const useLocalStorage = () => {
   const { setSearchHistory } = useSearchContext();
-  const removeDuplication = (selectedStationInfo: Station, data: Station[]) => {
+  const removeDuplication = (selectedStationInfo: StationProps, data: StationProps[]) => {
     return data.filter((station) => station.stationId !== selectedStationInfo.stationId);
   };
 
-  const addSearchHistory = useCallback((selectedStationInfo: Station) => {
+  const addSearchHistory = useCallback((selectedStationInfo: StationProps) => {
     if (!selectedStationInfo || selectedStationInfo == undefined) {
       return;
     }

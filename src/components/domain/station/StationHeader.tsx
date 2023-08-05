@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useResultContext } from './ResultContext';
-import { useStationInfo } from '../../../api/stations';
+import { useStation } from '../../../api/stations';
 import { StationProps } from '../../../types/stationType';
 import { useEffect, useState } from 'react';
 import Badge from '../../common/station/Badge';
@@ -12,17 +12,18 @@ interface BadgeProps {
 
 const StationHeader = () => {
   const { station, isTabPostion, handleChangeStation, handleShowInfo } = useResultContext();
-  const { data: stationData, isLoading } = useStationInfo();
+  const { data: stationData, isLoading } = useStation();
   const [badges, setBadges] = useState<BadgeProps[]>([]);
 
   useEffect(() => {
     if (!isLoading) {
-      const filterStation = stationData.filter(
+      const filterStation = stationData?.filter(
         (item: StationProps) => item.stationName === station.stationName
       );
-      const sortStation = filterStation.sort((a: StationProps, b: StationProps) =>
-        String(a.lineId).localeCompare(String(b.lineId))
-      );
+      const sortStation =
+        filterStation?.sort((a: StationProps, b: StationProps) =>
+          String(a.lineId).localeCompare(String(b.lineId))
+        ) ?? [];
 
       setBadges(
         sortStation.map((item: StationProps) => ({
