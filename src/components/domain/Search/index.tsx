@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import { useSearchContext } from './SearchContext';
-import { useStationInfo } from '../../../api/stations';
+import { useStation } from '../../../api/stations';
 import useSearchBar from '../../../hooks/useSearchBar';
 import SearchLoading from './SearchLoading';
 import ProgressBar from '../../common/ProgressBar';
@@ -12,7 +12,7 @@ import useLocalStorage from '../../../hooks/useLocalStorage';
 const Search = () => {
   const { keywords, setFilteredStations } = useSearchContext();
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
-  const { data, isLoading } = useStationInfo();
+  const { data, isLoading } = useStation();
   const { startListening, endListening } = useMic();
   const { displaySearchHistoryInOrder } = useLocalStorage();
 

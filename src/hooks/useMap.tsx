@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ElevatorProps, StationProps } from '../types/stationType';
 import { useResultContext } from '../components/domain/station/ResultContext';
-import { useStationInfo } from '../api/stations';
+import { useStation } from '../api/stations';
 import MyMarkerIcon from '../assets/icons/myMarker.png';
 
 export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
@@ -11,7 +11,7 @@ export const KakaoMapContext = createContext<kakao.maps.Map | null>(null);
 export const useMap = () => {
   const { station } = useResultContext();
   const kakaoMap = useContext(KakaoMapContext);
-  const { data: stationData, isLoading } = useStationInfo();
+  const { data: stationData, isLoading } = useStation();
   const [myMarker, setMyMarker] = useState<kakao.maps.CustomOverlay | null>(null);
   const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
   const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>(station.elevators);

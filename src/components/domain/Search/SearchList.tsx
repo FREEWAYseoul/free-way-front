@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import SearchItem from './SearchItem';
-import { type Station } from '../../../api/stations';
 import { useSearchContext } from './SearchContext';
+import { StationProps } from '../../../types/stationType';
 
 type Props = {
   label?: string;
-  data: Station[];
+  data: StationProps[];
   type?: 'homepage' | 'searchpage';
 };
 
@@ -21,7 +21,7 @@ const SearchList = ({ label, data, type }: Props) => {
           id={station.stationId}
           name={station.stationName}
           status={station.stationStatus}
-          line={station.lineId}
+          line={String(station.lineId)}
           isFocus={selectedIdx === idx ? true : false}
           type={type}
         />
