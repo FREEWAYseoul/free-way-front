@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Station, useStationInfo } from '../api/stations';
+import { useStation } from '../api/stations';
+import { StationProps } from '../types/stationType';
 
 interface TrieNode {
   children: Map<string, TrieNode>;
@@ -7,7 +8,7 @@ interface TrieNode {
 }
 
 const useAutocomplete = () => {
-  const { data } = useStationInfo();
+  const { data } = useStation();
 
   const createTrieNode = () => ({
     children: new Map(),
@@ -80,7 +81,7 @@ const useAutocomplete = () => {
 
   useEffect(() => {
     if (!data) return;
-    data.map((station: Station) => autocomplete.insertWord(station.stationName));
+    data.map((station: StationProps) => autocomplete.insertWord(station.stationName));
   }, [autocomplete, data]);
 
   return { autocomplete };

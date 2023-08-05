@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import { Station } from '../api/stations';
 import { useSearchContext } from '../components/domain/Search/SearchContext';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from './useLocalStorage';
 import NotFound from '../components/domain/Search/NotFound';
 import SearchList from '../components/domain/Search/SearchList';
 import VoiceSearchField from '../components/domain/Home/VoiceSearchField';
-import { useStationInfo } from '../api/stations';
+import { useStation } from '../api/stations';
 import useAutocomplete from './useAutocomplete';
+import { StationProps } from '../types/stationType';
 
 const useSearchBar = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const useSearchBar = () => {
     setKeywords,
     setSelectedStationInfo,
   } = useSearchContext();
-  const { data } = useStationInfo();
+  const { data } = useStation();
   const { autocomplete } = useAutocomplete();
   const { addSearchHistory } = useLocalStorage();
 
@@ -37,11 +37,11 @@ const useSearchBar = () => {
     (keywords: string) => {
       const character = keywords?.replace(/역$/, '').trim();
       const wordsStartingWithKeywords = autocomplete.searchPrefix(character);
-      const filteredStations = data.filter((station: Station) =>
+      const filteredStations = data?.filter((station: StationProps) =>
         wordsStartingWithKeywords.includes(station.stationName)
       );
 
-      return filteredStations;
+      return filteredStations ?? [];
     },
     [autocomplete, data]
   );
@@ -65,7 +65,7 @@ const useSearchBar = () => {
 
   // 함수 설명: 클릭 or submit된 역 정보를 저장(로컬과 리액트내)
   const saveStation = useCallback(
-    (selectedStation: Station) => {
+    (selectedStation: StationProps) => {
       setSelectedStationInfo(selectedStation);
       addSearchHistory(selectedStation);
       setKeywords(selectedStation?.stationName);
