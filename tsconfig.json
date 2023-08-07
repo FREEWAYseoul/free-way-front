@@ -19,7 +19,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "types": ["kakao.maps.d.ts", "node"]
+    "types": ["navermaps", "node"],
+    "typeRoots": ["./node_modules", "./node_modules/@types", "./@types"]
   },
   "include": ["src", "src/styles"],
   "references": [{ "path": "./tsconfig.node.json" }]

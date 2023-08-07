@@ -1,30 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { CoordinateProps } from '../../../types/stationType';
 import { useMap } from '../../../hooks/useMap';
+import ReactDOMServer from 'react-dom/server';
 
 interface CustomOverlayProps {
   coordinate: CoordinateProps;
-  onClick?: () => void;
-  children: React.ReactNode;
+  handleOnClick?: () => void;
+  children: React.ReactElement;
   zIndex?: number;
 }
 
-const CustomOverlay = ({ coordinate, onClick, children, zIndex }: CustomOverlayProps) => {
-  const { kakaoMap } = useMap();
-
-  const overlayRef = useRef<HTMLDivElement>(null);
+const CustomOverlay = ({ coordinate, handleOnClick, children, zIndex }: CustomOverlayProps) => {
+  const { naverMap } = useMap();
+  const componentHTML = ReactDOMServer.renderToString(children);
 
   useEffect(() => {
-    const markerPosition = new kakao.maps.LatLng(coordinate.latitude, coordinate.longitude);
+    const markerPosition = new naver.maps.LatLng(coordinate.latitude, coordinate.longitude);
 
-    const marker = new kakao.maps.CustomOverlay({
+    const marker = new naver.maps.Marker({
       position: markerPosition,
+      map: naverMap,
       clickable: true,
-      content: overlayRef?.current || '<div></div>',
-      zIndex: zIndex ? zIndex : 0,
+      icon: {
+        content: `${componentHTML}`,
+      },
+      zIndex: zIndex,
     });
 
-    marker.setMap(kakaoMap);
+    if (handleOnClick) {
+      naver.maps.Event.addListener(marker, 'click', handleOnClick);
+    }
 
     return () => {
       marker.setMap(null);
@@ -32,13 +37,7 @@ const CustomOverlay = ({ coordinate, onClick, children, zIndex }: CustomOverlayP
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div>
-      <div ref={overlayRef} onClick={onClick}>
-        {children}
-      </div>
-    </div>
-  );
+  return <></>;
 };
 
 export default CustomOverlay;

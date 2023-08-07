@@ -8,7 +8,7 @@ const StationMarker = ({ info, isActive, level }: StationMakerProps) => {
 
   return (
     <StyledStationMaker $color={color.color} $isActive={isActive} $level={level}>
-      {isActive && level < 5 ? (
+      {isActive && level > 15 ? (
         <StationTitle
           title={info.stationName}
           line={info.lineId}
