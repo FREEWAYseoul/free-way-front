@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const BASE_URL = process.env.NODE_ENV === 'development' ? '/' : import.meta.env.VITE_BASE_URL;
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: BASE_URL,
 });
 
 if (process.env.NODE_ENV === 'development') {
