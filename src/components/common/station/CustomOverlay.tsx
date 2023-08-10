@@ -23,6 +23,7 @@ const CustomOverlay = ({ coordinate, handleOnClick, children, zIndex }: CustomOv
       clickable: true,
       icon: {
         content: `${componentHTML}`,
+        anchor: zIndex ? new naver.maps.Point(0, 35) : new naver.maps.Point(0, 50),
       },
       zIndex: zIndex,
     });

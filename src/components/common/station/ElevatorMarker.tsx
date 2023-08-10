@@ -37,9 +37,6 @@ const ElevatorMarker = ({ text, status }: ElevatorMarkerProps) => {
 export default ElevatorMarker;
 
 const StyledElevatorMarker = styled.div<{ $status: string }>`
-  /* cursor: pointer; */
-  position: absolute;
-  top: -50px;
   z-index: 10;
   filter: drop-shadow(0px 0px 10.8px rgba(68, 81, 69, 0.3));
 

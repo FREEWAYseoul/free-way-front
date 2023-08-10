@@ -3,7 +3,7 @@ import subwayDumy from './data/subwayDumy.json';
 import elevatorDumy from './data/elevatorDumy.json';
 
 export const handlers = [
-  rest.get('/api/stations/search', async (_req, res, ctx) => {
+  rest.get('/api/stations', async (_req, res, ctx) => {
     await sleep(200);
     return res(ctx.status(200), ctx.json(subwayDumy));
   }),
