@@ -45,7 +45,8 @@
         "latitude": "37.544948554327775",
         "longitude": "127.0553622228127"
       },
-      "elevatorStatus": "사용 가능"
+      "elevatorStatus": "사용 가능",
+      "exitNumber": 1
     },
     {
       "elevatorId": 43,
@@ -53,7 +54,8 @@
         "latitude": "37.54467031883598",
         "longitude": "127.05529847239829"
       },
-      "elevatorStatus": "사용 가능"
+      "elevatorStatus": "사용 가능",
+      "exitNumber": 4
     }
   ]
 }

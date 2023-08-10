@@ -6,7 +6,8 @@ import theme from './styles/theme.ts';
 import GlobalStyle from './styles/global.ts';
 import { BrowserRouter } from 'react-router-dom';
 import { SearchContextProvider } from './components/domain/Search/SearchContext.tsx';
-import KakaoMapScriptLoader from './components/domain/map/KakaoMapScriptLoader.tsx';
+import NaverMapScriptLoader from './components/domain/naverMap/NaverMapScriptLoader.tsx';
+import 'regenerator-runtime/runtime';
 
 const queryClient = new QueryClient();
 
@@ -21,14 +22,16 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
   <ThemeProvider theme={theme}>
     <QueryClientProvider client={queryClient}>
-      <KakaoMapScriptLoader>
+      {/* <KakaoMapScriptLoader> */}
+      <NaverMapScriptLoader>
         <BrowserRouter>
           <SearchContextProvider>
             <GlobalStyle />
             <App />
           </SearchContextProvider>
         </BrowserRouter>
-      </KakaoMapScriptLoader>
+      </NaverMapScriptLoader>
+      {/* </KakaoMapScriptLoader> */}
     </QueryClientProvider>
   </ThemeProvider>
   // </React.StrictMode>

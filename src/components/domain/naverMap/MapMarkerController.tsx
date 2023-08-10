@@ -11,31 +11,43 @@ import styled from 'styled-components';
 const MapMarkerController = () => {
   const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
     useResultContext();
-  const { kakaoMap, stationMarkers, elevatorMarkers, setStationMarker, myMarker, refreshMyMarker } =
+  const { naverMap, stationMarkers, elevatorMarkers, setStationMarker, myMarker, refreshMyMarker } =
     useMap();
 
   /**
    * station marker move
    */
   const moveStation = async (lat: number, lng: number) => {
-    const moveLatLon = new kakao.maps.LatLng(lat, lng);
-    kakaoMap.setLevel(3);
-    kakaoMap.panTo(moveLatLon);
+    const moveLatLon = new naver.maps.LatLng(lat, lng);
+    naverMap.setZoom(17);
+    naverMap.panTo(moveLatLon);
     handleShowController(true);
   };
 
   useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'tilesloaded', setStationMarker);
+    const zoomChangeListener = naver.maps.Event.addListener(
+      naverMap,
+      'zoom_changed',
+      setStationMarker
+    );
+    const boundsChangeListener = naver.maps.Event.addListener(
+      naverMap,
+      'bounds_changed',
+      setStationMarker
+    );
 
     return () => {
-      kakao.maps.event.removeListener(kakaoMap, 'tilesloaded', setStationMarker);
+      naver.maps.Event.removeListener([zoomChangeListener, boundsChangeListener]);
     };
   }, [stationMarkers]);
 
   useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
+    const clickListener = naver.maps.Event.addListener(naverMap, 'click', () =>
+      handleShowController(!isShow)
+    );
+
     return () => {
-      kakao.maps.event.addListener(kakaoMap, 'click', () => handleShowController(!isShow));
+      naver.maps.Event.removeListener(clickListener);
     };
   }, [isShow]);
 
@@ -44,66 +56,63 @@ const MapMarkerController = () => {
   }, [station]);
 
   useEffect(() => {
-    kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(false));
+    const dragListener = naver.maps.Event.addListener(naverMap, 'drag', () =>
+      handleShowInfo(false)
+    );
     return () => {
       myMarker?.setMap(null);
-      kakao.maps.event.addListener(kakaoMap, 'drag', () => handleShowInfo(false));
+      naver.maps.Event.removeListener(dragListener);
     };
   }, []);
-
-  // useEffect(() => {
-  //   let watchId = 0;
-  //   if (isMyPostion) {
-  //     watchId = navigator.geolocation.watchPosition((position) => {
-  //       const { latitude, longitude } = position.coords;
-  //       const currentPosition = new kakao.maps.LatLng(latitude, longitude);
-
-  //       if (!myMarker) {
-  //         // 마커 생성
-  //         const marker = new kakao.maps.CustomOverlay({
-  //           position: currentPosition,
-  //           content: `<img src='${MyMarkerIcon}' alt="내 위치"/>`,
-  //         });
-  //         marker.setMap(kakaoMap);
-  //         setMyMarker(marker);
-  //         setIsStartMyMarker(true);
-  //       } else if (isStartMyMarker) {
-  //         myMarker?.setPosition(currentPosition);
-  //       }
-  //     });
-
-  //     return () => {
-  //       myMarker?.setMap(null);
-  //       navigator.geolocation.clearWatch(watchId);
-  //     };
-  //   }
-  // }, [isMyPostion, myMarker, isStartMyMarker]);
 
   return (
     <>
       <StyledMyMarker onClick={refreshMyMarker}>
         <img src={TargetIcon} />
       </StyledMyMarker>
-      {stationMarkers.length > 0 && (
-        <div>
+      {/* 지하철 타이틀 마커 */}
+      {stationMarkers.length > 0 && naverMap.getZoom() > 15 && (
+        <>
           {stationMarkers.map((item, idx) => (
             <CustomOverlay
               key={item.stationName + idx}
               coordinate={item.coordinate}
-              onClick={() => handleChangeStation(item.stationId)}
+              handleOnClick={() => handleChangeStation(item.stationId)}
               zIndex={10}
             >
               <StationMarker
                 info={item}
                 isActive={station.stationName === item.stationName}
-                level={kakaoMap.getLevel()}
+                level={naverMap.getZoom()}
               />
             </CustomOverlay>
           ))}
-        </div>
+        </>
       )}
-      {elevatorMarkers.length > 0 && kakaoMap.getLevel() < 5 && (
-        <div>
+
+      {/* 지하철 마커 */}
+      {stationMarkers.length > 0 && naverMap.getZoom() < 16 && (
+        <>
+          {stationMarkers.map((item, idx) => (
+            <CustomOverlay
+              key={item.stationName + idx}
+              coordinate={item.coordinate}
+              handleOnClick={() => handleChangeStation(item.stationId)}
+              zIndex={10}
+            >
+              <StationMarker
+                info={item}
+                isActive={station.stationName === item.stationName}
+                level={naverMap.getZoom()}
+              />
+            </CustomOverlay>
+          ))}
+        </>
+      )}
+
+      {/* 엘리베이터 마커 */}
+      {elevatorMarkers.length > 0 && naverMap.getZoom() > 15 && (
+        <>
           {elevatorMarkers.map((item) => (
             <CustomOverlay
               key={item.elevatorId}
@@ -115,7 +124,7 @@ const MapMarkerController = () => {
               <ElevatorMarker text={item.exitNumber} status={item.elevatorStatus} />
             </CustomOverlay>
           ))}
-        </div>
+        </>
       )}
     </>
   );

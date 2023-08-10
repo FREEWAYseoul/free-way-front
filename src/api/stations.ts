@@ -8,7 +8,7 @@ export type Coordinate = {
 };
 
 const fetchStations = async () => {
-  const res = await get<StationProps[]>('/api/stations/search');
+  const res = await get<StationProps[]>('/api/stations');
   return res.data;
 };
 

@@ -3,24 +3,24 @@ import styled from 'styled-components';
 import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
-import useMic from '../../../hooks/useMic';
+// import useMic from '../../../hooks/useMic';
 // import SafetyAlert from './SafteyAlert';
 import VoiceSearchField from './VoiceSearchField';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const Home = () => {
-  const { startListening, endListening } = useMic();
-  const [isListening, setIsListening] = useState(false);
+  // const { startListening, endListening } = useMic();
+  const [isListening] = useState(false);
   const { displaySearchHistoryInOrder } = useLocalStorage();
 
   const handleClick = () => {
-    if (isListening) {
-      setIsListening((prev) => !prev);
-      endListening();
-    } else {
-      setIsListening((prev) => !prev);
-      startListening();
-    }
+    // if (isListening) {
+    //   setIsListening((prev) => !prev);
+    //   endListening();
+    // } else {
+    //   setIsListening((prev) => !prev);
+    //   startListening();
+    // }
   };
 
   useEffect(() => {
