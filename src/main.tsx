@@ -7,7 +7,6 @@ import GlobalStyle from './styles/global.ts';
 import { BrowserRouter } from 'react-router-dom';
 import { SearchContextProvider } from './components/domain/Search/SearchContext.tsx';
 import NaverMapScriptLoader from './components/domain/naverMap/NaverMapScriptLoader.tsx';
-import 'regenerator-runtime/runtime';
 
 const queryClient = new QueryClient();
 
