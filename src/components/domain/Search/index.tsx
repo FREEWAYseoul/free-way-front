@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import { useSearchContext } from './SearchContext';
@@ -7,25 +7,23 @@ import useSearchBar from '../../../hooks/useSearchBar';
 import SearchLoading from './SearchLoading';
 import ProgressBar from '../../common/ProgressBar';
 import useLocalStorage from '../../../hooks/useLocalStorage';
+import useMic from '../../../hooks/useMic';
 
 const Search = () => {
   const { keywords, setFilteredStations } = useSearchContext();
   const { getFilteredStations, focusOnSearchInput, convertKeywordsToContent } = useSearchBar();
   const { data, isLoading } = useStation();
-  // const { startListening, endListening } = useMic();
+  const { startListening, endListening, listening } = useMic();
   const { displaySearchHistoryInOrder } = useLocalStorage();
 
-  const [isListening] = useState(false);
-  const content = convertKeywordsToContent(keywords, isListening);
+  const content = convertKeywordsToContent(keywords, listening);
 
   const handleClick = () => {
-    // if (isListening) {
-    //   setIsListening((prev) => !prev);
-    //   endListening();
-    // } else {
-    //   setIsListening((prev) => !prev);
-    //   startListening();
-    // }
+    if (listening) {
+      endListening();
+    } else {
+      startListening();
+    }
   };
 
   useEffect(() => {
