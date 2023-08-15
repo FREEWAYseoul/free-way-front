@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
-// import useMic from '../../../hooks/useMic';
 // import SafetyAlert from './SafteyAlert';
+import useMic from '../../../hooks/useMic';
 import VoiceSearchField from './VoiceSearchField';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 
 const Home = () => {
-  // const { startListening, endListening } = useMic();
-  const [isListening] = useState(false);
+  const { startListening, endListening, listening } = useMic();
   const { displaySearchHistoryInOrder } = useLocalStorage();
 
   const handleClick = () => {
-    // if (isListening) {
-    //   setIsListening((prev) => !prev);
-    //   endListening();
-    // } else {
-    //   setIsListening((prev) => !prev);
-    //   startListening();
-    // }
+    if (listening) {
+      endListening();
+    } else {
+      startListening();
+    }
   };
 
   useEffect(() => {
@@ -33,7 +30,7 @@ const Home = () => {
       <HomePageTitle />
       <HomeSearchBar handleClick={handleClick} />
       <ChildrenWrapper>
-        {isListening ? <VoiceSearchField /> : <HomeSearchHistoryList />}
+        {listening ? <VoiceSearchField /> : <HomeSearchHistoryList />}
       </ChildrenWrapper>
     </HomeWrapper>
   );
