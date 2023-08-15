@@ -43,12 +43,14 @@ export default StationMarker;
 
 const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean; $level: number }>`
   cursor: pointer;
+  position: relative;
   z-index: 10;
   filter: drop-shadow(0px 0px 10.8px rgba(68, 81, 69, 0.3));
 
   & > .triangle {
     position: absolute;
     left: 50%;
+    bottom: ${({ $isActive, $level }) => ($isActive && $level > 15 ? '-57px' : ' -44px')};
     color: ${({ $color }) => $color};
     transform: translateX(-50%);
     z-index: 90;
