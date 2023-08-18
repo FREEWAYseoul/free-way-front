@@ -12,7 +12,7 @@ const useLocalStorage = () => {
     if (!selectedStationInfo || selectedStationInfo == undefined) {
       return;
     }
-    const data = JSON.parse(localStorage.getItem('최근 검색') || '[]');
+    const data = JSON.parse(localStorage.getItem('최근 검색') ?? '[]');
     const dataWithoutDuplication = removeDuplication(selectedStationInfo, data);
     const newData = [...dataWithoutDuplication, selectedStationInfo];
     localStorage.setItem('최근 검색', JSON.stringify(newData));
@@ -20,7 +20,7 @@ const useLocalStorage = () => {
 
   const displaySearchHistoryInOrder = useCallback(() => {
     setSearchHistory(
-      JSON.parse(localStorage.getItem('최근 검색') || '[]')
+      JSON.parse(localStorage.getItem('최근 검색') ?? '[]')
         .slice(-4)
         .reverse()
     );
