@@ -31,7 +31,7 @@ const StyledBadge = styled.span<{ $isActive: boolean; $isText: boolean; $color: 
   height: 20px;
   border-radius: 10px;
   font-size: 0.875rem;
-  line-height: 120%;
+  line-height: 130%;
   text-align: center;
   background-color: #fff;
   border: 1.5px solid ${({ $color }) => $color};
@@ -45,7 +45,7 @@ const StyledBadge = styled.span<{ $isActive: boolean; $isText: boolean; $color: 
       : css`
           font-size: 0.75rem;
           font-weight: 600;
-          line-height: 1.2rem;
+          line-height: 150%;
         `;
   }}
 
