@@ -50,7 +50,7 @@ const StyledStationMaker = styled.div<{ $color: string; $isActive: boolean; $lev
   & > .triangle {
     position: absolute;
     left: 50%;
-    bottom: ${({ $isActive, $level }) => ($isActive && $level > 15 ? '-57px' : ' -44px')};
+    bottom: ${({ $isActive, $level }) => ($isActive && $level > 15 ? '-54px' : ' -44px')};
     color: ${({ $color }) => $color};
     transform: translateX(-50%);
     z-index: 90;
