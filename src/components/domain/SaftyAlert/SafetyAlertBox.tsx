@@ -7,8 +7,8 @@ const SafetyAlertBox = ({ info }: { info: SafetyAlertProps }) => {
   return (
     <StyledSafetyAlrertBox>
       <h1>{dateFormat(info.date)}</h1>
-      {info.notifications.map((item: SafetyAlertItemProps) => (
-        <AlertItem key={item.time} info={item} />
+      {info.notifications.map((item: SafetyAlertItemProps, idx) => (
+        <AlertItem key={idx + item.time} info={item} />
       ))}
     </StyledSafetyAlrertBox>
   );

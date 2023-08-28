@@ -17,12 +17,10 @@ const PageTitle = ({ upperLine, lowerLine }: PageTitleProps) => {
 export default PageTitle;
 
 export const TitleWrapper = styled.div`
-  width: 216px;
   height: 65px;
 `;
 
 export const Text = styled.div`
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 28px;

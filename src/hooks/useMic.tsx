@@ -17,7 +17,7 @@ const useMic = () => {
     SpeechRecognition.startListening({ language: 'ko-KR' });
     const timer = setTimeout(() => {
       SpeechRecognition.stopListening();
-    }, 5000);
+    }, 3000);
     return () => {
       clearTimeout(timer);
     };

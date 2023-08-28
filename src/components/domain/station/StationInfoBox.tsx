@@ -14,7 +14,8 @@ const StationInfoBox = () => {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      style={{ transform: `translateY(${tabPosition}px)` }}
+      style={{ transform: `translate3d(0,${tabPosition}px,0)` }}
+      // style={{ transform: `translateY(${tabPosition}px)` }}
     >
       <StationHeader />
       <Divider />

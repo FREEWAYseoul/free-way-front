@@ -66,7 +66,6 @@ const VoiceSearchText = styled.div<VoiceSearchProps>`
   padding: 0 10px;
   color: white;
   font-size: 18px;
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   line-height: 21px;

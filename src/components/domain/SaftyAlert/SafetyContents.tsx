@@ -9,8 +9,8 @@ const SafetyContents = () => {
 
   return (
     <StyledContents>
-      {alerts.map((info: SafetyAlertProps) => (
-        <SafetyAlertBox key={info.date} info={info} />
+      {alerts.map((info: SafetyAlertProps, idx) => (
+        <SafetyAlertBox key={idx} info={info} />
       ))}
     </StyledContents>
   );
