@@ -11,9 +11,10 @@ type SearchBarProps = {
   placeholder: string;
   listeningMessage?: string;
   handleClick?: () => void;
+  isListening?: boolean;
 } & PropsWithChildren;
 
-const SearchBar = ({ placeholder, handleClick }: SearchBarProps) => {
+const SearchBar = ({ placeholder, listeningMessage, handleClick, isListening }: SearchBarProps) => {
   const { keywords, inputRef, setKeywords } = useSearchContext();
   const { handleSubmit, handleTyping } = useSearchBar();
   const navigate = useNavigate();
@@ -30,15 +31,14 @@ const SearchBar = ({ placeholder, handleClick }: SearchBarProps) => {
           </Button>
           <form
             onSubmit={handleSubmit}
-            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}
           >
             <StyledSearchBarInput
               id='search-bar'
               value={keywords || ''}
               type='text'
-              placeholder={placeholder}
+              placeholder={isListening ? listeningMessage : placeholder}
               onChange={handleTyping}
-              // onKeyDown={handleKeydown}
               ref={inputRef}
             />
           </form>
@@ -59,14 +59,12 @@ export default SearchBar;
 const StyledSearchBarWrapper = styled.div`
   width: 100%;
   height: 75px;
-  /* border-radius: 4px; */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   display: grid;
-  grid-template-columns: 8fr 2fr;
+  grid-template-columns: 1fr 75px;
   background-color: #ffffff;
 
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 600;
   font-size: 1.125rem;
@@ -81,14 +79,21 @@ const StyledLeftSection = styled.div`
 
 const StyledSearchBarInput = styled.input`
   border-radius: 4px;
-  width: 100%;
-  max-width: 300px;
+  flex: 1;
   border: none;
   outline: none;
   padding-top: 4px;
   padding-left: 11px;
   font-weight: 500;
   line-height: 20px;
+
+  &::placeholder {
+    color: rgba(150, 161, 178, 0.5);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
 `;
 
 const StyledRightSection = styled.div`
