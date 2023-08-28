@@ -63,7 +63,6 @@ const TypingSearchSection = styled.section`
 
   text-decoration: none;
   outline: none;
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

@@ -24,7 +24,6 @@ const Text = styled.div<Text>`
   align-items: center;
 
   color: #96a1b2;
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 600;
   font-size: ${(props) => props.fontSize};

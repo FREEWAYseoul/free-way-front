@@ -35,7 +35,6 @@ const HomeNotFoundBox = styled.div`
   align-items: center;
 
   color: rgba(0, 0, 0, 0.5);
-  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 600;
   font-size: 16px;

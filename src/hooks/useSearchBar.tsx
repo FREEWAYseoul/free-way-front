@@ -115,7 +115,10 @@ const useSearchBar = () => {
     }
 
     if (isListening) {
+      if (inputRef.current) inputRef.current.disabled = true;
       content = <VoiceSearchField />;
+    } else {
+      if (inputRef.current) inputRef.current.disabled = false;
     }
 
     return content;

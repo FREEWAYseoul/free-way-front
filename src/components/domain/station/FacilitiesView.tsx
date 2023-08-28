@@ -174,7 +174,6 @@ const StyledFacilitiesView = styled.div`
     height: 36px;
     padding: 11px 0;
     color: #cbd0d9;
-    font-family: 'Pretendard';
     font-style: normal;
     font-weight: 600;
     font-size: 12px;
