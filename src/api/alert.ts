@@ -1,10 +1,6 @@
-import axios from 'axios';
+import { get } from '.';
+import { SafetyAlertProps } from '../types/alertType';
 
 export const fetchGetAlertList = async () => {
-  const res = await axios({
-    method: 'get',
-    url: '/api/notifications',
-  }).catch((e) => console.log(e));
-
-  return res;
+  return get<SafetyAlertProps[]>('/api/notifications');
 };
