@@ -12,7 +12,7 @@ export const useMap = () => {
   const { station } = useResultContext();
   const naverMap = useContext(NaverMapContext);
   const { data: stationData, isLoading } = useStation();
-  const [myMarker, setMyMarker] = useState<naver.maps.Marker | null>(null);
+  const [isMyMarker, setIsMyMarker] = useState<boolean>(false);
   const [stationMarkers, setStationMarkers] = useState<StationProps[]>([]);
   const [elevatorMarkers, setElevatorMarkers] = useState<ElevatorProps[]>(station.elevators);
 
@@ -59,23 +59,57 @@ export const useMap = () => {
   };
 
   // 내 위치 마커
-  const refreshMyMarker = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      const currentPosition = new naver.maps.LatLng(latitude, longitude);
-      myMarker?.setMap(null);
-      const marker = new naver.maps.Marker({
-        position: currentPosition,
-        map: naverMap,
-        icon: {
-          content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
-          anchor: new naver.maps.Point(40, 40),
-        },
-      });
-      setMyMarker(marker);
+  // const refreshMyMarker = () => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     const { latitude, longitude } = position.coords;
+  //     const currentPosition = new naver.maps.LatLng(latitude, longitude);
+  //     myMarker?.setMap(null);
+  //     const marker = new naver.maps.Marker({
+  //       position: currentPosition,
+  //       map: naverMap,
+  //       icon: {
+  //         content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
+  //         anchor: new naver.maps.Point(40, 40),
+  //       },
+  //     });
+  //     setMyMarker(marker);
 
-      naverMap.setCenter(currentPosition);
-    });
+  //     naverMap.setCenter(currentPosition);
+  //   });
+  // };
+
+  const trackingMyPosition = () => {
+    const myMarker: { marker: naver.maps.Marker | null } = { marker: null };
+    setIsMyMarker(true);
+
+    if (!isMyMarker) {
+      navigator.geolocation.watchPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const currentPosition = new naver.maps.LatLng(latitude, longitude);
+
+        if (!myMarker.marker) {
+          const marker = new naver.maps.Marker({
+            position: currentPosition,
+            map: naverMap,
+            icon: {
+              content: `<div><img src='${MyMarkerIcon}' alt="내 위치"/></div>`,
+              anchor: new naver.maps.Point(40, 40),
+            },
+          });
+          myMarker.marker = marker;
+          naverMap.setCenter(currentPosition);
+        } else {
+          myMarker.marker?.setPosition(currentPosition);
+        }
+      });
+    } else {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const currentPosition = new naver.maps.LatLng(latitude, longitude);
+        console.log(latitude, longitude);
+        naverMap.setCenter(currentPosition);
+      });
+    }
   };
 
   useEffect(() => {
@@ -88,23 +122,11 @@ export const useMap = () => {
     setElevatorMarkers(station.elevators);
   }, [station]);
 
-  useEffect(() => {
-    // if (myMarker) {
-    //   naverMap.setCenter(
-    //     new naver.maps.LatLng(
-    //       Number(myMarker?.getPosition().getLat()),
-    //       Number(myMarker?.getPosition().getLng())
-    //     )
-    //   );
-    // }
-  }, [myMarker]);
-
   return {
     naverMap,
     stationMarkers,
     setStationMarker,
     elevatorMarkers,
-    myMarker,
-    refreshMyMarker,
+    trackingMyPosition,
   };
 };
