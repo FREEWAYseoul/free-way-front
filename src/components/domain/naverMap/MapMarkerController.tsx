@@ -11,7 +11,7 @@ import styled from 'styled-components';
 const MapMarkerController = () => {
   const { station, handleShowInfo, handleChangeStation, isShow, handleShowController } =
     useResultContext();
-  const { naverMap, stationMarkers, elevatorMarkers, setStationMarker, myMarker, refreshMyMarker } =
+  const { naverMap, stationMarkers, elevatorMarkers, setStationMarker, trackingMyPosition } =
     useMap();
 
   /**
@@ -60,14 +60,13 @@ const MapMarkerController = () => {
       handleShowInfo(false)
     );
     return () => {
-      myMarker?.setMap(null);
       naver.maps.Event.removeListener(dragListener);
     };
   }, []);
 
   return (
     <>
-      <StyledMyMarker onClick={refreshMyMarker}>
+      <StyledMyMarker onClick={trackingMyPosition}>
         <img src={TargetIcon} />
       </StyledMyMarker>
       {/* 지하철 타이틀 마커 */}
