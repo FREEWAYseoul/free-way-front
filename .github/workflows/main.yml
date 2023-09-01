@@ -3,11 +3,11 @@ name: CI/CD AWS S3
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
-  test:
-    name: action test
+  develop:
+    name: develop server
     runs-on: ubuntu-latest
     steps:
       - name: check ls
