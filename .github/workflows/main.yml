@@ -19,6 +19,7 @@ jobs:
       - name: Set up environment variables
         run: |
           echo "VITE_NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+          echo "VITE_BASE_URL=${{ secrets.BASE_URL }}" >> .env
       - name: Install dependencies
         run: npm install
       - name: Generate build
