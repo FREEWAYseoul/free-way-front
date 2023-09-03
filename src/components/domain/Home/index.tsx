@@ -28,7 +28,7 @@ const Home = () => {
     <HomeWrapper id='home-container'>
       <HomeHeader />
       <HomePageTitle />
-      <HomeSearchBar handleClick={handleClick} />
+      <HomeSearchBar handleClick={handleClick} isListening={listening} />
       <ChildrenWrapper>
         {listening ? <VoiceSearchField /> : <HomeSearchHistoryList />}
       </ChildrenWrapper>
