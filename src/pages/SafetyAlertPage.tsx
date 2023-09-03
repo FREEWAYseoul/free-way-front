@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import SafetyHeader from '../components/domain/SaftyAlert/SafetyHeader';
 import SafetyContents from '../components/domain/SaftyAlert/SafetyContents';
+import PageHeader from '../components/domain/SaftyAlert/SafetyHeader';
 
 const SafetyAlertPage = () => {
   return (
     <StyledContainer>
-      <SafetyHeader />
+      <PageHeader title='알림' />
       <SafetyContents />
     </StyledContainer>
   );
