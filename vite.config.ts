@@ -10,7 +10,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: process.env.VITE_BASE_URL,
+          target: 'http://freeway.ap-northeast-2.elasticbeanstalk.com',
           changeOrigin: true,
           secure: false,
         },
