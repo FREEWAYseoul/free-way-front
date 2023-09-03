@@ -1,10 +1,6 @@
-import axios from 'axios';
+import { get } from '.';
 
 export const fetchGetAlertList = async () => {
-  const res = await axios({
-    method: 'get',
-    url: '/api/notifications',
-  }).catch((e) => console.log(e));
-
+  const res = await get('/api/notifications');
   return res;
 };
