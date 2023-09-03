@@ -1,6 +1,6 @@
 import { get } from '.';
+import { SafetyAlertProps } from '../types/alertType';
 
 export const fetchGetAlertList = async () => {
-  const res = await get('/api/notifications');
-  return res;
+  return get<SafetyAlertProps[]>('/api/notifications');
 };
