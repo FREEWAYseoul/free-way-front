@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HomeSearchBar from './HomeSearchBar';
 import HomePageTitle from './HomePageTitle';
 import HomeSearchHistoryList from './HomeSearchHistoryList';
-import SafetyAlert from './SafteyAlert';
+import HomeHeader from './HomeHeader';
 import useMic from '../../../hooks/useMic';
 import VoiceSearchField from './VoiceSearchField';
 import useLocalStorage from '../../../hooks/useLocalStorage';
@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <HomeWrapper id='home-container'>
-      <SafetyAlert />
+      <HomeHeader />
       <HomePageTitle />
       <HomeSearchBar handleClick={handleClick} />
       <ChildrenWrapper>

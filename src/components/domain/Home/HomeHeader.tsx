@@ -6,14 +6,16 @@ import { ReactComponent as NotiIcon } from '../../../assets/icons/bell.svg';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/gear.svg';
 import { useAlert } from '../../../hooks/useAlert';
 
-const SafetyAlert = () => {
+const HomeHeader = () => {
   const { toastMessage } = useAlert();
   const [isToastOpen, setIsToastOpen] = useState(true);
 
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate('/safetyAlert');
   };
+
   const activeToast = () => {
     if (toastMessage) {
       const timer = setTimeout(() => {
@@ -40,7 +42,7 @@ const SafetyAlert = () => {
           <NotiIconWrapper id='this-is-noti' onClick={handleClick}>
             <NotiIcon />
           </NotiIconWrapper>
-          <SettingIconWrapper id='this-is-setting'>
+          <SettingIconWrapper id='this-is-setting' onClick={() => navigate('/setting')}>
             <SettingIcon />
           </SettingIconWrapper>
         </HomePageHeader>
@@ -49,7 +51,7 @@ const SafetyAlert = () => {
   );
 };
 
-export default SafetyAlert;
+export default HomeHeader;
 
 const Wrapper = styled.div`
   width: 100%;
