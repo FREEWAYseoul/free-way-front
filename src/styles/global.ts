@@ -5,7 +5,10 @@ import normalize from 'styled-normalize';
 const GlobalStyle = createGlobalStyle`
   ${normalize}
 
-  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+  @font-face {
+    font-family: Pretendard;
+    src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
+  }
 
   *{
     font-family: 'Pretendard', sans-serif;
