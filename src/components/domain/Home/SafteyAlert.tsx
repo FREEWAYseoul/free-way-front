@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from '../../common/ToastMessage';
 import styled from 'styled-components';
-import { ReactComponent as NotiIcon } from '../../../assets/icons/종.svg';
+import { ReactComponent as NotiIcon } from '../../../assets/icons/bell.svg';
+import { ReactComponent as SettingIcon } from '../../../assets/icons/gear.svg';
 import { useAlert } from '../../../hooks/useAlert';
 
 const SafetyAlert = () => {
@@ -39,6 +40,9 @@ const SafetyAlert = () => {
           <NotiIconWrapper id='this-is-noti' onClick={handleClick}>
             <NotiIcon />
           </NotiIconWrapper>
+          <SettingIconWrapper id='this-is-setting'>
+            <SettingIcon />
+          </SettingIconWrapper>
         </HomePageHeader>
       </Wrapper>
     </>
@@ -59,6 +63,7 @@ const HomePageHeader = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: 12px;
 `;
 
 const NotiIconWrapper = styled.div`
@@ -67,6 +72,18 @@ const NotiIconWrapper = styled.div`
   position: relative;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const SettingIconWrapper = styled.div`
+  min-width: 30px;
+  min-height: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
   &:hover {
     transform: scale(1.1);
   }

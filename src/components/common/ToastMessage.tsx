@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { ReactComponent as NotiIcon } from '../../assets/icons/하얀종.svg';
+import { ReactComponent as NotiIcon } from '../../assets/icons/white-bell.svg';
 
 type ToastMessageProps = {
   content: string;
