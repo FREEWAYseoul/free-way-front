@@ -19,7 +19,7 @@ const HomeSearchBar = ({ handleClick, isListening }: Props) => {
         </TypingSearchSection>
         <VoiceSearchSection id='mic'>
           <VoiceSearchButton onClick={handleClick}>
-            {isListening ? <SoundWaveIcon /> : <MicIcon />}
+            {isListening ? <SoundWaveIcon style={{ color: '#fff' }} /> : <MicIcon />}
           </VoiceSearchButton>
         </VoiceSearchSection>
       </StyledHomeSearchBar>
