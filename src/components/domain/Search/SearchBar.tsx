@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../../common/Button';
 import { useSearchContext } from './SearchContext';
 import { ReactComponent as MicIcon } from '../../../assets/icons/mic-icon.svg';
+import { ReactComponent as SoundWaveIcon } from '../../../assets/icons/sound-wave.svg';
 import { ReactComponent as ChevronIcon } from '../../../assets/icons/chevron.svg';
 import { useNavigate } from 'react-router-dom';
 import useSearchBar from '../../../hooks/useSearchBar';
@@ -42,7 +43,7 @@ const SearchBar = ({ placeholder, listeningMessage, handleClick, isListening }: 
           />
         </form>
         <Button handleClick={handleClick}>
-          <MicIcon />
+          {isListening ? <SoundWaveIcon style={{ color: '#316BFF' }} /> : <MicIcon />}
         </Button>
       </StyledSearchBarWrapper>
     </>
