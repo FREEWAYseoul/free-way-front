@@ -29,10 +29,7 @@ const SearchBar = ({ placeholder, listeningMessage, handleClick, isListening }: 
         <Button handleClick={handleGoBack}>
           <ChevronIcon style={{ width: '24px', height: '24px' }} />
         </Button>
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        >
+        <StyledSearchForm onSubmit={handleSubmit}>
           <StyledSearchBarInput
             id='search-bar'
             value={keywords || ''}
@@ -41,7 +38,7 @@ const SearchBar = ({ placeholder, listeningMessage, handleClick, isListening }: 
             onChange={handleTyping}
             ref={inputRef}
           />
-        </form>
+        </StyledSearchForm>
         <Button handleClick={handleClick}>
           {isListening ? <SoundWaveIcon style={{ color: '#316BFF' }} /> : <MicIcon />}
         </Button>
@@ -58,7 +55,7 @@ const StyledSearchBarWrapper = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   display: grid;
-  grid-template-columns: 36px 1fr 75px;
+  grid-template-columns: 36px minmax(0, 1fr) 75px;
   background-color: #ffffff;
 
   padding-left: 13px;
@@ -68,9 +65,14 @@ const StyledSearchBarWrapper = styled.div`
   font-size: 1.125rem;
 `;
 
+const StyledSearchForm = styled.form`
+  margin: auto 0;
+`;
+
 const StyledSearchBarInput = styled.input`
+  box-sizing: border-box;
+  width: 100%;
   border-radius: 4px;
-  flex: 1;
   border: none;
   outline: none;
   padding-top: 4px;
