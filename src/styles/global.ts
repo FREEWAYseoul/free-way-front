@@ -6,24 +6,12 @@ const GlobalStyle = createGlobalStyle`
   ${normalize}
 
   @font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  :root {
-    --rsbs-backdrop-bg: rgba(0, 0, 0, 0.6);
-    --rsbs-bg: #fff;
-    --rsbs-handle-bg: hsla(0, 0%, 0%, 0.14);
-    --rsbs-max-w: auto;
-    --rsbs-ml: env(safe-area-inset-left);
-    --rsbs-mr: env(safe-area-inset-right);
-    --rsbs-overlay-rounded: 16px;
+    font-family: Pretendard;
+    src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
   }
 
   *{
-    font-family: 'Pretendard';
+    font-family: 'Pretendard', sans-serif;
     box-sizing: border-box;
   }
 

@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { ReactComponent as MicIcon } from '../../../assets/icons/home-mic-icon.svg';
+import { ReactComponent as SoundWaveIcon } from '../../../assets/icons/sound-wave.svg';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
   handleClick: () => void;
+  isListening: boolean;
 };
 
-const HomeSearchBar = ({ handleClick }: Props) => {
+const HomeSearchBar = ({ handleClick, isListening }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -17,7 +19,7 @@ const HomeSearchBar = ({ handleClick }: Props) => {
         </TypingSearchSection>
         <VoiceSearchSection id='mic'>
           <VoiceSearchButton onClick={handleClick}>
-            <MicIcon />
+            {isListening ? <SoundWaveIcon style={{ color: '#fff' }} /> : <MicIcon />}
           </VoiceSearchButton>
         </VoiceSearchSection>
       </StyledHomeSearchBar>
