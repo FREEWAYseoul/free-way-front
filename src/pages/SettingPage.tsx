@@ -4,25 +4,25 @@ import { ReactComponent as RightArrowIcon } from '../assets/icons/right-arrow.sv
 
 const SettingPage = () => {
   const sendAskMail = () => {
-    location.href = 'mailto:tjd123123@naver.com';
+    location.href = 'mailto:freeway.seoul@gmail.com';
   };
 
   return (
     <StyledContainer>
       <PageHeader title='설정' />
       <StyledSettingContent>
-        <div>
+        <StyledSettingItem>
           위치기반 서비스 이용약관 <RightArrowIcon />
-        </div>
-        <div>
+        </StyledSettingItem>
+        <StyledSettingItem>
           개인정보처리방침 <RightArrowIcon />
-        </div>
-        <div>
+        </StyledSettingItem>
+        <StyledSettingItem>
           오픈소스 라이브러리 <RightArrowIcon />
-        </div>
-        <div onClick={sendAskMail}>
+        </StyledSettingItem>
+        <StyledSettingItem onClick={sendAskMail}>
           문의하기 <RightArrowIcon />
-        </div>
+        </StyledSettingItem>
       </StyledSettingContent>
     </StyledContainer>
   );
@@ -39,26 +39,26 @@ const StyledContainer = styled.div`
 const StyledSettingContent = styled.div`
   display: flex;
   flex-direction: column;
+`;
 
-  & > div {
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 14px 0 20px;
-    height: 48px;
-    background-color: #fff;
+const StyledSettingItem = styled.div`
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px 0 20px;
+  height: 48px;
+  background-color: #fff;
 
-    &::before {
-      content: '';
-      position: absolute;
-      height: 1px;
-      width: 100%;
-      top: 0;
-      left: 0;
-      background-color: #d9d9d9;
-      opacity: 0.5;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #d9d9d9;
+    opacity: 0.5;
   }
 `;

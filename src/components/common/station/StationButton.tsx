@@ -11,25 +11,24 @@ interface StationButtonProps {
 
 const StationButton = ({ title, isActive, children, handleChangeTab, tel }: StationButtonProps) => {
   const handleTelLinkClick = () => {
-    // window.open(`tel:${tel}`, '_blank');
     document.location.href = `tel:${tel}`;
   };
 
   return (
     <>
-      {tel ? (
-        <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
-          <div className='wrapper' onClick={handleTelLinkClick}>
+      {title === '안내전화' ? (
+        <StyledButton onClick={() => handleChangeTab(title)} disabled={!tel}>
+          <StyledWrapper $isActive={isActive} $isDisabled={!tel} onClick={handleTelLinkClick}>
             <div className='iconWrapper'>{children}</div>
             <p>{title}</p>
-          </div>
+          </StyledWrapper>
         </StyledButton>
       ) : (
-        <StyledButton $isActive={isActive} onClick={() => handleChangeTab(title)}>
-          <div className='wrapper'>
+        <StyledButton onClick={() => handleChangeTab(title)}>
+          <StyledWrapper $isActive={isActive}>
             <div className='iconWrapper'>{children}</div>
             <p>{title}</p>
-          </div>
+          </StyledWrapper>
         </StyledButton>
       )}
     </>
@@ -38,7 +37,7 @@ const StationButton = ({ title, isActive, children, handleChangeTab, tel }: Stat
 
 export default StationButton;
 
-const StyledButton = styled.button<{ $isActive?: boolean }>`
+const StyledButton = styled.button`
   cursor: pointer;
   position: relative;
   padding: 0;
@@ -50,42 +49,6 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
     content: '';
     display: block;
     padding-bottom: 100%;
-  }
-
-  & .wrapper {
-    cursor: pointer;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-    height: 100%;
-    font-size: 1rem;
-    color: #808080;
-    background-color: #fff;
-
-    ${({ $isActive }) =>
-      $isActive &&
-      css`
-        font-weight: 600;
-        color: #316bff;
-      `}
-    & > .iconWrapper {
-      position: relative;
-      width: 100%;
-
-      & > svg {
-        max-height: 34px;
-        width: 34px;
-        /* height: auto; */
-      }
-    }
-
-    & > P {
-      margin: 0;
-    }
   }
 
   &:not(:first-child) {
@@ -102,5 +65,48 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
         z-index: 99;
       }
     }
+  }
+`;
+
+const StyledWrapper = styled.div<{ $isActive?: boolean; $isDisabled?: boolean }>`
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  color: #808080;
+  background-color: #fff;
+
+  ${({ $isActive }) =>
+    $isActive &&
+    css`
+      font-weight: 600;
+      color: #316bff;
+    `}
+
+  ${({ $isDisabled }) =>
+    $isDisabled &&
+    css`
+      cursor: default;
+      color: rgba(0, 0, 0, 0.25);
+    `}
+
+  & > .iconWrapper {
+    position: relative;
+    width: 100%;
+
+    & > svg {
+      max-height: 34px;
+      width: 34px;
+    }
+  }
+
+  & > P {
+    margin: 0;
   }
 `;
