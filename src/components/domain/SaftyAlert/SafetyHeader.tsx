@@ -7,13 +7,13 @@ type Props = { title: string };
 const PageHeader = ({ title }: Props) => {
   const navigate = useNavigate();
 
-  const handleMoveHome = () => {
-    navigate('/');
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   return (
     <StyledHeader>
-      <button onClick={handleMoveHome}>
+      <button onClick={handleGoBack}>
         <img src={BackArrowIcon} alt='뒤로가기' />
       </button>
       <p>{title}</p>
@@ -24,6 +24,7 @@ const PageHeader = ({ title }: Props) => {
 export default PageHeader;
 
 const StyledHeader = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -31,6 +32,7 @@ const StyledHeader = styled.div`
   height: 50px;
   width: 100%;
   background-color: #fff;
+  z-index: 99;
 
   & > p {
     margin: 0;
