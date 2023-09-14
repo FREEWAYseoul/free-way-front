@@ -6,6 +6,8 @@ import Layout from '../components/layout/Layout';
 import HomePage from '../pages/HomePage';
 import SafetyAlertPage from '../pages/SafetyAlertPage';
 import SettingPage from '../pages/SettingPage';
+import SettingTabList from '../components/domain/setting/SettingTabList';
+import IframeView from '../components/domain/setting/IframeView';
 
 const Routes = () => {
   return (
@@ -15,7 +17,10 @@ const Routes = () => {
         <Route path='/search' element={<SearchPage />} />
         <Route path='/result' element={<ResultPage />} />
         <Route path='/safetyAlert' element={<SafetyAlertPage />} />
-        <Route path='/setting' element={<SettingPage />} />
+        <Route path='/setting' element={<SettingPage />}>
+          <Route index element={<SettingTabList />} />
+          <Route path=':tabname' element={<IframeView />} />
+        </Route>
         <Route path='*' element={<Navigate replace to='/' />} />
       </Route>
     </ReactRouters>
