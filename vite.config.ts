@@ -10,7 +10,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://freeway.ap-northeast-2.elasticbeanstalk.com',
+          target: 'http://freeway-env.eba-mpxrzw3w.ap-northeast-2.elasticbeanstalk.com',
           changeOrigin: true,
           secure: false,
         },
